@@ -317,11 +317,15 @@ nav a.active {
 /* Filter Bar */
 .filter-bar {
     background-color: var(--navy-dark);
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing-sm) 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     position: sticky;
     top: 73px;
     z-index: 999;
+}
+
+.filter-header {
+    padding: var(--spacing-xs) 0;
 }
 
 .filter-container {

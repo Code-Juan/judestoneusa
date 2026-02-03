@@ -360,9 +360,11 @@ function toggleFilters() {
         const isCollapsed = filterContent.style.maxHeight === '0px';
         if (isCollapsed) {
             filterContent.style.maxHeight = '500px';
+            filterContent.style.marginTop = 'var(--spacing-sm)';
             if (filterArrow) filterArrow.style.transform = 'rotate(0deg)';
         } else {
             filterContent.style.maxHeight = '0px';
+            filterContent.style.marginTop = '0';
             if (filterArrow) filterArrow.style.transform = 'rotate(-90deg)';
         }
     }
