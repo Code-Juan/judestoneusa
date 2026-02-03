@@ -338,7 +338,148 @@ function createProductCard(product, type) {
         });
     }
 
+    // Add click handler to open product detail modal
+    card.addEventListener('click', function () {
+        showProductDetail(product, type);
+    });
+
+    // Make card appear clickable
+    card.style.cursor = 'pointer';
+
     return card;
+}
+
+// Show Product Detail Modal
+function showProductDetail(product, type) {
+    // Remove existing modal if any
+    const existingModal = document.getElementById('product-detail-modal');
+    if (existingModal) existingModal.remove();
+
+    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const isSaved = isDesignSaved(productId);
+
+    let detailHtml = '';
+
+    if (type === 'material') {
+        const allTags = product.Tag ? product.Tag.split(';').map(tag => 
+            `<span class="detail-tag">${tag.trim()}</span>`
+        ).join('') : '';
+
+        detailHtml = `
+            <div class="detail-image-container">
+                <img src="${product['Image URL']}" alt="${product['Color Name']}" class="detail-image">
+            </div>
+            <div class="detail-info">
+                <div class="detail-header">
+                    <h2 class="detail-title">${product['Color Name']}</h2>
+                    <button class="detail-save-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}">
+                        <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" width="24" height="24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="detail-brand">${product.Brand} • ${product.Finish}</div>
+                <div class="detail-meta">
+                    <span class="detail-meta-item">Group ${product.Group}</span>
+                </div>
+                <p class="detail-description">${product['Short Description']}</p>
+                <div class="detail-tags">
+                    ${allTags}
+                </div>
+            </div>
+        `;
+    } else if (type === 'sink') {
+        const allTags = product.Tag ? product.Tag.split(';').map(tag => 
+            `<span class="detail-tag">${tag.trim()}</span>`
+        ).join('') : '';
+
+        detailHtml = `
+            <div class="detail-image-container">
+                <img src="${product['Image URL']}" alt="${product.Model}" class="detail-image">
+            </div>
+            <div class="detail-info">
+                <div class="detail-header">
+                    <h2 class="detail-title">${product.Model}</h2>
+                    <button class="detail-save-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}">
+                        <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" width="24" height="24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="detail-brand">${product.Series} Series • ${product.Type}</div>
+                <div class="detail-meta">
+                    <span class="detail-meta-item">${product.Category}</span>
+                    <span class="detail-meta-item">Size: ${product['Size (L x W x H)']}</span>
+                </div>
+                <p class="detail-description">${product['Short Description']}</p>
+                <div class="detail-tags">
+                    ${allTags}
+                </div>
+            </div>
+        `;
+    }
+
+    // Create modal
+    const modal = document.createElement('div');
+    modal.id = 'product-detail-modal';
+    modal.className = 'product-detail-overlay';
+    modal.innerHTML = `
+        <div class="product-detail-content">
+            <button class="detail-close-btn" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+            ${detailHtml}
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+
+    // Close button handler
+    modal.querySelector('.detail-close-btn').addEventListener('click', closeProductDetail);
+
+    // Click outside to close
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeProductDetail();
+    });
+
+    // Escape key to close
+    document.addEventListener('keydown', handleDetailEscape);
+
+    // Save button handler
+    const saveBtn = modal.querySelector('.detail-save-btn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+            toggleSaveDesign(productId, this);
+            // Also update card heart button
+            document.querySelectorAll(`.save-heart-btn[data-product-id="${productId}"]`).forEach(heart => {
+                if (this.classList.contains('saved')) {
+                    heart.classList.add('saved');
+                    heart.querySelector('svg').setAttribute('fill', 'currentColor');
+                } else {
+                    heart.classList.remove('saved');
+                    heart.querySelector('svg').setAttribute('fill', 'none');
+                }
+            });
+        });
+    }
+}
+
+function closeProductDetail() {
+    const modal = document.getElementById('product-detail-modal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', handleDetailEscape);
+    }
+}
+
+function handleDetailEscape(e) {
+    if (e.key === 'Escape') closeProductDetail();
 }
 
 function isDesignSaved(productId) {
