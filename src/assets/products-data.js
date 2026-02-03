@@ -53,7 +53,7 @@ const materials = [
     "Color Name": "Seashell",
     "Finish": "Polished",
     "Short Description": "Seashell is a grey-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it’s a reliable choice for kitchens, baths, and busy homes.",
-    "Image URL": "images/materials/seashell.jpg",
+    "Image URL": "/images/materials/seashell.jpg",
     "Tag": "Quartz;Group 2;Alpha;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
   },
   {
@@ -80,7 +80,7 @@ const materials = [
     "Color Name": "Golden Carrara",
     "Finish": "Polished",
     "Short Description": "Golden Carrara is a gold-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it’s a reliable choice for kitchens, baths, and busy homes.",
-    "Image URL": "images/materials/golden-carrara.jpg",
+    "Image URL": "/images/materials/golden-carrara.jpg",
     "Tag": "Quartz;Group 3;Alpha;Polished;Gold;Warm-Accent;Elevated;Designer-Favorite;Kitchen;Bath;Low-Maintenance"
   },
   {
@@ -89,7 +89,7 @@ const materials = [
     "Color Name": "Carrara Blanco",
     "Finish": "Polished",
     "Short Description": "Carrara Blanco is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it’s a reliable choice for kitchens, baths, and busy homes.",
-    "Image URL": "images/materials/carrara-blanco.jpg",
+    "Image URL": "/images/materials/carrara-blanco.jpg",
     "Tag": "Quartz;Group 3;Alpha;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   },
   {
@@ -125,7 +125,7 @@ const materials = [
     "Color Name": "Black Carrara",
     "Finish": "Polished",
     "Short Description": "Black Carrara is a black-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it’s a reliable choice for kitchens, baths, and busy homes.",
-    "Image URL": "images/materials/black-carrara.jpg",
+    "Image URL": "/images/materials/black-carrara.jpg",
     "Tag": "Quartz;Group 4;Alpha;Polished;Black;Bold;High-Contrast;Statement;Kitchen;Bath;Low-Maintenance"
   },
   {
@@ -134,7 +134,7 @@ const materials = [
     "Color Name": "Calacatta Luna",
     "Finish": "Polished",
     "Short Description": "Calacatta Luna is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it’s a reliable choice for kitchens, baths, and busy homes.",
-    "Image URL": "images/materials/calacatta-luna.jpg",
+    "Image URL": "/images/materials/calacatta-luna.jpg",
     "Tag": "Quartz;Group 5;Alpha;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   },
   {
@@ -143,7 +143,7 @@ const materials = [
     "Color Name": "Calacatta Nova",
     "Finish": "Polished",
     "Short Description": "Calacatta Nova is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it’s a reliable choice for kitchens, baths, and busy homes.",
-    "Image URL": "images/materials/calacatta-nova.jpg",
+    "Image URL": "/images/materials/calacatta-nova.jpg",
     "Tag": "Quartz;Group 5;Alpha;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   }
 ];
