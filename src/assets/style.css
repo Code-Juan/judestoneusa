@@ -511,11 +511,42 @@ footer {
     }
 }
 
-/* Saved Designs */
+/* Saved Designs Header Link */
 .saved-designs-link {
-    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gray-light);
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.saved-designs-link:hover {
+    color: #e74c3c;
+}
+
+.saved-designs-link svg {
+    transition: all 0.2s ease;
+}
+
+.saved-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #e74c3c;
+    color: white;
+    font-size: 11px;
     font-weight: 600;
-    cursor: pointer;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
 }
 
 /* Product Card Image Wrapper */

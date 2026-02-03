@@ -368,14 +368,26 @@ function toggleSaveDesign(productId, button) {
 
 function updateSavedCount() {
     const saved = getSavedDesigns();
+    const countEl = document.querySelector('.saved-count');
     const savedLink = document.querySelector('.saved-designs-link');
-    if (savedLink) {
+    
+    if (countEl) {
         const count = saved.length;
         if (count > 0) {
-            savedLink.innerHTML = `My Saved Designs (${count})`;
+            countEl.textContent = count;
+            countEl.style.display = 'flex';
         } else {
-            savedLink.innerHTML = 'My Saved Designs';
+            countEl.style.display = 'none';
         }
+    }
+    
+    // Also fill heart if items are saved
+    if (savedLink && saved.length > 0) {
+        const svg = savedLink.querySelector('svg');
+        if (svg) svg.setAttribute('fill', 'currentColor');
+    } else if (savedLink) {
+        const svg = savedLink.querySelector('svg');
+        if (svg) svg.setAttribute('fill', 'none');
     }
 }
 

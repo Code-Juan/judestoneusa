@@ -22,7 +22,8 @@
                     <a href="../index.html">
                         <img src="../assets/brand/logo.png" alt="Judestone"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
+                        <span
+                            style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
                     </a>
                 </div>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
@@ -34,14 +35,15 @@
                     <a href="../contact/index.html">Contact</a>
                 </nav>
                 <div class="header-utils">
-                    <button class="icon-btn" aria-label="Search">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <a href="#" class="saved-designs-link" title="My Saved Designs">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
                         </svg>
-                    </button>
-                    <a href="#" class="saved-designs-link" style="color: var(--accent); font-weight: 600;">My Saved
-                        Designs</a>
+                        <span class="saved-count"></span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -60,10 +62,12 @@
     <section class="filter-bar">
         <div class="container">
             <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <button class="filter-toggle" onclick="toggleFilters()" style="background: none; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                <button class="filter-toggle" onclick="toggleFilters()"
+                    style="background: none; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                     <span>Filters</span>
-                    <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="transition: transform 0.3s; transform: rotate(-90deg);">
-                        <path d="M2 4l4 4 4-4"/>
+                    <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"
+                        style="transition: transform 0.3s; transform: rotate(-90deg);">
+                        <path d="M2 4l4 4 4-4" />
                     </svg>
                 </button>
                 <select class="sort-select">
@@ -73,7 +77,8 @@
                     <option value="newest">Newest</option>
                 </select>
             </div>
-            <div class="filter-container collapsible" id="filter-content" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease;">
+            <div class="filter-container collapsible" id="filter-content"
+                style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease;">
                 <div class="filter-group">
                     <button class="filter-btn active">ALL</button>
                 </div>
