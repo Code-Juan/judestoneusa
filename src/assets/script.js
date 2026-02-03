@@ -284,9 +284,19 @@ function createProductCard(product, type) {
     const card = document.createElement('div');
     card.className = 'product-card';
 
+    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const isSaved = isDesignSaved(productId);
+
     if (type === 'material') {
         card.innerHTML = `
-            <img src="${product['Image URL']}" alt="${product['Color Name']}" class="product-card-image" loading="lazy">
+            <div class="product-card-image-wrapper">
+                <img src="${product['Image URL']}" alt="${product['Color Name']}" class="product-card-image" loading="lazy">
+                <button class="save-heart-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}" aria-label="Save design">
+                    <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="product-card-content">
                 <h3 class="product-card-title">${product['Color Name']}</h3>
                 <div class="product-card-brand">${product.Brand}</div>
@@ -300,7 +310,14 @@ function createProductCard(product, type) {
         `;
     } else if (type === 'sink') {
         card.innerHTML = `
-            <img src="${product['Image URL']}" alt="${product.Model}" class="product-card-image" loading="lazy">
+            <div class="product-card-image-wrapper">
+                <img src="${product['Image URL']}" alt="${product.Model}" class="product-card-image" loading="lazy">
+                <button class="save-heart-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}" aria-label="Save design">
+                    <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="product-card-content">
                 <h3 class="product-card-title">${product.Model}</h3>
                 <div class="product-card-brand">${product.Series} Series - ${product.Type}</div>
@@ -312,30 +329,152 @@ function createProductCard(product, type) {
         `;
     }
 
-    // Add click handler for saved designs
-    card.addEventListener('click', function () {
-        // Could open modal or navigate to detail page
-        console.log('Product clicked:', product);
-    });
+    // Add click handler for heart button
+    const heartBtn = card.querySelector('.save-heart-btn');
+    if (heartBtn) {
+        heartBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            toggleSaveDesign(productId, this);
+        });
+    }
 
     return card;
 }
 
+function isDesignSaved(productId) {
+    const saved = getSavedDesigns();
+    return saved.includes(productId);
+}
+
+function toggleSaveDesign(productId, button) {
+    const saved = getSavedDesigns();
+    const index = saved.indexOf(productId);
+
+    if (index > -1) {
+        // Remove from saved
+        saved.splice(index, 1);
+        button.classList.remove('saved');
+        button.querySelector('svg').setAttribute('fill', 'none');
+    } else {
+        // Add to saved
+        saved.push(productId);
+        button.classList.add('saved');
+        button.querySelector('svg').setAttribute('fill', 'currentColor');
+    }
+
+    localStorage.setItem('judestone_saved_designs', JSON.stringify(saved));
+    updateSavedCount();
+}
+
+function updateSavedCount() {
+    const saved = getSavedDesigns();
+    const savedLink = document.querySelector('.saved-designs-link');
+    if (savedLink) {
+        const count = saved.length;
+        if (count > 0) {
+            savedLink.innerHTML = `My Saved Designs (${count})`;
+        } else {
+            savedLink.innerHTML = 'My Saved Designs';
+        }
+    }
+}
+
 // Saved Designs
 function initSavedDesigns() {
+    updateSavedCount();
+
     const savedLink = document.querySelector('.saved-designs-link');
     if (savedLink) {
         savedLink.addEventListener('click', function (e) {
             e.preventDefault();
-            const saved = getSavedDesigns();
-            if (saved.length === 0) {
-                alert('You have no saved designs yet.');
-            } else {
-                // Show saved designs modal or navigate to saved page
-                console.log('Saved designs:', saved);
+            showSavedDesignsModal();
+        });
+    }
+}
+
+function showSavedDesignsModal() {
+    const saved = getSavedDesigns();
+
+    // Remove existing modal if any
+    const existingModal = document.getElementById('saved-designs-modal');
+    if (existingModal) existingModal.remove();
+
+    // Create modal
+    const modal = document.createElement('div');
+    modal.id = 'saved-designs-modal';
+    modal.className = 'saved-modal-overlay';
+
+    let itemsHtml = '';
+    if (saved.length === 0) {
+        itemsHtml = '<p class="saved-modal-empty">You have no saved designs yet. Click the heart icon on any product to save it.</p>';
+    } else {
+        // Find product details for each saved item
+        const allProducts = [...(productsData?.materials || []), ...(productsData?.sinks || [])];
+
+        saved.forEach(productId => {
+            const product = allProducts.find(p => p['Color Name'] === productId || p.Model === productId);
+            if (product) {
+                const name = product['Color Name'] || product.Model;
+                const image = product['Image URL'];
+                const brand = product.Brand || `${product.Series} Series`;
+                itemsHtml += `
+                    <div class="saved-item">
+                        <img src="${image}" alt="${name}" class="saved-item-image">
+                        <div class="saved-item-info">
+                            <h4>${name}</h4>
+                            <p>${brand}</p>
+                        </div>
+                        <button class="saved-item-remove" data-product-id="${productId}" aria-label="Remove">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <path d="M18 6L6 18M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `;
             }
         });
     }
+
+    modal.innerHTML = `
+        <div class="saved-modal-content">
+            <div class="saved-modal-header">
+                <h2>My Saved Designs</h2>
+                <button class="saved-modal-close" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                        <path d="M18 6L6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="saved-modal-body">
+                ${itemsHtml}
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close button handler
+    modal.querySelector('.saved-modal-close').addEventListener('click', () => modal.remove());
+
+    // Click outside to close
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+    });
+
+    // Remove item handlers
+    modal.querySelectorAll('.saved-item-remove').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const productId = this.dataset.productId;
+            removeSavedDesign(productId);
+            // Update heart buttons on page
+            document.querySelectorAll(`.save-heart-btn[data-product-id="${productId}"]`).forEach(heart => {
+                heart.classList.remove('saved');
+                heart.querySelector('svg').setAttribute('fill', 'none');
+            });
+            // Refresh modal
+            showSavedDesignsModal();
+        });
+    });
 }
 
 function getSavedDesigns() {
@@ -355,7 +494,7 @@ function saveDesign(productId) {
 function toggleFilters() {
     const filterContent = document.getElementById('filter-content');
     const filterArrow = document.querySelector('.filter-arrow');
-    
+
     if (filterContent) {
         const isCollapsed = filterContent.style.maxHeight === '0px';
         if (isCollapsed) {
