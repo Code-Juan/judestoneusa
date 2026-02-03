@@ -924,3 +924,78 @@ footer {
     font-size: 0.8rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Sink Specifications Styles */
+.sink-specs {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.spec-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.spec-row:first-child {
+    padding-top: 0;
+}
+
+.spec-label {
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.spec-value {
+    color: var(--white);
+    font-size: 0.95rem;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Sink Options Styles */
+.sink-options {
+    margin-bottom: 20px;
+}
+
+.options-label {
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.options-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.option-item {
+    background: rgba(192, 192, 192, 0.15);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    transition: all 0.2s;
+}
+
+.option-item:hover {
+    background: rgba(192, 192, 192, 0.25);
+    border-color: var(--accent);
+}
