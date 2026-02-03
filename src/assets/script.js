@@ -357,7 +357,7 @@ function createProductCard(product, type) {
 function navigateToProductPage(product, type) {
     const productId = type === 'material' ? product['Color Name'] : product.Model;
     const encodedId = encodeURIComponent(productId);
-    
+
     window.location.href = `/product/?type=${type}&id=${encodedId}`;
 }
 
@@ -1103,13 +1103,11 @@ function renderComparison() {
     // Add "Add Item" column only if there's 1 item
     if (itemCount === 1 && canAddMore) {
         html += `
-            <div class="compare-item compare-add-item">
-                <button class="compare-add-btn" onclick="showProductSelector()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
-                        <path d="M12 5v14M5 12h14"></path>
-                    </svg>
-                    <span>Add ${compareState.type === 'material' ? 'Material' : 'Sink'}</span>
-                </button>
+            <div class="compare-item compare-add-item" onclick="showProductSelector()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                    <path d="M12 5v14M5 12h14"></path>
+                </svg>
+                <span>Add ${compareState.type === 'material' ? 'Material' : 'Sink'}</span>
             </div>
         `;
     }
@@ -1268,6 +1266,9 @@ function addToComparison(productId) {
     closeProductSelector();
 }
 
+// Selected items in product selector
+let selectorSelectedIds = [];
+
 // Show product selector modal
 function showProductSelector() {
     const modal = document.getElementById('product-selector-modal');
@@ -1276,11 +1277,18 @@ function showProductSelector() {
 
     if (!modal || !body) return;
 
+    // Reset selection
+    selectorSelectedIds = [];
+
+    // Calculate slots remaining
+    const items = getCurrentCompareItems();
+    const slotsRemaining = 4 - items.length;
+
     // Update label
-    typeLabel.textContent = compareState.type === 'material' ? 'Material' : 'Sink';
+    const typeName = compareState.type === 'material' ? 'Materials' : 'Sinks';
+    typeLabel.textContent = `${typeName} (Select up to ${slotsRemaining})`;
 
     // Get products not already in comparison
-    const items = getCurrentCompareItems();
     const currentIds = items.map(p =>
         compareState.type === 'material' ? p['Color Name'] : p.Model
     );
@@ -1305,7 +1313,12 @@ function showProductSelector() {
             const image = product['Image URL'];
 
             return `
-                <div class="selector-item" onclick="addToComparison('${id.replace(/'/g, "\\'")}')">
+                <div class="selector-item" data-id="${id.replace(/"/g, '&quot;')}" onclick="toggleSelectorItem(this, '${id.replace(/'/g, "\\'")}')">
+                    <div class="selector-checkbox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="16" height="16">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    </div>
                     <img src="${image}" alt="${name}" class="selector-item-image">
                     <div class="selector-item-info">
                         <h4>${name}</h4>
@@ -1316,8 +1329,78 @@ function showProductSelector() {
         }).join('');
     }
 
+    // Add/update confirm button
+    let footer = modal.querySelector('.selector-footer');
+    if (!footer) {
+        footer = document.createElement('div');
+        footer.className = 'selector-footer';
+        modal.querySelector('.product-selector-content').appendChild(footer);
+    }
+    updateSelectorFooter();
+
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+}
+
+// Toggle item selection in selector
+function toggleSelectorItem(element, productId) {
+    const items = getCurrentCompareItems();
+    const slotsRemaining = 4 - items.length;
+    const isSelected = selectorSelectedIds.includes(productId);
+
+    if (isSelected) {
+        // Deselect
+        selectorSelectedIds = selectorSelectedIds.filter(id => id !== productId);
+        element.classList.remove('selected');
+    } else if (selectorSelectedIds.length < slotsRemaining) {
+        // Select if we have room
+        selectorSelectedIds.push(productId);
+        element.classList.add('selected');
+    }
+
+    updateSelectorFooter();
+}
+
+// Update selector footer with count and confirm button
+function updateSelectorFooter() {
+    const footer = document.querySelector('.selector-footer');
+    if (!footer) return;
+
+    const count = selectorSelectedIds.length;
+    if (count === 0) {
+        footer.innerHTML = `<span class="selector-hint">Click items to select them</span>`;
+    } else {
+        footer.innerHTML = `
+            <span class="selector-count">${count} item${count > 1 ? 's' : ''} selected</span>
+            <button class="selector-confirm-btn" onclick="confirmSelectorSelection()">
+                Add to Comparison
+            </button>
+        `;
+    }
+}
+
+// Confirm and add all selected items
+function confirmSelectorSelection() {
+    const items = getCurrentCompareItems();
+
+    selectorSelectedIds.forEach(productId => {
+        if (items.length >= 4) return;
+
+        let product = null;
+        if (compareState.type === 'material') {
+            product = productsData.materials.find(m => m['Color Name'] === productId);
+        } else {
+            product = productsData.sinks.find(s => s.Model === productId);
+        }
+
+        if (product) {
+            items.push(product);
+        }
+    });
+
+    setCurrentCompareItems(items);
+    renderComparison();
+    closeProductSelector();
 }
 
 // Close product selector modal
@@ -1326,6 +1409,7 @@ function closeProductSelector() {
     if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = '';
+        selectorSelectedIds = [];
     }
 }
 
@@ -1334,3 +1418,5 @@ window.switchCompareTab = switchCompareTab;
 window.showProductSelector = showProductSelector;
 window.closeProductSelector = closeProductSelector;
 window.addToComparison = addToComparison;
+window.toggleSelectorItem = toggleSelectorItem;
+window.confirmSelectorSelection = confirmSelectorSelection;
