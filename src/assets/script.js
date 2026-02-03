@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize page-specific functionality
     const path = window.location.pathname;
 
-    if (path.includes('sinks')) {
+    if (path.includes('/product/') || path.includes('/product')) {
+        initProductDetailPage();
+    } else if (path.includes('sinks')) {
         initSinksGallery();
     } else if (path.includes('quartz-designs') || path.endsWith('/') || path.includes('index')) {
         initQuartzGallery();
@@ -338,15 +340,28 @@ function createProductCard(product, type) {
         });
     }
 
-    // Add click handler to open product detail modal
+    // Add click handler to navigate to product detail page
     card.addEventListener('click', function () {
-        showProductDetail(product, type);
+        navigateToProductPage(product, type);
     });
 
     // Make card appear clickable
     card.style.cursor = 'pointer';
 
     return card;
+}
+
+// Navigate to product detail page
+function navigateToProductPage(product, type) {
+    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const encodedId = encodeURIComponent(productId);
+
+    // Determine base path based on current location
+    const basePath = window.location.pathname.includes('/sinks/') || window.location.pathname.includes('/quartz-designs/')
+        ? '../product/'
+        : 'product/';
+
+    window.location.href = `${basePath}?type=${type}&id=${encodedId}`;
 }
 
 // Show Product Detail Modal
@@ -395,7 +410,7 @@ function showProductDetail(product, type) {
 
         // Build specifications section
         let specsHtml = '<div class="sink-specs">';
-        
+
         // Show Gauge Options if there are gauge options available
         const gaugeOptions = product.Options ? product.Options.filter(opt => opt.toLowerCase().includes('gauge')) : [];
         if (gaugeOptions.length > 0) {
@@ -410,7 +425,7 @@ function showProductDetail(product, type) {
         if (product['Interior Dimension']) {
             specsHtml += `<div class="spec-row"><span class="spec-label">Interior Dimension:</span><span class="spec-value">${product['Interior Dimension']}</span></div>`;
         }
-        
+
         specsHtml += '</div>';
 
         detailHtml = `
@@ -690,4 +705,259 @@ function removeSavedDesign(productId) {
     const filtered = saved.filter(id => id !== productId);
     localStorage.setItem('judestone_saved_designs', JSON.stringify(filtered));
     updateSavedCount();
+}
+
+// Initialize Product Detail Page
+function initProductDetailPage() {
+    if (!productsData) return;
+
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    const productId = urlParams.get('id');
+
+    if (!type || !productId) {
+        showProductNotFound();
+        return;
+    }
+
+    // Find the product
+    let product = null;
+    if (type === 'material') {
+        product = productsData.materials.find(m => m['Color Name'] === productId);
+    } else if (type === 'sink') {
+        product = productsData.sinks.find(s => s.Model === productId);
+    }
+
+    if (!product) {
+        showProductNotFound();
+        return;
+    }
+
+    // Update page title
+    const productName = type === 'material' ? product['Color Name'] : product.Model;
+    document.title = `${productName} - Judestone`;
+
+    // Update breadcrumb
+    updateBreadcrumb(product, type);
+
+    // Render product detail
+    renderProductDetailPage(product, type);
+
+    // Load related products
+    loadRelatedProducts(product, type);
+}
+
+function showProductNotFound() {
+    const container = document.getElementById('product-detail');
+    if (container) {
+        container.innerHTML = `
+            <div class="product-not-found">
+                <h2>Product Not Found</h2>
+                <p>The product you're looking for doesn't exist or has been removed.</p>
+                <a href="../quartz-designs/index.html" class="btn btn-primary">Browse Quartz Designs</a>
+                <a href="../sinks/index.html" class="btn btn-secondary">Browse Sinks</a>
+            </div>
+        `;
+    }
+}
+
+function updateBreadcrumb(product, type) {
+    const categoryLink = document.getElementById('category-link');
+    const productName = document.getElementById('product-name');
+
+    if (type === 'material') {
+        categoryLink.href = '../quartz-designs/index.html';
+        categoryLink.textContent = 'Quartz Designs';
+        productName.textContent = product['Color Name'];
+    } else if (type === 'sink') {
+        categoryLink.href = '../sinks/index.html';
+        categoryLink.textContent = 'Sinks';
+        productName.textContent = product.Model;
+    }
+}
+
+function renderProductDetailPage(product, type) {
+    const container = document.getElementById('product-detail');
+    if (!container) return;
+
+    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const isSaved = isDesignSaved(productId);
+
+    let detailHtml = '';
+
+    if (type === 'material') {
+        const allTags = product.Tag ? product.Tag.split(';').map(tag =>
+            `<span class="product-page-tag">${tag.trim()}</span>`
+        ).join('') : '';
+
+        detailHtml = `
+            <div class="product-page-image">
+                <img src="${product['Image URL']}" alt="${product['Color Name']}">
+            </div>
+            <div class="product-page-info">
+                <div class="product-page-header">
+                    <h1 class="product-page-title">${product['Color Name']}</h1>
+                    <button class="product-page-save-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}">
+                        <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" width="28" height="28">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="product-page-subtitle">${product.Brand} • ${product.Finish}</div>
+                
+                <div class="product-page-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">Group</span>
+                        <span class="spec-value">${product.Group}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Brand</span>
+                        <span class="spec-value">${product.Brand}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Finish</span>
+                        <span class="spec-value">${product.Finish}</span>
+                    </div>
+                </div>
+
+                <div class="product-page-description">
+                    <h3>Description</h3>
+                    <p>${product['Short Description']}</p>
+                </div>
+
+                <div class="product-page-tags">
+                    <h3>Tags</h3>
+                    <div class="tags-list">${allTags}</div>
+                </div>
+
+                <div class="product-page-actions">
+                    <a href="../contact/index.html" class="btn btn-primary">Request a Quote</a>
+                    <a href="../contact/index.html" class="btn btn-secondary">Order Sample</a>
+                </div>
+            </div>
+        `;
+    } else if (type === 'sink') {
+        const allTags = product.Tag ? product.Tag.split(';').map(tag =>
+            `<span class="product-page-tag">${tag.trim()}</span>`
+        ).join('') : '';
+
+        // Build specifications
+        let specsHtml = '';
+
+        const gaugeOptions = product.Options ? product.Options.filter(opt => opt.toLowerCase().includes('gauge')) : [];
+        if (gaugeOptions.length > 0) {
+            specsHtml += `
+                <div class="spec-item">
+                    <span class="spec-label">Gauge Options</span>
+                    <span class="spec-value">${gaugeOptions.join(', ')}</span>
+                </div>
+            `;
+        }
+
+        if (product['Cabinet Base']) {
+            specsHtml += `
+                <div class="spec-item">
+                    <span class="spec-label">Cabinet Base</span>
+                    <span class="spec-value">${product['Cabinet Base']}</span>
+                </div>
+            `;
+        }
+
+        if (product['Overall Dimension']) {
+            specsHtml += `
+                <div class="spec-item">
+                    <span class="spec-label">Overall Dimension</span>
+                    <span class="spec-value">${product['Overall Dimension']}</span>
+                </div>
+            `;
+        }
+
+        if (product['Interior Dimension']) {
+            specsHtml += `
+                <div class="spec-item">
+                    <span class="spec-label">Interior Dimension</span>
+                    <span class="spec-value">${product['Interior Dimension']}</span>
+                </div>
+            `;
+        }
+
+        detailHtml = `
+            <div class="product-page-image">
+                <img src="${product['Image URL']}" alt="${product.Model}">
+            </div>
+            <div class="product-page-info">
+                <div class="product-page-header">
+                    <h1 class="product-page-title">${product.Model}</h1>
+                    <button class="product-page-save-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}">
+                        <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" width="28" height="28">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="product-page-subtitle">${product.Series} Series • ${product.Type} • ${product.Category}</div>
+                
+                <div class="product-page-specs">
+                    ${specsHtml}
+                </div>
+
+                <div class="product-page-description">
+                    <h3>Description</h3>
+                    <p>${product['Short Description']}</p>
+                </div>
+
+                <div class="product-page-tags">
+                    <h3>Tags</h3>
+                    <div class="tags-list">${allTags}</div>
+                </div>
+
+                <div class="product-page-actions">
+                    <a href="../contact/index.html" class="btn btn-primary">Request a Quote</a>
+                    <a href="../contact/index.html" class="btn btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        `;
+    }
+
+    container.innerHTML = detailHtml;
+
+    // Add save button handler
+    const saveBtn = container.querySelector('.product-page-save-btn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+            const id = this.dataset.productId;
+            toggleSaveDesign(id, this);
+        });
+    }
+}
+
+function loadRelatedProducts(product, type) {
+    const section = document.getElementById('related-products');
+    const grid = document.getElementById('related-grid');
+    if (!section || !grid) return;
+
+    let related = [];
+
+    if (type === 'material') {
+        // Get materials from same group or brand
+        related = productsData.materials
+            .filter(m => m['Color Name'] !== product['Color Name'] &&
+                (m.Group === product.Group || m.Brand === product.Brand))
+            .slice(0, 4);
+    } else if (type === 'sink') {
+        // Get sinks from same series or category
+        related = productsData.sinks
+            .filter(s => s.Model !== product.Model &&
+                (s.Series === product.Series || s.Category === product.Category))
+            .slice(0, 4);
+    }
+
+    if (related.length > 0) {
+        section.style.display = 'block';
+        grid.innerHTML = '';
+        related.forEach(item => {
+            const card = createProductCard(item, type);
+            grid.appendChild(card);
+        });
+    }
 }
