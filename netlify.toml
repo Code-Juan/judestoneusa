@@ -2,30 +2,39 @@
   publish = "dist"
   command = "npm run build"
 
-# Handle routing - redirect all routes to index.html
+# Trailing slash redirects to serve index.html in folders
+[[redirects]]
+  from = "/about"
+  to = "/about/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/quartz-designs"
+  to = "/quartz-designs/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/sinks"
+  to = "/sinks/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/product"
+  to = "/product/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/compare"
+  to = "/compare/index.html"
+  status = 200
+
+# 404 fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
-
-# Remove trailing slashes for consistency
-[[redirects]]
-  from = "/about/"
-  to = "/about"
-  status = 301
-
-[[redirects]]
-  from = "/quartz-designs/"
-  to = "/quartz-designs"
-  status = 301
-
-[[redirects]]
-  from = "/sinks/"
-  to = "/sinks"
-  status = 301
-
-
-[[redirects]]
-  from = "/contact/"
-  to = "/contact"
-  status = 301
+  status = 404

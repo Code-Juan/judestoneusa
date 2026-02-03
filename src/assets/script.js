@@ -357,13 +357,8 @@ function createProductCard(product, type) {
 function navigateToProductPage(product, type) {
     const productId = type === 'material' ? product['Color Name'] : product.Model;
     const encodedId = encodeURIComponent(productId);
-
-    // Determine base path based on current location
-    const basePath = window.location.pathname.includes('/sinks/') || window.location.pathname.includes('/quartz-designs/')
-        ? '../product/'
-        : 'product/';
-
-    window.location.href = `${basePath}?type=${type}&id=${encodedId}`;
+    
+    window.location.href = `/product/?type=${type}&id=${encodedId}`;
 }
 
 // Show Product Detail Modal
@@ -622,10 +617,8 @@ function showSavedDesignsModal() {
         });
     }
 
-    // Determine compare link path based on current location
-    const comparePath = window.location.pathname.includes('/pages/') 
-        ? '../compare/index.html' 
-        : 'compare/index.html';
+    // Use absolute path for compare page
+    const comparePath = '/compare/';
 
     modal.innerHTML = `
         <div class="saved-modal-content">
@@ -771,8 +764,8 @@ function showProductNotFound() {
             <div class="product-not-found">
                 <h2>Product Not Found</h2>
                 <p>The product you're looking for doesn't exist or has been removed.</p>
-                <a href="../quartz-designs/index.html" class="btn btn-primary">Browse Quartz Designs</a>
-                <a href="../sinks/index.html" class="btn btn-secondary">Browse Sinks</a>
+                <a href="/quartz-designs/" class="btn btn-primary">Browse Quartz Designs</a>
+                <a href="/sinks/" class="btn btn-secondary">Browse Sinks</a>
             </div>
         `;
     }
@@ -783,11 +776,11 @@ function updateBreadcrumb(product, type) {
     const productName = document.getElementById('product-name');
 
     if (type === 'material') {
-        categoryLink.href = '../quartz-designs/index.html';
+        categoryLink.href = '/quartz-designs/';
         categoryLink.textContent = 'Quartz Designs';
         productName.textContent = product['Color Name'];
     } else if (type === 'sink') {
-        categoryLink.href = '../sinks/index.html';
+        categoryLink.href = '/sinks/';
         categoryLink.textContent = 'Sinks';
         productName.textContent = product.Model;
     }
@@ -848,8 +841,8 @@ function renderProductDetailPage(product, type) {
                 </div>
 
                 <div class="product-page-actions">
-                    <a href="../contact/index.html" class="btn btn-primary">Request a Quote</a>
-                    <a href="../contact/index.html" class="btn btn-secondary">Order Sample</a>
+                    <a href="/contact/" class="btn btn-primary">Request a Quote</a>
+                    <a href="/contact/" class="btn btn-secondary">Order Sample</a>
                 </div>
             </div>
         `;
@@ -928,8 +921,8 @@ function renderProductDetailPage(product, type) {
                 </div>
 
                 <div class="product-page-actions">
-                    <a href="../contact/index.html" class="btn btn-primary">Request a Quote</a>
-                    <a href="../contact/index.html" class="btn btn-secondary">Contact Us</a>
+                    <a href="/contact/" class="btn btn-primary">Request a Quote</a>
+                    <a href="/contact/" class="btn btn-secondary">Contact Us</a>
                 </div>
             </div>
         `;
