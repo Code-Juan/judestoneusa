@@ -1,6 +1,6 @@
-# Judestone USA Official Website
+# Judestone Official Website
 
-A modern, responsive website for Judestone USA, featuring premium quartz designs and sink products with advanced filtering and search capabilities.
+A modern, responsive website for Judestone, featuring premium quartz designs and sink products with advanced filtering and search capabilities.
 
 ## Project Structure
 

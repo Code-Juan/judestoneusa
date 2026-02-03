@@ -5,13 +5,13 @@ function parseCSV(filePath) {
     const content = fs.readFileSync(filePath, 'utf-8');
     const lines = content.split('\n').filter(line => line.trim());
     const headers = lines[0].split(',').map(h => h.trim());
-    
+
     const data = [];
     for (let i = 1; i < lines.length; i++) {
         const values = [];
         let current = '';
         let inQuotes = false;
-        
+
         for (let j = 0; j < lines[i].length; j++) {
             const char = lines[i][j];
             if (char === '"') {
@@ -24,7 +24,7 @@ function parseCSV(filePath) {
             }
         }
         values.push(current.trim());
-        
+
         if (values.length === headers.length) {
             const obj = {};
             headers.forEach((header, index) => {
@@ -33,7 +33,7 @@ function parseCSV(filePath) {
             data.push(obj);
         }
     }
-    
+
     return data;
 }
 

@@ -32,13 +32,13 @@ async function build() {
 
         try {
             execSync('magick --version', { stdio: 'ignore' });
-            
+
             // Find logo file
             const brandDir = 'assets/brand';
             if (await fs.pathExists(brandDir)) {
                 const files = await fs.readdir(brandDir);
                 const logoFile = files.find(f => f.match(/\.(svg|png|jpg|jpeg)$/i));
-                
+
                 if (logoFile) {
                     const logoPath = path.join(brandDir, logoFile);
                     console.log('ImageMagick found - generating favicon files...');

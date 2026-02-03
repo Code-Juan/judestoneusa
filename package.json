@@ -1,7 +1,7 @@
 {
     "name": "judestone-usa-website",
     "version": "1.0.0",
-    "description": "Judestone USA Official Website - Premium Quartz Designs and Sink Products",
+    "description": "Judestone Official Website - Premium Quartz Designs and Sink Products",
     "main": "backend/server.js",
     "scripts": {
         "start": "node backend/server.js",
@@ -17,7 +17,7 @@
         "stone",
         "supplier"
     ],
-    "author": "Judestone USA",
+    "author": "Judestone",
     "license": "MIT",
     "dependencies": {
         "cors": "^2.8.5",

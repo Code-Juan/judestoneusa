@@ -102,5 +102,5 @@ app.post('/api/contact', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Judestone USA backend server running on port ${PORT}`);
+    console.log(`Judestone backend server running on port ${PORT}`);
 });

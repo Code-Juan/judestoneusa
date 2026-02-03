@@ -24,10 +24,6 @@
   to = "/sinks"
   status = 301
 
-[[redirects]]
-  from = "/where-to-buy/"
-  to = "/where-to-buy"
-  status = 301
 
 [[redirects]]
   from = "/contact/"
