@@ -59,16 +59,24 @@
     <!-- Filter Bar -->
     <section class="filter-bar">
         <div class="container">
-            <div class="filter-container">
-                <div class="filter-group">
-                    <button class="filter-btn active">ALL</button>
-                </div>
+            <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                <button class="filter-toggle" onclick="toggleFilters()" style="background: none; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>Filters</span>
+                    <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="transition: transform 0.3s;">
+                        <path d="M2 4l4 4 4-4"/>
+                    </svg>
+                </button>
                 <select class="sort-select">
                     <option value="recommended">Sort By: Recommended</option>
                     <option value="name-asc">Name A-Z</option>
                     <option value="name-desc">Name Z-A</option>
                     <option value="newest">Newest</option>
                 </select>
+            </div>
+            <div class="filter-container collapsible" id="filter-content" style="max-height: 500px; overflow: hidden; transition: max-height 0.3s ease;">
+                <div class="filter-group">
+                    <button class="filter-btn active">ALL</button>
+                </div>
             </div>
         </div>
     </section>

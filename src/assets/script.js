@@ -351,6 +351,26 @@ function saveDesign(productId) {
     }
 }
 
+// Filter toggle for collapsible filter section
+function toggleFilters() {
+    const filterContent = document.getElementById('filter-content');
+    const filterArrow = document.querySelector('.filter-arrow');
+    
+    if (filterContent) {
+        const isCollapsed = filterContent.style.maxHeight === '0px';
+        if (isCollapsed) {
+            filterContent.style.maxHeight = '500px';
+            if (filterArrow) filterArrow.style.transform = 'rotate(0deg)';
+        } else {
+            filterContent.style.maxHeight = '0px';
+            if (filterArrow) filterArrow.style.transform = 'rotate(-90deg)';
+        }
+    }
+}
+
+// Make toggleFilters available globally
+window.toggleFilters = toggleFilters;
+
 // Debug logging
 console.log('Judestone script loaded, path:', window.location.pathname);
 
