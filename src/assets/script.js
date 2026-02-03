@@ -975,11 +975,26 @@ function loadRelatedProducts(product, type) {
 // COMPARISON PAGE FUNCTIONS
 // =====================================================
 
-// Current comparison state
+// Current comparison state - stores items per type
 let compareState = {
     type: 'material', // 'material' or 'sink'
-    items: []         // Array of product objects
+    materialItems: [],  // Array of material product objects
+    sinkItems: []       // Array of sink product objects
 };
+
+// Get current items based on active tab
+function getCurrentCompareItems() {
+    return compareState.type === 'material' ? compareState.materialItems : compareState.sinkItems;
+}
+
+// Set current items based on active tab
+function setCurrentCompareItems(items) {
+    if (compareState.type === 'material') {
+        compareState.materialItems = items;
+    } else {
+        compareState.sinkItems = items;
+    }
+}
 
 // Initialize Comparison Page
 function initComparePage() {
@@ -1002,17 +1017,18 @@ function initComparePage() {
         }
     });
 
-    // Determine default tab and populate
+    // Initialize both tabs with saved items
+    compareState.materialItems = savedMaterials.slice(0, 4);
+    compareState.sinkItems = savedSinks.slice(0, 4);
+
+    // Determine default tab
     if (savedMaterials.length > 0) {
         compareState.type = 'material';
-        compareState.items = savedMaterials.slice(0, 4);
     } else if (savedSinks.length > 0) {
         compareState.type = 'sink';
-        compareState.items = savedSinks.slice(0, 4);
     } else {
         // Default to materials with empty state
         compareState.type = 'material';
-        compareState.items = [];
     }
 
     // Update tab UI
@@ -1026,25 +1042,8 @@ function initComparePage() {
 function switchCompareTab(type) {
     if (type === compareState.type) return;
 
+    // Just switch the type - items are preserved in their respective arrays
     compareState.type = type;
-
-    // Load saved items for this type
-    const saved = getSavedDesigns();
-    compareState.items = [];
-
-    saved.forEach(productId => {
-        if (type === 'material') {
-            const material = productsData.materials.find(m => m['Color Name'] === productId);
-            if (material && compareState.items.length < 4) {
-                compareState.items.push(material);
-            }
-        } else {
-            const sink = productsData.sinks.find(s => s.Model === productId);
-            if (sink && compareState.items.length < 4) {
-                compareState.items.push(sink);
-            }
-        }
-    });
 
     updateCompareTabs();
     renderComparison();
@@ -1066,35 +1065,43 @@ function updateCompareTabs() {
 function renderComparison() {
     const grid = document.getElementById('compare-grid');
     const emptyState = document.getElementById('compare-empty');
+    const items = getCurrentCompareItems();
 
     if (!grid) return;
 
     // Show/hide empty state
-    if (compareState.items.length === 0) {
+    if (items.length === 0) {
         grid.style.display = 'none';
         if (emptyState) emptyState.style.display = 'flex';
+        // Remove floating add button if exists
+        const existingFloatBtn = document.querySelector('.compare-add-floating');
+        if (existingFloatBtn) existingFloatBtn.remove();
         return;
     }
 
     grid.style.display = 'grid';
     if (emptyState) emptyState.style.display = 'none';
 
-    // Set grid columns based on item count
-    const itemCount = compareState.items.length;
-    const showAddButton = itemCount < 4;
-    const totalColumns = showAddButton ? itemCount + 1 : itemCount;
+    const itemCount = items.length;
+    const canAddMore = itemCount < 4;
 
-    grid.style.gridTemplateColumns = `repeat(${totalColumns}, 1fr)`;
+    // If only 1 item, show full-size add slot
+    // If 2+ items, show small floating add button
+    if (itemCount === 1) {
+        grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    } else {
+        grid.style.gridTemplateColumns = `repeat(${itemCount}, 1fr)`;
+    }
 
     // Build comparison HTML
     let html = '';
 
-    compareState.items.forEach((product, index) => {
+    items.forEach((product, index) => {
         html += renderCompareItem(product, index);
     });
 
-    // Add "Add Item" column if less than 4 items
-    if (showAddButton) {
+    // Add "Add Item" column only if there's 1 item
+    if (itemCount === 1 && canAddMore) {
         html += `
             <div class="compare-item compare-add-item">
                 <button class="compare-add-btn" onclick="showProductSelector()">
@@ -1108,6 +1115,28 @@ function renderComparison() {
     }
 
     grid.innerHTML = html;
+
+    // Handle floating add button for 2+ items
+    let floatingBtn = document.querySelector('.compare-add-floating');
+    if (itemCount >= 2 && canAddMore) {
+        if (!floatingBtn) {
+            floatingBtn = document.createElement('button');
+            floatingBtn.className = 'compare-add-floating';
+            floatingBtn.onclick = showProductSelector;
+            floatingBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M12 5v14M5 12h14"></path>
+                </svg>
+                <span>Add ${compareState.type === 'material' ? 'Material' : 'Sink'}</span>
+            `;
+            grid.parentElement.appendChild(floatingBtn);
+        } else {
+            // Update text in case type changed
+            floatingBtn.querySelector('span').textContent = `Add ${compareState.type === 'material' ? 'Material' : 'Sink'}`;
+        }
+    } else if (floatingBtn) {
+        floatingBtn.remove();
+    }
 
     // Add remove button handlers
     grid.querySelectorAll('.compare-remove-btn').forEach(btn => {
@@ -1210,13 +1239,16 @@ function renderCompareItem(product, index) {
 
 // Remove item from comparison
 function removeFromComparison(index) {
-    compareState.items.splice(index, 1);
+    const items = getCurrentCompareItems();
+    items.splice(index, 1);
+    setCurrentCompareItems(items);
     renderComparison();
 }
 
 // Add item to comparison
 function addToComparison(productId) {
-    if (compareState.items.length >= 4) return;
+    const items = getCurrentCompareItems();
+    if (items.length >= 4) return;
 
     let product = null;
     if (compareState.type === 'material') {
@@ -1225,10 +1257,11 @@ function addToComparison(productId) {
         product = productsData.sinks.find(s => s.Model === productId);
     }
 
-    if (product && !compareState.items.some(p =>
+    if (product && !items.some(p =>
         (compareState.type === 'material' ? p['Color Name'] : p.Model) === productId
     )) {
-        compareState.items.push(product);
+        items.push(product);
+        setCurrentCompareItems(items);
         renderComparison();
     }
 
@@ -1247,7 +1280,8 @@ function showProductSelector() {
     typeLabel.textContent = compareState.type === 'material' ? 'Material' : 'Sink';
 
     // Get products not already in comparison
-    const currentIds = compareState.items.map(p =>
+    const items = getCurrentCompareItems();
+    const currentIds = items.map(p =>
         compareState.type === 'material' ? p['Color Name'] : p.Model
     );
 

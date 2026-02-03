@@ -1550,6 +1550,33 @@ footer {
     margin-bottom: 25px;
 }
 
+/* Floating Add Button (for 2+ items) */
+.compare-add-floating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--navy-dark);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 30px auto 0;
+    transition: all 0.2s;
+}
+
+.compare-add-floating:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.compare-add-floating svg {
+    width: 20px;
+    height: 20px;
+}
+
 /* Product Selector Modal */
 .product-selector-modal {
     position: fixed;
