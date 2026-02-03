@@ -6,8 +6,8 @@
     --navy-primary: #4A5568;
     --navy-dark: #1E3A5F;
     --white: #FFFFFF;
-    --gold: #D4AF37;
-    --gold-hover: #F4CF57;
+    --accent: #C0C0C0;
+    --accent-hover: #E0E0E0;
     --gray-light: #E5E7EB;
     --gray-medium: #9CA3AF;
 
@@ -91,7 +91,7 @@ a {
 }
 
 a:hover {
-    color: var(--gold);
+    color: var(--accent);
 }
 
 /* Container */
@@ -148,12 +148,12 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--gold);
+    color: var(--accent);
     background-color: rgba(255, 255, 255, 0.05);
 }
 
 nav a.active {
-    color: var(--gold);
+    color: var(--accent);
 }
 
 /* Utility Icons */
@@ -176,7 +176,7 @@ nav a.active {
 }
 
 .icon-btn:hover {
-    color: var(--gold);
+    color: var(--accent);
 }
 
 .icon-btn svg {
@@ -199,12 +199,12 @@ nav a.active {
 }
 
 .btn-primary {
-    background-color: var(--gold);
+    background-color: var(--accent);
     color: var(--navy-deep);
 }
 
 .btn-primary:hover {
-    background-color: var(--gold-hover);
+    background-color: var(--accent-hover);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
@@ -217,7 +217,7 @@ nav a.active {
 
 .btn-secondary:hover {
     background-color: var(--navy-primary);
-    border-color: var(--gold);
+    border-color: var(--accent);
 }
 
 /* Hero Section */
@@ -350,14 +350,14 @@ nav a.active {
 }
 
 .filter-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 .filter-btn.active {
-    background-color: var(--gold);
+    background-color: var(--accent);
     color: var(--navy-deep);
-    border-color: var(--gold);
+    border-color: var(--accent);
 }
 
 .sort-select {
@@ -372,7 +372,7 @@ nav a.active {
 }
 
 .sort-select:hover {
-    border-color: var(--gold);
+    border-color: var(--accent);
 }
 
 /* Page Title */
@@ -382,7 +382,7 @@ nav a.active {
 }
 
 .page-title h1 {
-    color: var(--gold);
+    color: var(--accent);
     margin-bottom: var(--spacing-xs);
 }
 
@@ -408,7 +408,7 @@ footer {
 }
 
 .footer-column h3 {
-    color: var(--gold);
+    color: var(--accent);
     margin-bottom: var(--spacing-sm);
     font-size: 1.1rem;
 }
@@ -427,7 +427,7 @@ footer {
 }
 
 .footer-column a:hover {
-    color: var(--gold);
+    color: var(--accent);
 }
 
 .footer-bottom {
@@ -509,7 +509,7 @@ footer {
 
 /* Saved Designs */
 .saved-designs-link {
-    color: var(--gold);
+    color: var(--accent);
     font-weight: 600;
 }
 
