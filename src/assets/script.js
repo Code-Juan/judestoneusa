@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize page-specific functionality
     const path = window.location.pathname;
 
-    if (path.includes('/product/') || path.includes('/product')) {
+    if (path.includes('/compare/') || path.includes('/compare')) {
+        initComparePage();
+    } else if (path.includes('/product/') || path.includes('/product')) {
         initProductDetailPage();
     } else if (path.includes('sinks')) {
         initSinksGallery();
@@ -620,6 +622,11 @@ function showSavedDesignsModal() {
         });
     }
 
+    // Determine compare link path based on current location
+    const comparePath = window.location.pathname.includes('/pages/') 
+        ? '../compare/index.html' 
+        : 'compare/index.html';
+
     modal.innerHTML = `
         <div class="saved-modal-content">
             <div class="saved-modal-header">
@@ -632,6 +639,15 @@ function showSavedDesignsModal() {
             </div>
             <div class="saved-modal-body">
                 ${itemsHtml}
+            </div>
+            <div class="saved-modal-footer">
+                <a href="${comparePath}" class="btn btn-primary saved-compare-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path>
+                        <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+                    </svg>
+                    Compare Designs
+                </a>
             </div>
         </div>
     `;
@@ -961,3 +977,333 @@ function loadRelatedProducts(product, type) {
         });
     }
 }
+
+// =====================================================
+// COMPARISON PAGE FUNCTIONS
+// =====================================================
+
+// Current comparison state
+let compareState = {
+    type: 'material', // 'material' or 'sink'
+    items: []         // Array of product objects
+};
+
+// Initialize Comparison Page
+function initComparePage() {
+    if (!productsData) return;
+
+    // Get saved designs and categorize them
+    const saved = getSavedDesigns();
+    const savedMaterials = [];
+    const savedSinks = [];
+
+    saved.forEach(productId => {
+        const material = productsData.materials.find(m => m['Color Name'] === productId);
+        if (material) {
+            savedMaterials.push(material);
+            return;
+        }
+        const sink = productsData.sinks.find(s => s.Model === productId);
+        if (sink) {
+            savedSinks.push(sink);
+        }
+    });
+
+    // Determine default tab and populate
+    if (savedMaterials.length > 0) {
+        compareState.type = 'material';
+        compareState.items = savedMaterials.slice(0, 4);
+    } else if (savedSinks.length > 0) {
+        compareState.type = 'sink';
+        compareState.items = savedSinks.slice(0, 4);
+    } else {
+        // Default to materials with empty state
+        compareState.type = 'material';
+        compareState.items = [];
+    }
+
+    // Update tab UI
+    updateCompareTabs();
+
+    // Render comparison
+    renderComparison();
+}
+
+// Switch between Materials and Sinks tabs
+function switchCompareTab(type) {
+    if (type === compareState.type) return;
+
+    compareState.type = type;
+
+    // Load saved items for this type
+    const saved = getSavedDesigns();
+    compareState.items = [];
+
+    saved.forEach(productId => {
+        if (type === 'material') {
+            const material = productsData.materials.find(m => m['Color Name'] === productId);
+            if (material && compareState.items.length < 4) {
+                compareState.items.push(material);
+            }
+        } else {
+            const sink = productsData.sinks.find(s => s.Model === productId);
+            if (sink && compareState.items.length < 4) {
+                compareState.items.push(sink);
+            }
+        }
+    });
+
+    updateCompareTabs();
+    renderComparison();
+}
+
+// Update tab UI to show active state
+function updateCompareTabs() {
+    const tabs = document.querySelectorAll('.compare-tab');
+    tabs.forEach(tab => {
+        if (tab.dataset.type === compareState.type) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+}
+
+// Render the comparison grid
+function renderComparison() {
+    const grid = document.getElementById('compare-grid');
+    const emptyState = document.getElementById('compare-empty');
+
+    if (!grid) return;
+
+    // Show/hide empty state
+    if (compareState.items.length === 0) {
+        grid.style.display = 'none';
+        if (emptyState) emptyState.style.display = 'flex';
+        return;
+    }
+
+    grid.style.display = 'grid';
+    if (emptyState) emptyState.style.display = 'none';
+
+    // Set grid columns based on item count
+    const itemCount = compareState.items.length;
+    const showAddButton = itemCount < 4;
+    const totalColumns = showAddButton ? itemCount + 1 : itemCount;
+
+    grid.style.gridTemplateColumns = `repeat(${totalColumns}, 1fr)`;
+
+    // Build comparison HTML
+    let html = '';
+
+    compareState.items.forEach((product, index) => {
+        html += renderCompareItem(product, index);
+    });
+
+    // Add "Add Item" column if less than 4 items
+    if (showAddButton) {
+        html += `
+            <div class="compare-item compare-add-item">
+                <button class="compare-add-btn" onclick="showProductSelector()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                        <path d="M12 5v14M5 12h14"></path>
+                    </svg>
+                    <span>Add ${compareState.type === 'material' ? 'Material' : 'Sink'}</span>
+                </button>
+            </div>
+        `;
+    }
+
+    grid.innerHTML = html;
+
+    // Add remove button handlers
+    grid.querySelectorAll('.compare-remove-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const index = parseInt(this.dataset.index);
+            removeFromComparison(index);
+        });
+    });
+}
+
+// Render a single comparison item
+function renderCompareItem(product, index) {
+    if (compareState.type === 'material') {
+        return `
+            <div class="compare-item">
+                <button class="compare-remove-btn" data-index="${index}" title="Remove">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M18 6L6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="compare-item-image">
+                    <img src="${product['Image URL']}" alt="${product['Color Name']}">
+                </div>
+                <div class="compare-item-details">
+                    <h3 class="compare-item-name">${product['Color Name']}</h3>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Brand</span>
+                        <span class="compare-spec-value">${product.Brand}</span>
+                    </div>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Group</span>
+                        <span class="compare-spec-value">${product.Group}</span>
+                    </div>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Finish</span>
+                        <span class="compare-spec-value">${product.Finish}</span>
+                    </div>
+                    <div class="compare-description">
+                        <p>${product['Short Description']}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        // Sink
+        const gaugeOptions = product.Options ? product.Options.filter(opt => opt.toLowerCase().includes('gauge')) : [];
+
+        return `
+            <div class="compare-item">
+                <button class="compare-remove-btn" data-index="${index}" title="Remove">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M18 6L6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="compare-item-image">
+                    <img src="${product['Image URL']}" alt="${product.Model}">
+                </div>
+                <div class="compare-item-details">
+                    <h3 class="compare-item-name">${product.Model}</h3>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Series</span>
+                        <span class="compare-spec-value">${product.Series} Series</span>
+                    </div>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Type</span>
+                        <span class="compare-spec-value">${product.Type}</span>
+                    </div>
+                    ${gaugeOptions.length > 0 ? `
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Gauge Options</span>
+                        <span class="compare-spec-value">${gaugeOptions.join(', ')}</span>
+                    </div>
+                    ` : ''}
+                    ${product['Cabinet Base'] ? `
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Cabinet Base</span>
+                        <span class="compare-spec-value">${product['Cabinet Base']}</span>
+                    </div>
+                    ` : ''}
+                    ${product['Overall Dimension'] ? `
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Overall Dimension</span>
+                        <span class="compare-spec-value">${product['Overall Dimension']}</span>
+                    </div>
+                    ` : ''}
+                    ${product['Interior Dimension'] ? `
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Interior Dimension</span>
+                        <span class="compare-spec-value">${product['Interior Dimension']}</span>
+                    </div>
+                    ` : ''}
+                    <div class="compare-description">
+                        <p>${product['Short Description']}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Remove item from comparison
+function removeFromComparison(index) {
+    compareState.items.splice(index, 1);
+    renderComparison();
+}
+
+// Add item to comparison
+function addToComparison(productId) {
+    if (compareState.items.length >= 4) return;
+
+    let product = null;
+    if (compareState.type === 'material') {
+        product = productsData.materials.find(m => m['Color Name'] === productId);
+    } else {
+        product = productsData.sinks.find(s => s.Model === productId);
+    }
+
+    if (product && !compareState.items.some(p =>
+        (compareState.type === 'material' ? p['Color Name'] : p.Model) === productId
+    )) {
+        compareState.items.push(product);
+        renderComparison();
+    }
+
+    closeProductSelector();
+}
+
+// Show product selector modal
+function showProductSelector() {
+    const modal = document.getElementById('product-selector-modal');
+    const body = document.getElementById('product-selector-body');
+    const typeLabel = document.getElementById('selector-type-label');
+
+    if (!modal || !body) return;
+
+    // Update label
+    typeLabel.textContent = compareState.type === 'material' ? 'Material' : 'Sink';
+
+    // Get products not already in comparison
+    const currentIds = compareState.items.map(p =>
+        compareState.type === 'material' ? p['Color Name'] : p.Model
+    );
+
+    let availableProducts = [];
+    if (compareState.type === 'material') {
+        availableProducts = productsData.materials.filter(m => !currentIds.includes(m['Color Name']));
+    } else {
+        availableProducts = productsData.sinks.filter(s => !currentIds.includes(s.Model));
+    }
+
+    // Render product list
+    if (availableProducts.length === 0) {
+        body.innerHTML = '<p class="selector-empty">No more items available to add.</p>';
+    } else {
+        body.innerHTML = availableProducts.map(product => {
+            const id = compareState.type === 'material' ? product['Color Name'] : product.Model;
+            const name = compareState.type === 'material' ? product['Color Name'] : product.Model;
+            const subtitle = compareState.type === 'material'
+                ? `${product.Brand} • ${product.Finish}`
+                : `${product.Series} Series • ${product.Type}`;
+            const image = product['Image URL'];
+
+            return `
+                <div class="selector-item" onclick="addToComparison('${id.replace(/'/g, "\\'")}')">
+                    <img src="${image}" alt="${name}" class="selector-item-image">
+                    <div class="selector-item-info">
+                        <h4>${name}</h4>
+                        <p>${subtitle}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// Close product selector modal
+function closeProductSelector() {
+    const modal = document.getElementById('product-selector-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+// Make functions available globally
+window.switchCompareTab = switchCompareTab;
+window.showProductSelector = showProductSelector;
+window.closeProductSelector = closeProductSelector;
+window.addToComparison = addToComparison;

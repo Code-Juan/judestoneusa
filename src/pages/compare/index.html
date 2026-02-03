@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Designs - Judestone</title>
+    <meta name="description"
+        content="Compare quartz materials and sinks side-by-side to find the perfect match for your project.">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/brand/logo.png" alt="Judestone"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span
+                            style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+                <nav>
+                    <a href="../index.html">Home</a>
+                    <a href="../about/index.html">About Judestone</a>
+                    <a href="../quartz-designs/index.html">Quartz Designs</a>
+                    <a href="../sinks/index.html">Sinks</a>
+                    <a href="../contact/index.html">Contact</a>
+                </nav>
+                <div class="header-utils">
+                    <a href="#" class="saved-designs-link" title="My Saved Designs">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                        <span class="saved-count"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">Home</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Compare Designs</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Compare Page Content -->
+    <section class="compare-page">
+        <div class="container">
+            <div class="compare-header">
+                <h1>Compare Designs</h1>
+                <p>Select up to 4 items to compare side-by-side</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="compare-tabs">
+                <button class="compare-tab active" data-type="material" onclick="switchCompareTab('material')">
+                    Materials
+                </button>
+                <button class="compare-tab" data-type="sink" onclick="switchCompareTab('sink')">
+                    Sinks
+                </button>
+            </div>
+
+            <!-- Comparison Grid -->
+            <div class="compare-grid" id="compare-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="compare-empty" id="compare-empty" style="display: none;">
+                <div class="compare-empty-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64"
+                        height="64">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                        </path>
+                    </svg>
+                    <h3>No items to compare</h3>
+                    <p>Add items from your saved designs or browse our catalog</p>
+                    <button class="btn btn-primary" onclick="showProductSelector()">Add Item</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Selector Modal (hidden by default) -->
+    <div class="product-selector-modal" id="product-selector-modal" style="display: none;">
+        <div class="product-selector-content">
+            <div class="product-selector-header">
+                <h2>Select a <span id="selector-type-label">Material</span></h2>
+                <button class="product-selector-close" onclick="closeProductSelector()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                        <path d="M18 6L6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="product-selector-body" id="product-selector-body">
+                <!-- Product list populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Our Company</h3>
+                    <ul>
+                        <li><a href="../about/index.html">About Us</a></li>
+                        <li><a href="../contact/index.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="../quartz-designs/index.html">Quartz Designs</a></li>
+                        <li><a href="../sinks/index.html">Sinks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Get Judestone</h3>
+                    <ul>
+                        <li><a href="../contact/index.html">Contact Us</a></li>
+                        <li><a href="../contact/index.html">Order a Sample</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <p style="color: var(--gray-light); margin-bottom: var(--spacing-sm);">Sign up for updates</p>
+                    <div class="email-signup">
+                        <input type="email" placeholder="Your email">
+                        <button class="btn btn-primary">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Judestone. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/products-data.js"></script>
+    <script src="../../assets/script.js"></script>
+</body>
+
+</html>
