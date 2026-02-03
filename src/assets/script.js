@@ -370,7 +370,7 @@ function updateSavedCount() {
     const saved = getSavedDesigns();
     const countEl = document.querySelector('.saved-count');
     const savedLink = document.querySelector('.saved-designs-link');
-    
+
     if (countEl) {
         const count = saved.length;
         if (count > 0) {
@@ -380,7 +380,7 @@ function updateSavedCount() {
             countEl.style.display = 'none';
         }
     }
-    
+
     // Also fill heart if items are saved
     if (savedLink && saved.length > 0) {
         const svg = savedLink.querySelector('svg');
@@ -531,4 +531,5 @@ function removeSavedDesign(productId) {
     const saved = getSavedDesigns();
     const filtered = saved.filter(id => id !== productId);
     localStorage.setItem('judestone_saved_designs', JSON.stringify(filtered));
+    updateSavedCount();
 }
