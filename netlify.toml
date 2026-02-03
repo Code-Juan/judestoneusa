@@ -1,0 +1,35 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# Handle routing - redirect all routes to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Remove trailing slashes for consistency
+[[redirects]]
+  from = "/about/"
+  to = "/about"
+  status = 301
+
+[[redirects]]
+  from = "/quartz-designs/"
+  to = "/quartz-designs"
+  status = 301
+
+[[redirects]]
+  from = "/sinks/"
+  to = "/sinks"
+  status = 301
+
+[[redirects]]
+  from = "/where-to-buy/"
+  to = "/where-to-buy"
+  status = 301
+
+[[redirects]]
+  from = "/contact/"
+  to = "/contact"
+  status = 301

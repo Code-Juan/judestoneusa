@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Judestone USA</title>
+    <meta name="description" content="Contact Judestone USA for product inquiries, sample requests, or to find a retailer near you. We're here to help with your project needs.">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../../../assets/brand/logo.svg" alt="Judestone USA" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--gold);">JUDESTONE USA</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+                <nav>
+                    <a href="../index.html">Home</a>
+                    <a href="../about/index.html">About Judestone</a>
+                    <a href="../quartz-designs/index.html">Quartz Designs</a>
+                    <a href="../sinks/index.html">Sinks</a>
+                    <a href="../where-to-buy/index.html">Where to Buy</a>
+                    <a href="index.html" class="active">Contact</a>
+                </nav>
+                <div class="header-utils">
+                    <button class="icon-btn" aria-label="Search">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <section style="padding: var(--spacing-xl) 0;">
+        <div class="container">
+            <div class="page-title">
+                <h1>Contact Us</h1>
+                <p>Have questions about our products? Need to order a sample? We're here to help.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); max-width: 1000px; margin: var(--spacing-xl) auto;">
+                <!-- Contact Form -->
+                <div style="background-color: var(--navy-dark); padding: var(--spacing-lg); border-radius: 8px;">
+                    <h2 style="color: var(--gold); margin-bottom: var(--spacing-md);">Send Us a Message</h2>
+                    <form style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                        <div>
+                            <label style="display: block; color: var(--white); margin-bottom: var(--spacing-xs);">Name</label>
+                            <input type="text" required style="width: 100%; padding: var(--spacing-sm); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; background-color: var(--navy-deep); color: var(--white);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--white); margin-bottom: var(--spacing-xs);">Email</label>
+                            <input type="email" required style="width: 100%; padding: var(--spacing-sm); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; background-color: var(--navy-deep); color: var(--white);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--white); margin-bottom: var(--spacing-xs);">Phone</label>
+                            <input type="tel" style="width: 100%; padding: var(--spacing-sm); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; background-color: var(--navy-deep); color: var(--white);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--white); margin-bottom: var(--spacing-xs);">Subject</label>
+                            <select style="width: 100%; padding: var(--spacing-sm); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; background-color: var(--navy-deep); color: var(--white);">
+                                <option>General Inquiry</option>
+                                <option>Order a Sample</option>
+                                <option>Find a Retailer</option>
+                                <option>Product Information</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--white); margin-bottom: var(--spacing-xs);">Message</label>
+                            <textarea rows="5" required style="width: 100%; padding: var(--spacing-sm); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; background-color: var(--navy-deep); color: var(--white); resize: vertical;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                
+                <!-- Order Sample CTA -->
+                <div style="background-color: var(--navy-dark); padding: var(--spacing-lg); border-radius: 8px; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 style="color: var(--gold); margin-bottom: var(--spacing-md);">Order a Sample</h2>
+                    <p style="color: var(--gray-light); margin-bottom: var(--spacing-md);">
+                        Want to see our materials in person? Request a sample to experience the quality and beauty of Judestone products firsthand.
+                    </p>
+                    <a href="#" class="btn btn-primary" style="text-align: center;">Request Sample</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Our Company</h3>
+                    <ul>
+                        <li><a href="../about/index.html">About Us</a></li>
+                        <li><a href="index.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="../quartz-designs/index.html">Quartz Designs</a></li>
+                        <li><a href="../sinks/index.html">Sinks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Get Judestone</h3>
+                    <ul>
+                        <li><a href="../where-to-buy/index.html">Find a Retailer</a></li>
+                        <li><a href="index.html">Order a Sample</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <p style="color: var(--gray-light); margin-bottom: var(--spacing-sm);">Sign up for updates</p>
+                    <div class="email-signup">
+                        <input type="email" placeholder="Your email">
+                        <button class="btn btn-primary">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Judestone USA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/script.js"></script>
+</body>
+</html>
