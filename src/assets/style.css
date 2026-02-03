@@ -1499,24 +1499,23 @@ footer {
     border: 2px dashed rgba(255, 255, 255, 0.15);
 }
 
-.compare-add-btn {
-    background: none;
-    border: none;
-    color: var(--gray-light);
+.compare-add-item {
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 15px;
-    padding: 40px;
-    transition: color 0.2s;
+    color: var(--gray-light);
+    transition: color 0.2s, border-color 0.2s;
 }
 
-.compare-add-btn:hover {
+.compare-add-item:hover {
     color: var(--accent);
+    border-color: var(--accent);
 }
 
-.compare-add-btn span {
+.compare-add-item span {
     font-size: 1rem;
     font-weight: 500;
 }
@@ -1676,4 +1675,72 @@ footer {
     text-align: center;
     color: var(--gray-light);
     padding: 40px 20px;
+}
+
+/* Selector checkbox and selected state */
+.selector-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--gray-medium);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.selector-checkbox svg {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.selector-item.selected {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.selector-item.selected .selector-checkbox {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.selector-item.selected .selector-checkbox svg {
+    opacity: 1;
+    stroke: var(--navy-dark);
+}
+
+/* Selector footer */
+.selector-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--navy-dark);
+}
+
+.selector-hint {
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+}
+
+.selector-count {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.selector-confirm-btn {
+    background: var(--accent);
+    color: var(--navy-dark);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.selector-confirm-btn:hover {
+    background: var(--accent-hover);
 }
