@@ -361,7 +361,7 @@ function showProductDetail(product, type) {
     let detailHtml = '';
 
     if (type === 'material') {
-        const allTags = product.Tag ? product.Tag.split(';').map(tag => 
+        const allTags = product.Tag ? product.Tag.split(';').map(tag =>
             `<span class="detail-tag">${tag.trim()}</span>`
         ).join('') : '';
 
@@ -389,9 +389,40 @@ function showProductDetail(product, type) {
             </div>
         `;
     } else if (type === 'sink') {
-        const allTags = product.Tag ? product.Tag.split(';').map(tag => 
+        const allTags = product.Tag ? product.Tag.split(';').map(tag =>
             `<span class="detail-tag">${tag.trim()}</span>`
         ).join('') : '';
+
+        // Build specifications section
+        let specsHtml = '<div class="sink-specs">';
+
+        if (product.Gauge) {
+            specsHtml += `<div class="spec-row"><span class="spec-label">Gauge:</span><span class="spec-value">${product.Gauge}</span></div>`;
+        }
+        if (product['Cabinet Base']) {
+            specsHtml += `<div class="spec-row"><span class="spec-label">Cabinet Base:</span><span class="spec-value">${product['Cabinet Base']}</span></div>`;
+        }
+        if (product['Overall Dimension']) {
+            specsHtml += `<div class="spec-row"><span class="spec-label">Overall Dimension:</span><span class="spec-value">${product['Overall Dimension']}</span></div>`;
+        }
+        if (product['Interior Dimension']) {
+            specsHtml += `<div class="spec-row"><span class="spec-label">Interior Dimension:</span><span class="spec-value">${product['Interior Dimension']}</span></div>`;
+        }
+
+        specsHtml += '</div>';
+
+        // Build options section if options exist
+        let optionsHtml = '';
+        if (product.Options && product.Options.length > 0) {
+            optionsHtml = `
+                <div class="sink-options">
+                    <span class="options-label">Available Options:</span>
+                    <div class="options-list">
+                        ${product.Options.map(opt => `<span class="option-item">${opt}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
 
         detailHtml = `
             <div class="detail-image-container">
@@ -406,11 +437,9 @@ function showProductDetail(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="detail-brand">${product.Series} Series • ${product.Type}</div>
-                <div class="detail-meta">
-                    <span class="detail-meta-item">${product.Category}</span>
-                    <span class="detail-meta-item">Size: ${product['Size (L x W x H)']}</span>
-                </div>
+                <div class="detail-brand">${product.Series} Series • ${product.Type} • ${product.Category}</div>
+                ${specsHtml}
+                ${optionsHtml}
                 <p class="detail-description">${product['Short Description']}</p>
                 <div class="detail-tags">
                     ${allTags}
