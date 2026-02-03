@@ -17,14 +17,10 @@ async function build() {
             await fs.copy('images', 'dist/images');
         }
 
-        // Copy logo files to dist if they exist
+        // Copy brand assets folder to dist/assets/brand
         if (await fs.pathExists('assets/brand')) {
-            const brandFiles = await fs.readdir('assets/brand');
-            for (const file of brandFiles) {
-                if (file.match(/\.(svg|png|jpg|jpeg|ico)$/i)) {
-                    await fs.copy(`assets/brand/${file}`, `dist/${file}`);
-                }
-            }
+            await fs.ensureDir('dist/assets/brand');
+            await fs.copy('assets/brand', 'dist/assets/brand');
         }
 
         // Generate favicon files from logo if ImageMagick is available

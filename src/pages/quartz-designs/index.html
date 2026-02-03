@@ -20,7 +20,7 @@
             <div class="header-content">
                 <div class="logo">
                     <a href="../index.html">
-                        <img src="../../../assets/brand/logo.png" alt="Judestone"
+                        <img src="../assets/brand/logo.png" alt="Judestone"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <span style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
                     </a>
@@ -59,10 +59,10 @@
     <!-- Filter Bar -->
     <section class="filter-bar">
         <div class="container">
-            <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+            <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
                 <button class="filter-toggle" onclick="toggleFilters()" style="background: none; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                     <span>Filters</span>
-                    <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="transition: transform 0.3s;">
+                    <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="transition: transform 0.3s; transform: rotate(-90deg);">
                         <path d="M2 4l4 4 4-4"/>
                     </svg>
                 </button>
@@ -73,7 +73,7 @@
                     <option value="newest">Newest</option>
                 </select>
             </div>
-            <div class="filter-container collapsible" id="filter-content" style="max-height: 500px; overflow: hidden; transition: max-height 0.3s ease;">
+            <div class="filter-container collapsible" id="filter-content" style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease;">
                 <div class="filter-group">
                     <button class="filter-btn active">ALL</button>
                 </div>
