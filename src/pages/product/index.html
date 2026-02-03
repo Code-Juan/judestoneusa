@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Judestone</title>
+    <meta name="description" content="View product details for premium quartz materials and sinks from Judestone.">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/brand/logo.png" alt="Judestone"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span
+                            style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+                <nav>
+                    <a href="../index.html">Home</a>
+                    <a href="../about/index.html">About Judestone</a>
+                    <a href="../quartz-designs/index.html">Quartz Designs</a>
+                    <a href="../sinks/index.html">Sinks</a>
+                    <a href="../contact/index.html">Contact</a>
+                </nav>
+                <div class="header-utils">
+                    <a href="#" class="saved-designs-link" title="My Saved Designs">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                        <span class="saved-count"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <div class="container">
+            <nav class="breadcrumb" id="breadcrumb">
+                <a href="../index.html">Home</a>
+                <span class="breadcrumb-separator">›</span>
+                <a href="#" id="category-link">Products</a>
+                <span class="breadcrumb-separator">›</span>
+                <span id="product-name">Loading...</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail-page">
+        <div class="container">
+            <div class="product-detail-layout" id="product-detail">
+                <!-- Loading State -->
+                <div class="loading-state">
+                    <p>Loading product details...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products-section" id="related-products" style="display: none;">
+        <div class="container">
+            <h2>Related Products</h2>
+            <div class="related-products-grid" id="related-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Our Company</h3>
+                    <ul>
+                        <li><a href="../about/index.html">About Us</a></li>
+                        <li><a href="../contact/index.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="../quartz-designs/index.html">Quartz Designs</a></li>
+                        <li><a href="../sinks/index.html">Sinks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Get Judestone</h3>
+                    <ul>
+                        <li><a href="../contact/index.html">Contact Us</a></li>
+                        <li><a href="../contact/index.html">Order a Sample</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <p style="color: var(--gray-light); margin-bottom: var(--spacing-sm);">Sign up for updates</p>
+                    <div class="email-signup">
+                        <input type="email" placeholder="Your email">
+                        <button class="btn btn-primary">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Judestone. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/products-data.js"></script>
+    <script src="../../assets/script.js"></script>
+</body>
+
+</html>
