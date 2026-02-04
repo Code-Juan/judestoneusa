@@ -4,147 +4,147 @@
 const materials = [
   {
     "Group": "1",
-    "Brand": "VINA",
     "Color Name": "Frost White",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Frost White is a white-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/2040Ocean-White.jpg",
-    "Tag": "Quartz;Group 1;Vina;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 1;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "1",
-    "Brand": "VINA",
     "Color Name": "Iced White",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Iced White is a white-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/2050Iced-White.jpg",
-    "Tag": "Quartz;Group 1;Vina;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 1;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "1",
-    "Brand": "VINA",
     "Color Name": "Silver Grey",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Silver Grey is a grey-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/2147Silver-Grey-600x600.jpg",
-    "Tag": "Quartz;Group 1;Vina;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 1;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "1",
-    "Brand": "VINA",
     "Color Name": "Steel Grey",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Steel Grey is a grey-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/2143Steel-Grey.jpg",
-    "Tag": "Quartz;Group 1;Vina;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 1;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "1",
-    "Brand": "VINA",
     "Color Name": "Pebble Sand",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Pebble Sand is a beige-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/2332Pebble-Sand.jpg",
-    "Tag": "Quartz;Group 1;Vina;Polished;Beige;Warm-Tone;Cozy;Classic;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 1;Polished;Beige;Warm-Tone;Cozy;Classic;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "2",
-    "Brand": "ALPHA",
     "Color Name": "Seashell",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Seashell is a grey-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "/images/materials/seashell.jpg",
-    "Tag": "Quartz;Group 2;Alpha;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 2;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "2",
-    "Brand": "VINA",
     "Color Name": "Platinum White",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Platinum White is a white-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/2036Platinum-White.jpg",
-    "Tag": "Quartz;Group 2;Vina;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 2;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "3",
-    "Brand": "VINA",
     "Color Name": "Carrara Galbi",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Carrara Galbi is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://cdn.msisurfaces.com/images/quartz-countertops/products/thumbnails/carrara-delphi-quartz.jpg",
-    "Tag": "Quartz;Group 3;Vina;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 3;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "3",
-    "Brand": "ALPHA",
     "Color Name": "Golden Carrara",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Golden Carrara is a gold-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "/images/materials/golden-carrara.jpg",
-    "Tag": "Quartz;Group 3;Alpha;Polished;Gold;Warm-Accent;Elevated;Designer-Favorite;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 3;Polished;Gold;Warm-Accent;Elevated;Designer-Favorite;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "3",
-    "Brand": "ALPHA",
     "Color Name": "Carrara Blanco",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Carrara Blanco is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "/images/materials/carrara-blanco.jpg",
-    "Tag": "Quartz;Group 3;Alpha;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 3;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "3",
-    "Brand": "VINA",
     "Color Name": "Montana Grey",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Montana Grey is a grey-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/Montana-Grey-VQ8121-4.jpg",
-    "Tag": "Quartz;Group 3;Vina;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 3;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "3",
-    "Brand": "VINA",
     "Color Name": "Pure White",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Pure White is a white-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/1003-2.jpg",
-    "Tag": "Quartz;Group 3;Vina;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 3;Polished;White;Bright;Clean-Look;Airy;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "4",
-    "Brand": "VINA",
     "Color Name": "Elegance Grey",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Elegance Grey is a grey-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "https://vinaquartz.com.vn/wp-content/uploads/2025/01/8101-Elegant-Grey.jpg",
-    "Tag": "Quartz;Group 4;Vina;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 4;Polished;Grey;Modern;Cool-Tone;Versatile;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "4",
-    "Brand": "ALPHA",
     "Color Name": "Black Carrara",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Black Carrara is a black-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "/images/materials/black-carrara.jpg",
-    "Tag": "Quartz;Group 4;Alpha;Polished;Black;Bold;High-Contrast;Statement;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 4;Polished;Black;Bold;High-Contrast;Statement;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "5",
-    "Brand": "ALPHA",
     "Color Name": "Calacatta Luna",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Calacatta Luna is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "/images/materials/calacatta-luna.jpg",
-    "Tag": "Quartz;Group 5;Alpha;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 5;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   },
   {
     "Group": "5",
-    "Brand": "ALPHA",
     "Color Name": "Calacatta Nova",
     "Finish": "Polished",
+    "Thickness": ["2cm", "3cm"],
     "Short Description": "Calacatta Nova is a neutral-toned quartz with a clean, modern look that fits both classic and contemporary spaces. With a polished finish and low-maintenance performance, it's a reliable choice for kitchens, baths, and busy homes.",
     "Image URL": "/images/materials/calacatta-nova.jpg",
-    "Tag": "Quartz;Group 5;Alpha;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
+    "Tag": "Quartz;Group 5;Polished;Neutral;Versatile;Timeless;Everyday;Kitchen;Bath;Low-Maintenance"
   }
 ];
 
@@ -443,10 +443,10 @@ const sinks = [
 ];
 
 const materialFilters = [
-  "Airy", "Alpha", "Beige", "Black", "Bold", "Bright", "Classic", "Clean-Look",
+  "Airy", "Beige", "Black", "Bold", "Bright", "Classic", "Clean-Look",
   "Cool-Tone", "Cozy", "Designer-Favorite", "Elevated", "Everyday", "Gold", "Grey",
   "High-Contrast", "Low-Maintenance", "Modern", "Neutral", "Polished", "Statement",
-  "Timeless", "Versatile", "Vina", "Warm-Accent", "Warm-Tone", "White"
+  "Timeless", "Versatile", "Warm-Accent", "Warm-Tone", "White"
 ];
 
 const sinkFilters = [
