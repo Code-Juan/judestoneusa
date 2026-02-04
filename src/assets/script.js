@@ -303,7 +303,7 @@ function createProductCard(product, type) {
             </div>
             <div class="product-card-content">
                 <h3 class="product-card-title">${product['Color Name']}</h3>
-                <div class="product-card-brand">${product.Brand}</div>
+                <div class="product-card-brand">Group ${product.Group} • ${product.Finish}</div>
                 <p class="product-card-description">${product['Short Description']}</p>
                 <div class="product-card-tags">
                     ${product.Tag ? product.Tag.split(';').slice(0, 3).map(tag =>
@@ -390,7 +390,7 @@ function showProductDetail(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="detail-brand">${product.Brand} • ${product.Finish}</div>
+                <div class="detail-brand">Group ${product.Group} • ${product.Finish}</div>
                 <div class="detail-meta">
                     <span class="detail-meta-item">Group ${product.Group}</span>
                 </div>
@@ -598,7 +598,7 @@ function showSavedDesignsModal() {
             if (product) {
                 const name = product['Color Name'] || product.Model;
                 const image = product['Image URL'];
-                const brand = product.Brand || `${product.Series} Series`;
+                const brand = product.Group ? `Group ${product.Group}` : `${product.Series} Series`;
                 itemsHtml += `
                     <div class="saved-item">
                         <img src="${image}" alt="${name}" class="saved-item-image">
@@ -813,7 +813,7 @@ function renderProductDetailPage(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="product-page-subtitle">${product.Brand} • ${product.Finish}</div>
+                <div class="product-page-subtitle">Group ${product.Group} • ${product.Finish}</div>
                 
                 <div class="product-page-specs">
                     <div class="spec-item">
@@ -821,8 +821,8 @@ function renderProductDetailPage(product, type) {
                         <span class="spec-value">${product.Group}</span>
                     </div>
                     <div class="spec-item">
-                        <span class="spec-label">Brand</span>
-                        <span class="spec-value">${product.Brand}</span>
+                        <span class="spec-label">Thickness</span>
+                        <span class="spec-value">${product.Thickness ? product.Thickness.join(', ') : '2cm, 3cm'}</span>
                     </div>
                     <div class="spec-item">
                         <span class="spec-label">Finish</span>
@@ -948,10 +948,10 @@ function loadRelatedProducts(product, type) {
     let related = [];
 
     if (type === 'material') {
-        // Get materials from same group or brand
+        // Get materials from same group
         related = productsData.materials
             .filter(m => m['Color Name'] !== product['Color Name'] &&
-                (m.Group === product.Group || m.Brand === product.Brand))
+                m.Group === product.Group)
             .slice(0, 4);
     } else if (type === 'sink') {
         // Get sinks from same series or category
@@ -1161,12 +1161,12 @@ function renderCompareItem(product, index) {
                 <div class="compare-item-details">
                     <h3 class="compare-item-name">${product['Color Name']}</h3>
                     <div class="compare-spec">
-                        <span class="compare-spec-label">Brand</span>
-                        <span class="compare-spec-value">${product.Brand}</span>
-                    </div>
-                    <div class="compare-spec">
                         <span class="compare-spec-label">Group</span>
                         <span class="compare-spec-value">${product.Group}</span>
+                    </div>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Thickness</span>
+                        <span class="compare-spec-value">${product.Thickness ? product.Thickness.join(', ') : '2cm, 3cm'}</span>
                     </div>
                     <div class="compare-spec">
                         <span class="compare-spec-label">Finish</span>
@@ -1308,7 +1308,7 @@ function showProductSelector() {
             const id = compareState.type === 'material' ? product['Color Name'] : product.Model;
             const name = compareState.type === 'material' ? product['Color Name'] : product.Model;
             const subtitle = compareState.type === 'material'
-                ? `${product.Brand} • ${product.Finish}`
+                ? `Group ${product.Group} • ${product.Finish}`
                 : `${product.Series} Series • ${product.Type}`;
             const image = product['Image URL'];
 
