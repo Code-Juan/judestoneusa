@@ -1,13 +1,48 @@
 const fs = require('fs-extra');
 const path = require('path');
 
+/** Read file as string, auto-detect UTF-16/UTF-8, return UTF-8 string (for GitHub Pages) */
+function readAsUtf8(filePath) {
+    const buf = fs.readFileSync(filePath);
+    if (buf.length >= 2 && buf[0] === 0xFF && buf[1] === 0xFE) {
+        return buf.toString('utf16le');
+    }
+    if (buf.length >= 2 && buf[0] === 0xFE && buf[1] === 0xFF) {
+        return buf.toString('utf16be');
+    }
+    // UTF-16 LE without BOM (e.g. Windows): alternating null bytes in ASCII range
+    if (buf.length >= 4 && buf[1] === 0 && buf[3] === 0 && buf[0] < 128 && buf[2] < 128) {
+        return buf.toString('utf16le');
+    }
+    let str = buf.toString('utf8');
+    if (str.charCodeAt(0) === 0xFEFF) str = str.slice(1);
+    return str;
+}
+
+async function copyPagesAsUtf8(srcDir, destDir) {
+    const entries = await fs.readdir(srcDir, { withFileTypes: true });
+    for (const e of entries) {
+        const srcPath = path.join(srcDir, e.name);
+        const destPath = path.join(destDir, e.name);
+        if (e.isDirectory()) {
+            await fs.ensureDir(destPath);
+            await copyPagesAsUtf8(srcPath, destPath);
+        } else if (e.name.endsWith('.html')) {
+            const content = readAsUtf8(srcPath);
+            await fs.writeFile(destPath, content, 'utf8');
+        } else {
+            await fs.copy(srcPath, destPath);
+        }
+    }
+}
+
 async function build() {
     try {
         // Create dist directory
         await fs.ensureDir('dist');
 
-        // Copy src/pages to dist
-        await fs.copy('src/pages', 'dist');
+        // Copy src/pages to dist, normalizing HTML to UTF-8 (fixes GitHub Pages encoding)
+        await copyPagesAsUtf8('src/pages', 'dist');
 
         // Copy src/assets to dist/assets
         await fs.copy('src/assets', 'dist/assets');

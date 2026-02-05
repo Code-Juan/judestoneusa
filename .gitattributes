@@ -1,0 +1,4 @@
+# Ensure HTML and text files use LF so build/output is consistent on all platforms
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
