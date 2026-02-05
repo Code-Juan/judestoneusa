@@ -22,7 +22,8 @@
                     <a href="../index.html">
                         <img src="../assets/brand/logo.png" alt="Judestone"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
+                        <span
+                            style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
                     </a>
                 </div>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
@@ -34,12 +35,15 @@
                     <a href="index.html" class="active">Contact</a>
                 </nav>
                 <div class="header-utils">
-                    <button class="icon-btn" aria-label="Search">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <a href="#" class="saved-designs-link" title="My Saved Designs">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
                         </svg>
-                    </button>
+                        <span class="saved-count"></span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -53,39 +57,63 @@
                 <p>Get in touch with the Judestone team. We're here to help with your project needs.</p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); max-width: 1200px; margin: var(--spacing-xl) auto;">
-                
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); max-width: 1200px; margin: var(--spacing-xl) auto;">
+
                 <!-- Contact Information -->
                 <div style="background-color: var(--navy-dark); padding: var(--spacing-lg); border-radius: 8px;">
                     <h2 style="color: var(--accent); margin-bottom: var(--spacing-md);">Contact Information</h2>
-                    
+
                     <div style="margin-bottom: var(--spacing-md);">
                         <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Phone</h3>
                         <p style="color: var(--gray-light);">
-                            <a href="tel:+1-555-123-4567" style="color: var(--gray-light); text-decoration: none;">(555) 123-4567</a>
+                            <a href="tel:+1-586-208-4628" style="color: var(--gray-light); text-decoration: none;">(586)
+                                208-4628</a>
                         </p>
                     </div>
-                    
-                    <div style="margin-bottom: var(--spacing-md);">
+
+                    <div>
                         <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Email</h3>
                         <p style="color: var(--gray-light);">
-                            <a href="mailto:info@judestoneusa.com" style="color: var(--gray-light); text-decoration: none;">info@judestoneusa.com</a>
+                            <a href="mailto:info@judestoneusa.com"
+                                style="color: var(--gray-light); text-decoration: none;">info@judestoneusa.com</a>
                         </p>
                     </div>
-                    
+
+                    <!-- Follow Us - Coming Soon
                     <div>
-                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Follow Us</h3>
+                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Follow Us
+                        </h3>
                         <div style="display: flex; gap: var(--spacing-sm);">
                             <a href="#" style="color: var(--gray-light); text-decoration: none;">Facebook</a>
                             <a href="#" style="color: var(--gray-light); text-decoration: none;">Instagram</a>
                         </div>
                     </div>
+                    -->
                 </div>
 
-                <!-- Location -->
+                <!-- About Judestone -->
+                <div style="background-color: var(--navy-dark); padding: var(--spacing-lg); border-radius: 8px;">
+                    <h2 style="color: var(--accent); margin-bottom: var(--spacing-md);">Why Judestone?</h2>
+                    <p style="color: var(--gray-light); line-height: 1.7; margin-bottom: var(--spacing-md);">
+                        Judestone is your trusted source for premium quartz surfaces and stainless steel sinks. 
+                        We work directly with fabricators and contractors to provide high-quality materials 
+                        at competitive prices.
+                    </p>
+                    <p style="color: var(--gray-light); line-height: 1.7; margin-bottom: var(--spacing-md);">
+                        Whether you're working on a kitchen renovation, bathroom upgrade, or commercial project, 
+                        our team is here to help you find the perfect materials for your needs.
+                    </p>
+                    <p style="color: var(--gray-light); line-height: 1.7;">
+                        Give us a call or send an email to discuss your project, request samples, 
+                        or get a quote. We look forward to working with you.
+                    </p>
+                </div>
+
+                <!-- Location - Coming Soon
                 <div style="background-color: var(--navy-dark); padding: var(--spacing-lg); border-radius: 8px;">
                     <h2 style="color: var(--accent); margin-bottom: var(--spacing-md);">Location</h2>
-                    
+
                     <div style="margin-bottom: var(--spacing-md);">
                         <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Address</h3>
                         <p style="color: var(--gray-light);">
@@ -94,43 +122,49 @@
                             City, State 12345
                         </p>
                     </div>
-                    
+
                     <div style="margin-bottom: var(--spacing-md);">
-                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Showroom Hours</h3>
+                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Showroom
+                            Hours</h3>
                         <p style="color: var(--gray-light);">
                             Monday - Friday: 8:00 AM - 5:00 PM<br>
                             Saturday: 9:00 AM - 2:00 PM<br>
                             Sunday: Closed
                         </p>
                     </div>
-                    
-                    <a href="https://maps.google.com" target="_blank" class="btn btn-secondary" style="display: inline-block; text-align: center;">Get Directions</a>
-                </div>
 
-                <!-- Warehouse/Distribution -->
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-secondary"
+                        style="display: inline-block; text-align: center;">Get Directions</a>
+                </div>
+                -->
+
+                <!-- Warehouse/Distribution - Coming Soon
                 <div style="background-color: var(--navy-dark); padding: var(--spacing-lg); border-radius: 8px;">
                     <h2 style="color: var(--accent); margin-bottom: var(--spacing-md);">Warehouse</h2>
-                    
+
                     <div style="margin-bottom: var(--spacing-md);">
-                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Pickup Address</h3>
+                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Pickup
+                            Address</h3>
                         <p style="color: var(--gray-light);">
                             456 Industrial Blvd<br>
                             City, State 12345
                         </p>
                     </div>
-                    
+
                     <div style="margin-bottom: var(--spacing-md);">
-                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Pickup Hours</h3>
+                        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: var(--spacing-xs);">Pickup Hours
+                        </h3>
                         <p style="color: var(--gray-light);">
                             Monday - Friday: 7:00 AM - 4:00 PM<br>
                             Saturday - Sunday: Closed
                         </p>
                     </div>
-                    
+
                     <p style="color: var(--gray-medium); font-size: 0.9rem; font-style: italic;">
                         Please call ahead to schedule pickup.
                     </p>
                 </div>
+                -->
 
             </div>
         </div>
@@ -176,6 +210,7 @@
         </div>
     </footer>
 
+    <script src="../../assets/products-data.js"></script>
     <script src="../../assets/script.js"></script>
 </body>
 
