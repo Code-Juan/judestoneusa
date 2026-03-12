@@ -138,3 +138,6 @@ Thumbs.db
 *.bak
 *.backup
 *.old
+
+# Crop script source URLs (contains supplier URLs - copy from crop_source_urls.json.example)
+crop_source_urls.json

@@ -1,87 +1,40 @@
 #!/usr/bin/env python3
 """
 Crop specific material images for Judestone website
-Downloads from source URLs and saves with new-name filenames (hides original names from view)
+Downloads from source URLs (in crop_source_urls.json) and saves with new-name filenames.
+Source URLs are gitignored - copy crop_source_urls.json.example to crop_source_urls.json.
 """
 
+import json
 import os
 import re
+import sys
 import requests
 from io import BytesIO
 from PIL import Image
 
 # Output directory for cropped images
-OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images", "materials")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "images", "materials")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# All 16 materials: (source_url, width, height, offset_x, offset_y)
-# Source URLs used only for fetching; output filename derived from new material name
-MATERIALS_TO_CROP = {
-    "Arctic Tundra": (
-        "https://[redacted].com/wp-content/uploads/2025/01/2040Ocean-White.jpg",
-        600, 600, 0, 0
-    ),
-    "Glacier Frost": (
-        "https://[redacted].com/wp-content/uploads/2025/01/2050Iced-White.jpg",
-        600, 600, 0, 0
-    ),
-    "Sterling Ash": (
-        "https://[redacted].com/wp-content/uploads/2025/01/2147Silver-Grey-600x600.jpg",
-        600, 600, 0, 0
-    ),
-    "Titanium Ridge": (
-        "https://[redacted].com/wp-content/uploads/2025/01/2143Steel-Grey.jpg",
-        600, 600, 0, 0
-    ),
-    "Desert Dune": (
-        "https://[redacted].com/wp-content/uploads/2025/01/2332Pebble-Sand.jpg",
-        600, 600, 0, 0
-    ),
-    "Coastal Mist": (
-        "https://[redacted].com/uploads/product/classic/3151-seashell1.jpg",
-        414, 414, 0, 0
-    ),
-    "Imperial Pearl": (
-        "https://[redacted].com/wp-content/uploads/2025/01/2036Platinum-White.jpg",
-        600, 600, 0, 0
-    ),
-    "Venato Classic": (
-        "https://cdn.[redacted].com/images/quartz-countertops/products/thumbnails/carrara-delphi-quartz.jpg",
-        600, 600, 0, 0
-    ),
-    "Aurora Venato": (
-        "https://[redacted].com/uploads/product/natural/golden-carrara-6308.jpg",
-        414, 414, 0, 0
-    ),
-    "Bianco Crest": (
-        "https://[redacted].com/uploads/product/natural/nq6003-5.jpg",
-        414, 414, 0, 0
-    ),
-    "Summit Fog": (
-        "https://[redacted].com/wp-content/uploads/2025/01/Montana-Grey-VQ8121-4.jpg",
-        414, 414, 0, 0
-    ),
-    "Alpine Pure": (
-        "https://[redacted].com/wp-content/uploads/2025/01/1003-2.jpg",
-        414, 414, 0, 0
-    ),
-    "Nocturne Stone": (
-        "https://[redacted].com/wp-content/uploads/2025/01/8101-Elegant-Grey.jpg",
-        414, 414, 0, 0
-    ),
-    "Obsidian Venato": (
-        "https://[redacted].com/uploads/product/natural/nq6005-close.jpg",
-        414, 414, 0, 0
-    ),
-    "Luna Calacatta": (
-        "https://[redacted].com/uploads/product/calacatta/calacatta-new-logo/90051.jpg",
-        470, 470, 20, 20
-    ),
-    "Calacatta Royale": (
-        "https://[redacted].com/uploads/product/calacatta/calacatta-new-logo/9700.jpg",
-        470, 470, 20, 20
-    ),
-}
+# Load source URLs from config (gitignored - no supplier URLs in repo)
+CONFIG_PATH = os.path.join(SCRIPT_DIR, "crop_source_urls.json")
+
+
+def load_materials_config():
+    """Load MATERIALS_TO_CROP from crop_source_urls.json. Format: {name: [url, w, h, ox, oy]}"""
+    if not os.path.exists(CONFIG_PATH):
+        print(f"ERROR: {CONFIG_PATH} not found.")
+        print("Copy crop_source_urls.json.example to crop_source_urls.json and add source URLs.")
+        sys.exit(1)
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+    # Convert list format to tuple: [url, w, h, ox, oy] -> (url, w, h, ox, oy)
+    return {k: tuple(v) for k, v in raw.items() if not k.startswith("_")}
+
+
+MATERIALS_TO_CROP = load_materials_config()
 
 
 def slug_from_name(name):
