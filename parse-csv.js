@@ -45,9 +45,15 @@ const materialsRaw = parseCSV(materialsPath);
 const sinksPath = path.join(__dirname, '..', '..', 'Judestone Files', 'JUDESTONE - Master SKU Sheet (Sinks).csv');
 const sinksRaw = parseCSV(sinksPath);
 
-// Strip brand-related data from output (Brand field, Vina/Alpha from Tags)
-const BRAND_KEYS_TO_REMOVE = ['Brand'];
-const TAG_VALUES_TO_STRIP = ['Vina', 'Alpha'];
+// Strip brand-related data from output (keys and tag values from config)
+const configPath = path.join(__dirname, 'brand-strip-config.json');
+let BRAND_KEYS_TO_REMOVE = ['Brand'];
+let TAG_VALUES_TO_STRIP = [];
+try {
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    if (config.keysToRemove) BRAND_KEYS_TO_REMOVE = config.keysToRemove;
+    if (config.tagValuesToStrip) TAG_VALUES_TO_STRIP = config.tagValuesToStrip;
+} catch (_) { /* use defaults if config missing */ }
 
 function sanitizeTag(tagStr) {
     if (!tagStr) return tagStr;
@@ -66,10 +72,11 @@ function sanitizeItem(item, isMaterial) {
 const materials = materialsRaw.map(m => sanitizeItem(m, true));
 const sinks = sinksRaw.map(s => sanitizeItem(s, false));
 
-// Extract filter categories from tags (exclude brand names and generic terms)
+// Extract filter categories from tags (exclude generic terms + tag values to strip)
 function extractFilters(items, tagColumn) {
     const filters = new Set();
-    const excludePattern = /^(Quartz|Group \d+|Kitchen|Bath|Vina|Alpha)$/i;
+    const stripPart = TAG_VALUES_TO_STRIP.length ? '|' + TAG_VALUES_TO_STRIP.map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') : '';
+    const excludePattern = new RegExp('^(Quartz|Group \\d+|Kitchen|Bath' + stripPart + ')$', 'i');
     items.forEach(item => {
         if (item[tagColumn]) {
             const tags = item[tagColumn].split(';').map(t => t.trim());

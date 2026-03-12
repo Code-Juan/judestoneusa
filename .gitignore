@@ -141,3 +141,10 @@ Thumbs.db
 
 # Crop script source URLs (contains supplier URLs - copy from crop_source_urls.json.example)
 crop_source_urls.json
+
+# Brand strip config (tag values to remove from output - copy from brand-strip-config.json.example)
+brand-strip-config.json
+
+# Temporary filter-repo replacement files
+replace-text.txt
+replace-message.txt
