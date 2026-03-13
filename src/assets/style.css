@@ -125,6 +125,8 @@ header {
     align-items: center;
 }
 
+/* Logo size: applies when img is inside .logo (header) or when img has .logo directly (index) */
+img.logo,
 .logo img {
     height: 50px;
     width: auto;
