@@ -1,0 +1,5 @@
+{
+  "_comment": "Copy to brand-strip-config.json (gitignored). Add tag values to strip from output.",
+  "tagValuesToStrip": ["TagValue1", "TagValue2"],
+  "keysToRemove": ["Brand"]
+}

@@ -1,0 +1,19 @@
+{
+  "_comment": "Copy this file to crop_source_urls.json and fill in source URLs. crop_source_urls.json is gitignored.",
+  "Arctic Tundra": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Glacier Frost": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Sterling Ash": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Titanium Ridge": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Desert Dune": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Coastal Mist": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Imperial Pearl": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Venato Classic": ["https://example.com/source.jpg", 600, 600, 0, 0],
+  "Aurora Venato": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Bianco Crest": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Summit Fog": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Alpine Pure": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Nocturne Stone": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Obsidian Venato": ["https://example.com/source.jpg", 414, 414, 0, 0],
+  "Luna Calacatta": ["https://example.com/source.jpg", 470, 470, 20, 20],
+  "Calacatta Royale": ["https://example.com/source.jpg", 470, 470, 20, 20]
+}

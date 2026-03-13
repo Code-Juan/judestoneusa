@@ -39,20 +39,49 @@ function parseCSV(filePath) {
 
 // Parse Materials CSV
 const materialsPath = path.join(__dirname, '..', '..', 'Judestone Files', 'JUDESTONE - Master SKU Sheet (Material).csv');
-const materials = parseCSV(materialsPath);
+const materialsRaw = parseCSV(materialsPath);
 
 // Parse Sinks CSV
 const sinksPath = path.join(__dirname, '..', '..', 'Judestone Files', 'JUDESTONE - Master SKU Sheet (Sinks).csv');
-const sinks = parseCSV(sinksPath);
+const sinksRaw = parseCSV(sinksPath);
 
-// Extract filter categories from tags
+// Strip brand-related data from output (keys and tag values from config)
+const configPath = path.join(__dirname, 'brand-strip-config.json');
+let BRAND_KEYS_TO_REMOVE = ['Brand'];
+let TAG_VALUES_TO_STRIP = [];
+try {
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    if (config.keysToRemove) BRAND_KEYS_TO_REMOVE = config.keysToRemove;
+    if (config.tagValuesToStrip) TAG_VALUES_TO_STRIP = config.tagValuesToStrip;
+} catch (_) { /* use defaults if config missing */ }
+
+function sanitizeTag(tagStr) {
+    if (!tagStr) return tagStr;
+    const tags = tagStr.split(';').map(t => t.trim());
+    const filtered = tags.filter(t => t && !TAG_VALUES_TO_STRIP.some(b => b.toLowerCase() === t.toLowerCase()));
+    return filtered.join('; ');
+}
+
+function sanitizeItem(item, isMaterial) {
+    const out = { ...item };
+    BRAND_KEYS_TO_REMOVE.forEach(k => delete out[k]);
+    if (out.Tag) out.Tag = sanitizeTag(out.Tag);
+    return out;
+}
+
+const materials = materialsRaw.map(m => sanitizeItem(m, true));
+const sinks = sinksRaw.map(s => sanitizeItem(s, false));
+
+// Extract filter categories from tags (exclude generic terms + tag values to strip)
 function extractFilters(items, tagColumn) {
     const filters = new Set();
+    const stripPart = TAG_VALUES_TO_STRIP.length ? '|' + TAG_VALUES_TO_STRIP.map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') : '';
+    const excludePattern = new RegExp('^(Quartz|Group \\d+|Kitchen|Bath' + stripPart + ')$', 'i');
     items.forEach(item => {
         if (item[tagColumn]) {
             const tags = item[tagColumn].split(';').map(t => t.trim());
             tags.forEach(tag => {
-                if (tag && !tag.match(/^(Quartz|Group \d+|Kitchen|Bath)$/i)) {
+                if (tag && !tag.match(excludePattern)) {
                     filters.add(tag);
                 }
             });
