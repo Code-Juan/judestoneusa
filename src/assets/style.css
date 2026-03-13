@@ -445,6 +445,7 @@ footer {
 }
 
 /* Email Signup */
+form.email-signup,
 .email-signup {
     display: flex;
     gap: var(--spacing-xs);

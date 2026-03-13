@@ -28,7 +28,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize saved designs
     initSavedDesigns();
+
+    // Initialize email signup (Formspree)
+    initEmailSignup();
 });
+
+// Email Signup (Formspree) - AJAX submit to stay on page
+function initEmailSignup() {
+    document.querySelectorAll('form.email-signup').forEach(function (form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Signing up...';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    btn.textContent = 'Thanks!';
+                    form.querySelector('input[name="email"]').value = '';
+                } else {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Something went wrong');
+                }
+            } catch (err) {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                alert(err.message || 'Something went wrong. Please try again.');
+            }
+        });
+    });
+}
 
 // Mobile Menu Toggle
 function initMobileMenu() {
