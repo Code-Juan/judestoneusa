@@ -4,14 +4,13 @@
 (function () {
     'use strict';
 
-    if (!document.body || !document.body.classList.contains('home')) {
-        // Script tag order guarantees body exists, but guard anyway.
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-
     var initialized = false;
+
+    if (document.body && document.body.classList.contains('home')) {
+        init();
+    } else {
+        document.addEventListener('DOMContentLoaded', init);
+    }
 
     function init() {
         if (initialized || !document.body.classList.contains('home')) return;
@@ -23,7 +22,7 @@
         var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         initReveals(reduceMotion);
-        initShowcase(reduceMotion);
+        initRail(reduceMotion);
     }
 
     function initReveals(reduceMotion) {
@@ -42,66 +41,40 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
         items.forEach(function (el) { observer.observe(el); });
     }
 
-    function initShowcase(reduceMotion) {
-        var showcase = document.querySelector('[data-showcase]');
-        if (!showcase) return;
+    function initRail(reduceMotion) {
+        var rail = document.querySelector('[data-rail]');
+        var prev = document.querySelector('[data-rail-prev]');
+        var next = document.querySelector('[data-rail-next]');
+        if (!rail || !prev || !next) return;
 
-        var slides = showcase.querySelectorAll('.js-stage img');
-        var thumbs = showcase.querySelectorAll('.js-thumb');
-        var nameEl = showcase.querySelector('.js-stage-name');
-        var groupEl = showcase.querySelector('.js-stage-group');
-        if (slides.length < 2) return;
-
-        var current = 0;
-        var timer = null;
-        var INTERVAL = 4500;
-
-        function show(index) {
-            current = (index + slides.length) % slides.length;
-            slides.forEach(function (img, i) {
-                img.classList.toggle('is-active', i === current);
-            });
-            thumbs.forEach(function (btn, i) {
-                btn.classList.toggle('is-active', i === current);
-            });
-            var active = slides[current];
-            if (nameEl) nameEl.textContent = active.getAttribute('data-name') || '';
-            if (groupEl) groupEl.textContent = active.getAttribute('data-group') || '';
+        function step() {
+            var card = rail.querySelector('.js-rail-card');
+            return card ? card.getBoundingClientRect().width + 16 : 300;
         }
 
-        function start() {
-            if (reduceMotion || timer) return;
-            timer = window.setInterval(function () { show(current + 1); }, INTERVAL);
-        }
-
-        function stop() {
-            if (timer) {
-                window.clearInterval(timer);
-                timer = null;
-            }
-        }
-
-        thumbs.forEach(function (btn, i) {
-            btn.addEventListener('click', function () {
-                show(i);
-                stop();
-                start();
+        function scrollRail(direction) {
+            rail.scrollBy({
+                left: direction * step() * 2,
+                behavior: reduceMotion ? 'auto' : 'smooth'
             });
-        });
+        }
 
-        showcase.addEventListener('mouseenter', stop);
-        showcase.addEventListener('mouseleave', start);
-        showcase.addEventListener('focusin', stop);
-        showcase.addEventListener('focusout', start);
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) { stop(); } else { start(); }
-        });
+        prev.addEventListener('click', function () { scrollRail(-1); });
+        next.addEventListener('click', function () { scrollRail(1); });
 
-        start();
+        function updateButtons() {
+            var max = rail.scrollWidth - rail.clientWidth - 2;
+            prev.disabled = rail.scrollLeft <= 2;
+            next.disabled = rail.scrollLeft >= max;
+        }
+
+        rail.addEventListener('scroll', updateButtons, { passive: true });
+        window.addEventListener('resize', updateButtons);
+        updateButtons();
     }
 })();
