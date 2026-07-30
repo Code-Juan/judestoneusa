@@ -16,12 +16,15 @@
     <meta name="description"
         content="Discover premium quartz countertop designs and high-quality sink products from Judestone. We serve projects of all sizes, and excel at bulk procurement and delivery for multifamily and large-scale builds.">
     <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/home.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
-<body>
+<body class="home">
     <!-- Header -->
     <header>
         <div class="container">
@@ -57,67 +60,247 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Premium Quartz Designs</h1>
-            <p>Discover our extensive collection of high-quality quartz countertop materials and professional-grade sink
-                products. Perfect for kitchens, baths, and commercial spaces, and we excel at bulk procurement and delivery for multifamily and large-scale production projects.</p>
-            <a href="quartz-designs/index.html" class="btn btn-primary">View Our Quartz Designs</a>
-        </div>
-    </section>
-
-    <!-- Featured Products Section -->
-    <section style="padding: var(--spacing-xl) 0; background-color: var(--navy-dark);">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">Featured Collections</h2>
-            <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-                <div class="product-card">
-                    <div
-                        style="background-color: var(--white); padding: var(--spacing-lg); text-align: center; min-height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <div>
-                            <h3 style="color: var(--navy-deep); margin-bottom: var(--spacing-sm);">Quartz Materials</h3>
-                            <p style="color: var(--navy-primary); margin-bottom: var(--spacing-md);">Explore our premium quartz designs</p>
-                            <a href="quartz-designs/index.html" class="btn btn-primary">Browse Designs</a>
+    <main>
+        <!-- Hero: copy left, rotating swatch showcase right -->
+        <section class="js-hero">
+            <div class="container">
+                <div class="js-hero-inner">
+                    <div class="js-hero-copy">
+                        <p class="js-kicker">Premium Quartz · Undermount Sinks · Bulk Supply</p>
+                        <h1>Quartz that holds&nbsp;up.<br>Supply that <em>keeps&nbsp;up.</em></h1>
+                        <p class="js-hero-sub">Judestone curates sixteen premium quartz designs and twenty
+                            professional-grade undermount sinks, then delivers them at any volume - a single kitchen
+                            or hundreds of multifamily units, priced across five straightforward groups.</p>
+                        <div class="js-hero-ctas">
+                            <a href="quartz-designs/index.html" class="js-btn js-btn-gold">Explore Quartz Designs</a>
+                            <a href="contact/index.html" class="js-btn js-btn-ghost">Request a Bulk Quote</a>
                         </div>
+                        <p class="js-hero-meta">Samples available · Side-by-side design compare · Multifamily &amp;
+                            large-scale specialists</p>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div
-                        style="background-color: var(--white); padding: var(--spacing-lg); text-align: center; min-height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <div>
-                            <h3 style="color: var(--navy-deep); margin-bottom: var(--spacing-sm);">Sink Products</h3>
-                            <p style="color: var(--navy-primary); margin-bottom: var(--spacing-md);">Professional-grade sink solutions</p>
-                            <a href="sinks/index.html" class="btn btn-primary">View Sinks</a>
+                    <div class="js-showcase" data-showcase>
+                        <figure class="js-stage">
+                            <img src="/images/materials/calacatta-royale.jpg" alt="Calacatta Royale quartz swatch"
+                                class="is-active" data-name="Calacatta Royale" data-group="Group 5 · Polished">
+                            <img src="/images/materials/obsidian-venato.jpg" alt="Obsidian Venato quartz swatch"
+                                data-name="Obsidian Venato" data-group="Group 4 · Polished" loading="lazy">
+                            <img src="/images/materials/luna-calacatta.jpg" alt="Luna Calacatta quartz swatch"
+                                data-name="Luna Calacatta" data-group="Group 5 · Polished" loading="lazy">
+                            <img src="/images/materials/aurora-venato.jpg" alt="Aurora Venato quartz swatch"
+                                data-name="Aurora Venato" data-group="Group 3 · Polished" loading="lazy">
+                            <img src="/images/materials/desert-dune.jpg" alt="Desert Dune quartz swatch"
+                                data-name="Desert Dune" data-group="Group 1 · Polished" loading="lazy">
+                            <figcaption class="js-stage-caption">
+                                <span class="js-stage-name">Calacatta Royale</span>
+                                <span class="js-stage-group">Group 5 · Polished</span>
+                            </figcaption>
+                        </figure>
+                        <div class="js-thumbs" role="group" aria-label="Featured quartz designs">
+                            <button type="button" class="js-thumb is-active" aria-label="Show Calacatta Royale">
+                                <img src="/images/materials/calacatta-royale.jpg" alt="" loading="lazy"></button>
+                            <button type="button" class="js-thumb" aria-label="Show Obsidian Venato">
+                                <img src="/images/materials/obsidian-venato.jpg" alt="" loading="lazy"></button>
+                            <button type="button" class="js-thumb" aria-label="Show Luna Calacatta">
+                                <img src="/images/materials/luna-calacatta.jpg" alt="" loading="lazy"></button>
+                            <button type="button" class="js-thumb" aria-label="Show Aurora Venato">
+                                <img src="/images/materials/aurora-venato.jpg" alt="" loading="lazy"></button>
+                            <button type="button" class="js-thumb" aria-label="Show Desert Dune">
+                                <img src="/images/materials/desert-dune.jpg" alt="" loading="lazy"></button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Why Choose Section -->
-    <section style="padding: var(--spacing-xl) 0;">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--accent);">Why Choose Judestone
-                USA</h2>
-            <div
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-lg);">
-                <div style="text-align: center;">
-                    <h3 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Premium Quality</h3>
-                    <p style="color: var(--gray-light);">High-grade materials and craftsmanship for every project</p>
+        <!-- Fact strip -->
+        <section class="js-facts" aria-label="Judestone at a glance">
+            <div class="container">
+                <ul>
+                    <li><strong>16</strong><span>Curated quartz designs</span></li>
+                    <li><strong>20</strong><span>Undermount sink models</span></li>
+                    <li><strong>5</strong><span>Price groups, one supplier</span></li>
+                    <li><strong>ADA</strong><span>Compliant sink options</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- The Collection -->
+        <section class="js-section js-light">
+            <div class="container">
+                <div class="js-collection-head js-reveal">
+                    <div>
+                        <p class="js-kicker">The Collection</p>
+                        <h2 class="js-h2">Sixteen designs. No filler.</h2>
+                    </div>
+                    <p class="js-lede">From bright polished whites to bold calacattas and dramatic darks - every
+                        design is chosen to work in kitchens, baths, and high-traffic commercial spaces, and priced
+                        in one of five straightforward groups.</p>
                 </div>
-                <div style="text-align: center;">
-                    <h3 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Extensive Selection</h3>
-                    <p style="color: var(--gray-light);">Wide variety of designs and finishes</p>
+                <div class="js-swatch-grid">
+                    <a href="quartz-designs/index.html" class="js-swatch js-reveal">
+                        <div class="js-swatch-img"><img src="/images/materials/calacatta-royale.jpg"
+                                alt="Calacatta Royale quartz" loading="lazy"></div>
+                        <div class="js-swatch-info">
+                            <span><span class="js-swatch-name">Calacatta Royale</span><span
+                                    class="js-swatch-finish">Polished</span></span>
+                            <span class="js-swatch-group">Group 5</span>
+                        </div>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-swatch js-reveal">
+                        <div class="js-swatch-img"><img src="/images/materials/obsidian-venato.jpg"
+                                alt="Obsidian Venato quartz" loading="lazy"></div>
+                        <div class="js-swatch-info">
+                            <span><span class="js-swatch-name">Obsidian Venato</span><span
+                                    class="js-swatch-finish">Polished</span></span>
+                            <span class="js-swatch-group">Group 4</span>
+                        </div>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-swatch js-reveal">
+                        <div class="js-swatch-img"><img src="/images/materials/aurora-venato.jpg"
+                                alt="Aurora Venato quartz" loading="lazy"></div>
+                        <div class="js-swatch-info">
+                            <span><span class="js-swatch-name">Aurora Venato</span><span
+                                    class="js-swatch-finish">Polished</span></span>
+                            <span class="js-swatch-group">Group 3</span>
+                        </div>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-swatch js-reveal">
+                        <div class="js-swatch-img"><img src="/images/materials/bianco-crest.jpg"
+                                alt="Bianco Crest quartz" loading="lazy"></div>
+                        <div class="js-swatch-info">
+                            <span><span class="js-swatch-name">Bianco Crest</span><span
+                                    class="js-swatch-finish">Polished</span></span>
+                            <span class="js-swatch-group">Group 3</span>
+                        </div>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-swatch js-reveal">
+                        <div class="js-swatch-img"><img src="/images/materials/sterling-ash.jpg"
+                                alt="Sterling Ash quartz" loading="lazy"></div>
+                        <div class="js-swatch-info">
+                            <span><span class="js-swatch-name">Sterling Ash</span><span
+                                    class="js-swatch-finish">Polished</span></span>
+                            <span class="js-swatch-group">Group 1</span>
+                        </div>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-swatch js-reveal">
+                        <div class="js-swatch-img"><img src="/images/materials/desert-dune.jpg"
+                                alt="Desert Dune quartz" loading="lazy"></div>
+                        <div class="js-swatch-info">
+                            <span><span class="js-swatch-name">Desert Dune</span><span
+                                    class="js-swatch-finish">Polished</span></span>
+                            <span class="js-swatch-group">Group 1</span>
+                        </div>
+                    </a>
                 </div>
-                <div style="text-align: center;">
-                    <h3 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Bulk & Large-Scale</h3>
-                    <p style="color: var(--gray-light);">We excel at procuring and delivering bulk quantities for multifamily and production projects</p>
+                <div class="js-collection-ctas js-reveal">
+                    <a href="quartz-designs/index.html" class="js-btn js-btn-gold">View All 16 Designs</a>
+                    <a href="compare/index.html" class="js-btn js-btn-ghost">Compare Side by Side</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Sinks -->
+        <section class="js-section js-sinks">
+            <div class="container">
+                <div class="js-sinks-inner">
+                    <div class="js-reveal">
+                        <p class="js-kicker">Sink Program</p>
+                        <h2 class="js-h2">The sink that matches the countertop program.</h2>
+                        <p class="js-lede">Spec the sink alongside the quartz and one supplier covers the whole
+                            top - no chasing a second vendor for the cutout that holds the job up.</p>
+                        <ul class="js-sinks-specs">
+                            <li><strong>Twenty undermount models</strong> across kitchen and bath, in single and
+                                double-bowl configurations.</li>
+                            <li><strong>ADA-compliant options</strong> for multifamily and commercial requirements.
+                            </li>
+                            <li><strong>Sized for standard cabinets</strong>, with published dimensions for every
+                                model so fabrication templates stay simple.</li>
+                        </ul>
+                        <a href="sinks/index.html" class="js-btn js-btn-gold">Browse Sink Models</a>
+                    </div>
+                    <figure class="js-sink-figure js-reveal">
+                        <img src="https://strictlysinks.store/wp-content/uploads/2025/06/R28R-SS-4-Sink-Only.jpg"
+                            alt="Judestone R28R undermount kitchen sink" loading="lazy"
+                            onerror="this.closest('figure').style.display='none';">
+                        <figcaption>R-Series · Undermount</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- Built for volume -->
+        <section class="js-section js-light">
+            <div class="container">
+                <div class="js-volume-head js-reveal">
+                    <p class="js-kicker">Built for Volume</p>
+                    <h2 class="js-h2">One kitchen or four hundred units. Same finish, same schedule.</h2>
+                    <p class="js-lede">Judestone serves projects of all sizes, and is built around bulk procurement
+                        and delivery for multifamily and large-scale construction.</p>
+                </div>
+                <div class="js-cards">
+                    <div class="js-card js-reveal">
+                        <h3>Project-level procurement</h3>
+                        <p>Quotes priced across five material groups for the full unit count - not slab by slab -
+                            so budgeting a building is as simple as budgeting a kitchen.</p>
+                    </div>
+                    <div class="js-card js-reveal">
+                        <h3>Consistency at scale</h3>
+                        <p>Engineered quartz keeps pattern and color consistent from the model unit to the last
+                            building, so unit 400 matches the one your buyers toured.</p>
+                    </div>
+                    <div class="js-card js-reveal">
+                        <h3>Delivery that follows the build</h3>
+                        <p>Bulk orders are staged and delivered for multifamily and large-scale builds, so material
+                            lands when the construction schedule needs it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process -->
+        <section class="js-section js-process">
+            <div class="container">
+                <div class="js-reveal">
+                    <p class="js-kicker">How It Works</p>
+                    <h2 class="js-h2">From first sample to final delivery.</h2>
+                </div>
+                <ol>
+                    <li class="js-reveal">
+                        <h3>Browse &amp; save</h3>
+                        <p>Explore the collection, save the designs you like, and compare them side by side.</p>
+                    </li>
+                    <li class="js-reveal">
+                        <h3>Order samples</h3>
+                        <p>See the material in your own space and light before you commit a project to it.</p>
+                    </li>
+                    <li class="js-reveal">
+                        <h3>Request a bulk quote</h3>
+                        <p>Send your designs and unit counts for a project-level quote across the five groups.</p>
+                    </li>
+                    <li class="js-reveal">
+                        <h3>Take delivery</h3>
+                        <p>Material arrives staged for your build - one kitchen or an entire community.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Closing CTA -->
+        <section class="js-section js-close">
+            <div class="container">
+                <div class="js-reveal">
+                    <p class="js-kicker" style="justify-content:center; display:inline-flex;">Judestone USA</p>
+                    <h2 class="js-h2">Spec Judestone on your next project.</h2>
+                    <p class="js-lede">Tell us what you're building and we'll come back with designs, samples, and a
+                        quote that fits the scale of the job.</p>
+                    <div class="js-hero-ctas">
+                        <a href="contact/index.html" class="js-btn js-btn-gold">Request a Bulk Quote</a>
+                        <a href="contact/index.html" class="js-btn js-btn-ghost">Order a Sample</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -147,21 +330,22 @@
                 </div>
                 <div class="footer-column">
                     <h3>Stay Connected</h3>
-                    <p style="color: var(--gray-light); margin-bottom: var(--spacing-sm);">Sign up for updates</p>
+                    <p class="footer-note">Sign up for updates</p>
                     <form class="email-signup" action="https://formspree.io/f/xreylqrp" method="POST">
                         <input type="email" name="email" placeholder="Your email" required>
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <button type="submit" class="js-btn js-btn-gold">Sign Up</button>
                     </form>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Judestone. All rights reserved.</p>
+                <p>&copy; 2026 Judestone. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script src="../assets/products-data.js"></script>
     <script src="../assets/script.js"></script>
+    <script src="../assets/home.js"></script>
 </body>
 
 </html>
