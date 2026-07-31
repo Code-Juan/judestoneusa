@@ -74,7 +74,7 @@
         <!-- 01: pick your track -->
         <section class="js-band">
             <div class="js-wrap">
-                <span class="js-seclabel">01 &middot; Start where your problem is</span>
+                <span class="js-seclabel">01 &middot; Pick your track</span>
                 <div class="js-seclabel-rule"></div>
                 <div class="js-cards3">
                     <div class="js-bp js-c3">
@@ -83,8 +83,7 @@
                         <h3>Material strategy session</h3>
                         <p>Bring one upcoming project. We'll map material options, pivot scenarios, and value
                             engineering - before you buy anything.</p>
-                        <p><a href="mailto:info@judestoneusa.com?subject=Material%20strategy%20session">Schedule a
-                                session</a></p>
+                        <p><a href="#send" data-track="material-strategy">Start this track &rarr;</a></p>
                     </div>
                     <div class="js-bp js-c3">
                         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
@@ -92,8 +91,7 @@
                         <h3>Price a live project</h3>
                         <p>Send the drawings and unit mix. We'll return program pricing with cut-to-size and
                             deployment options, market by market.</p>
-                        <p><a href="mailto:info@judestoneusa.com?subject=Project%20pricing%20request">Send your
-                                project</a></p>
+                        <p><a href="#send" data-track="price-project">Start this track &rarr;</a></p>
                     </div>
                     <div class="js-bp js-c3">
                         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
@@ -101,17 +99,95 @@
                         <h3>National program review</h3>
                         <p>Building in multiple markets? We'll design one supply program that follows your pipeline
                             across the country.</p>
-                        <p><a href="mailto:info@judestoneusa.com?subject=National%20program%20review">Start the
-                                review</a></p>
+                        <p><a href="#send" data-track="national-program">Start this track &rarr;</a></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 02: direct lines -->
+        <!-- 02: the form -->
+        <section id="send" class="js-band">
+            <div class="js-wrap">
+                <span class="js-seclabel">02 &middot; Send us the project</span>
+                <div class="js-seclabel-rule"></div>
+                <div class="js-sec-head">
+                    <h2 class="js-h2">Tell us what you're building.</h2>
+                    <p class="js-side-note">Required fields marked with an asterisk</p>
+                </div>
+                <form class="js-bp js-form" id="order-desk-form" novalidate>
+                    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                        class="corner br"></i>
+                    <div class="js-form-grid">
+                        <div class="js-field">
+                            <label for="od-name">Name <span class="js-req">*</span></label>
+                            <input class="js-input" type="text" id="od-name" name="name" autocomplete="name"
+                                required>
+                            <span class="js-field-error" data-error-for="name"></span>
+                        </div>
+                        <div class="js-field">
+                            <label for="od-company">Company <span class="js-req">*</span></label>
+                            <input class="js-input" type="text" id="od-company" name="company"
+                                autocomplete="organization" required>
+                            <span class="js-field-error" data-error-for="company"></span>
+                        </div>
+                        <div class="js-field">
+                            <label for="od-email">Email <span class="js-req">*</span></label>
+                            <input class="js-input" type="email" id="od-email" name="email" autocomplete="email"
+                                required>
+                            <span class="js-field-error" data-error-for="email"></span>
+                        </div>
+                        <div class="js-field">
+                            <label for="od-phone">Phone</label>
+                            <input class="js-input" type="tel" id="od-phone" name="phone" autocomplete="tel">
+                            <span class="js-field-error" data-error-for="phone"></span>
+                        </div>
+                        <div class="js-field">
+                            <label for="od-track">What do you need <span class="js-req">*</span></label>
+                            <select class="js-select" id="od-track" name="track" required>
+                                <option value="material-strategy">Material strategy session</option>
+                                <option value="price-project">Price a live project</option>
+                                <option value="national-program">National program review</option>
+                                <option value="general">Something else</option>
+                            </select>
+                            <span class="js-field-error" data-error-for="track"></span>
+                        </div>
+                        <div class="js-field">
+                            <label for="od-units">Unit count</label>
+                            <input class="js-input" type="text" id="od-units" name="units"
+                                placeholder="e.g. 240 units, 3 buildings">
+                            <span class="js-field-error" data-error-for="units"></span>
+                        </div>
+                        <div class="js-field js-field-full">
+                            <label for="od-markets">Markets</label>
+                            <input class="js-input" type="text" id="od-markets" name="markets"
+                                placeholder="Where you're building - one metro or a national pipeline">
+                            <span class="js-field-error" data-error-for="markets"></span>
+                        </div>
+                        <div class="js-field js-field-full">
+                            <label for="od-message">The project <span class="js-req">*</span></label>
+                            <textarea class="js-textarea" id="od-message" name="message" required
+                                placeholder="Unit mix, schedule and phasing, spec or budget constraints, and what you're worried about."></textarea>
+                            <span class="js-field-error" data-error-for="message"></span>
+                        </div>
+                        <div class="js-hp" aria-hidden="true">
+                            <label for="od-website">Leave this field empty</label>
+                            <input type="text" id="od-website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="js-form-foot">
+                        <button type="submit" class="js-btn js-btn-primary" data-submit>Send to the order desk</button>
+                        <p class="js-form-note">Drawings and unit mixes can follow by email once we reply - no need
+                            to attach anything here.</p>
+                    </div>
+                    <p class="js-form-status" id="order-desk-status" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- 03: direct lines -->
         <section class="js-band">
             <div class="js-wrap">
-                <span class="js-seclabel">02 &middot; Direct lines</span>
+                <span class="js-seclabel">03 &middot; Direct lines</span>
                 <div class="js-seclabel-rule"></div>
                 <div class="js-cards2">
                     <div class="js-bp js-c3">
@@ -127,7 +203,7 @@
                             class="corner br"></i>
                         <h3>Email</h3>
                         <a class="js-direct" href="mailto:info@judestoneusa.com">info@judestoneusa.com</a>
-                        <p>Send drawings, unit mixes, and schedules. The more we can see, the more specific the
+                        <p>Best for anything with attachments. The more we can see, the more specific the
                             strategy comes back.</p>
                     </div>
                 </div>
@@ -137,7 +213,7 @@
         <!-- 03: what to send -->
         <section class="js-band">
             <div class="js-wrap">
-                <span class="js-seclabel">03 &middot; What to send</span>
+                <span class="js-seclabel">04 &middot; What to send</span>
                 <div class="js-seclabel-rule"></div>
                 <h2 class="js-h2">The more you send, the less we have to assume.</h2>
                 <p class="js-lede">None of it is required to start a conversation. It is what turns a first call
@@ -173,11 +249,13 @@
         <!-- 04: what happens next -->
         <section class="js-band-navy">
             <div class="js-wrap">
-                <span class="js-seclabel">04 &middot; What happens next</span>
+                <span class="js-seclabel">05 &middot; What happens next</span>
                 <div class="js-seclabel-rule"></div>
-                <h2 class="js-h2">From first call to final phase.</h2>
-                <p class="js-lede">One strategic partner owns sourcing, logistics, compliance, and supply. One
-                    contract, one standard, one accountable outcome.</p>
+                <h2 class="js-h2">What happens after you send it.</h2>
+                <p class="js-lede">A real person reads it the same business day. If we need drawings or a unit mix to
+                    go further, we ask for exactly what is missing - not a generic follow-up. You get material
+                    options with pricing attached, and the pivot scenarios priced alongside them, so the first
+                    number you see is one you can build a budget on.</p>
                 <div class="js-order-ctas" style="justify-content:flex-start;">
                     <a href="tel:+15862084628" class="js-btn js-btn-primary">Call (586) 208-4628</a>
                     <a href="mailto:info@judestoneusa.com" class="js-btn js-btn-paper">Email the order desk</a>
@@ -239,8 +317,10 @@
         </div>
     </footer>
 
+    <script src="../../assets/config.js"></script>
     <script src="../../assets/products-data.js"></script>
     <script src="../../assets/script.js"></script>
+    <script src="../../assets/order-desk.js"></script>
 </body>
 
 </html>

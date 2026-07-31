@@ -951,6 +951,177 @@ nav a.active {
 }
 
 /* ==========================================================================
+   Order desk form (blueprint sheet)
+   ========================================================================== */
+
+.js-form {
+    margin-top: 44px;
+    padding: clamp(20px, 3vw, 34px);
+    background: #fff;
+}
+
+.js-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 24px;
+}
+
+.js-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.js-field-full {
+    grid-column: 1 / -1;
+}
+
+.js-field label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--js-slate);
+}
+
+.js-field label .js-req {
+    color: var(--js-gold-700);
+}
+
+.js-field .js-hint {
+    font-size: 12px;
+    color: color-mix(in srgb, var(--js-ink) 55%, transparent);
+}
+
+.js-input,
+.js-select,
+.js-textarea {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 12px;
+    font-family: var(--js-body);
+    font-size: 15px;
+    color: var(--js-ink);
+    caret-color: var(--js-gold-600);
+    background: var(--js-bg);
+    border: 1px solid color-mix(in srgb, var(--js-ink) 28%, transparent);
+    border-radius: 4px;
+    transition: border-color .15s ease;
+}
+
+.js-textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.js-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--js-slate) 50%), linear-gradient(135deg, var(--js-slate) 50%, transparent 50%);
+    background-position: calc(100% - 18px) calc(50% + 2px), calc(100% - 13px) calc(50% + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+}
+
+.js-input:hover,
+.js-select:hover,
+.js-textarea:hover {
+    border-color: color-mix(in srgb, var(--js-ink) 45%, transparent);
+}
+
+.js-input:focus,
+.js-select:focus,
+.js-textarea:focus {
+    outline: none;
+    border-color: var(--js-gold-500);
+    box-shadow: 0 0 0 1px var(--js-gold-500);
+}
+
+.js-input.is-invalid,
+.js-select.is-invalid,
+.js-textarea.is-invalid {
+    border-color: #a8321f;
+    box-shadow: 0 0 0 1px #a8321f;
+}
+
+.js-field-error {
+    display: none;
+    font-size: 12px;
+    color: #a8321f;
+}
+
+.js-field-error.is-shown {
+    display: block;
+}
+
+/* Honeypot: kept in the layout flow but invisible and unfocusable */
+.js-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.js-form-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 20px;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--js-divider);
+}
+
+.js-form-note {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
+    max-width: 46ch;
+}
+
+.js-form-status {
+    margin: 20px 0 0;
+    padding: 14px 16px;
+    border: 1px solid var(--js-divider);
+    font-size: 14.5px;
+    line-height: 1.6;
+    display: none;
+}
+
+.js-form-status.is-shown {
+    display: block;
+}
+
+.js-form-status.is-ok {
+    border-color: var(--js-gold-500);
+    background: var(--js-gold-100);
+    color: var(--js-ink);
+}
+
+.js-form-status.is-error {
+    border-color: #a8321f;
+    background: #f7e9e6;
+    color: #7d2617;
+}
+
+.js-btn[disabled] {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+
+    .js-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
    Legacy page furniture
    ========================================================================== */
 

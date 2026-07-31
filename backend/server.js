@@ -38,27 +38,27 @@ app.use('/api/', limiter);
 
 // CORS configuration
 const allowedOrigins = [
-    'http://localhost:8000',
-    'http://localhost:3000',
     'https://judestoneusa.com',
-    'https://www.judestoneusa.com',
-    'https://*.netlify.app'
+    'https://www.judestoneusa.com'
 ];
 
 if (process.env.CORS_ORIGIN) {
     allowedOrigins.push(process.env.CORS_ORIGIN);
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else if (origin && origin.match(/^https:\/\/.*\.netlify\.app$/)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+        if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
+        // Netlify deploy previews
+        if (/^https:\/\/[\w-]+\.netlify\.app$/.test(origin)) return callback(null, true);
+        // Any local dev server port, outside production only
+        if (!isProduction && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+            return callback(null, true);
         }
+        callback(new Error('Not allowed by CORS'));
     },
     credentials: true
 }));
@@ -72,33 +72,8 @@ app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.get('/api/contact/health', (req, res) => {
-    res.json({ status: 'ok', service: 'contact-api' });
-});
-
-// Contact route (placeholder - implement with Postmark if needed)
-app.post('/api/contact', async (req, res) => {
-    try {
-        const { name, email, phone, subject, message } = req.body;
-        
-        // Basic validation
-        if (!name || !email || !message) {
-            return res.status(400).json({ error: 'Name, email, and message are required' });
-        }
-        
-        // TODO: Implement email sending with Postmark
-        // For now, just log the submission
-        console.log('Contact form submission:', { name, email, phone, subject, message });
-        
-        res.json({ 
-            success: true, 
-            message: 'Thank you for your message. We will get back to you soon.' 
-        });
-    } catch (error) {
-        console.error('Contact form error:', error);
-        res.status(500).json({ error: 'Failed to send message. Please try again later.' });
-    }
-});
+// Contact / order desk routes (Postmark)
+app.use('/api/contact', require('./routes/contact'));
 
 // Start server
 app.listen(PORT, () => {
