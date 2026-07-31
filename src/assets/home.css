@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Judestone Homepage - "Supplier spec sheet" redesign (2026)
-   Ported from the Industry design system retuned for Judestone:
-   navy ink, gold accent, Barlow Condensed headings, blueprint framing.
+   Judestone Homepage - "Supplier spec sheet" design, Judestone Standard copy
+   Industry design system retuned for Judestone: navy ink, gold accent,
+   Barlow Condensed headings, blueprint framing.
    Scoped to body.home so style.css and every interior page stay untouched.
    ========================================================================== */
 
@@ -33,6 +33,21 @@ body.home {
     font-family: var(--js-body);
     font-size: 16px;
     text-wrap: pretty;
+}
+
+html:has(body.home) {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    html:has(body.home) {
+        scroll-behavior: auto;
+    }
+}
+
+body.home section[id] {
+    scroll-margin-top: 84px;
 }
 
 body.home h1,
@@ -109,7 +124,7 @@ body.home .js-bp > .corner.tr { top: -6px; right: -6px; }
 body.home .js-bp > .corner.bl { bottom: -6px; left: -6px; }
 body.home .js-bp > .corner.br { bottom: -6px; right: -6px; }
 
-/* Dark-field variant (sink figure) */
+/* Dark-field variant */
 body.home .js-bp-dark {
     border-color: rgba(246, 243, 236, .3);
 }
@@ -191,7 +206,7 @@ body.home header {
 
 body.home .header-content {
     min-height: 64px;
-    gap: 16px 26px;
+    gap: 16px 24px;
 }
 
 body.home .js-brand {
@@ -228,7 +243,7 @@ body.home .js-wordmark {
 }
 
 body.home nav {
-    gap: 4px 24px;
+    gap: 4px 22px;
 }
 
 body.home nav a {
@@ -333,6 +348,7 @@ body.home .js-h2 {
     font-size: clamp(32px, 3.6vw, 46px);
     line-height: 1.08;
     margin: 0;
+    max-width: 26ch;
 }
 
 body.home .js-lede {
@@ -343,8 +359,57 @@ body.home .js-lede {
     margin: 16px 0 0;
 }
 
+body.home .js-sec-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 48px;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+body.home .js-sec-head .js-h2 {
+    max-width: 24ch;
+}
+
+body.home .js-side-note {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
+    max-width: 30ch;
+}
+
+/* Paper band scaffolding */
+body.home .js-band {
+    background: var(--js-bg);
+    padding-top: clamp(48px, 6vw, 80px);
+    padding-bottom: clamp(56px, 7vw, 88px);
+}
+
+/* Navy band scaffolding */
+body.home .js-band-navy {
+    background: var(--js-navy-field);
+    color: var(--js-paper);
+    padding-top: clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+}
+
+body.home .js-band-navy .js-seclabel {
+    color: var(--js-gold-400);
+}
+
+body.home .js-band-navy .js-seclabel-rule {
+    background: rgba(246, 243, 236, .18);
+}
+
+body.home .js-band-navy .js-lede {
+    color: rgba(246, 243, 236, .72);
+}
+
 /* --------------------------------------------------------------------------
-   Hero: full-bleed slab, navy wash, picker rail
+   Hero: full-bleed slab, navy wash, pivot strip
    -------------------------------------------------------------------------- */
 
 body.home .js-hero {
@@ -365,12 +430,6 @@ body.home .js-hero-bg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity .6s ease;
-}
-
-body.home .js-hero-bg img.is-active {
-    opacity: 1;
 }
 
 body.home .js-hero-shade {
@@ -405,7 +464,7 @@ body.home .js-hero-main {
 }
 
 body.home .js-hero h1 {
-    font-size: clamp(44px, 6.2vw, 86px);
+    font-size: clamp(42px, 5.8vw, 80px);
     line-height: 1.02;
     margin: 0 0 0 -0.052em;
 }
@@ -422,7 +481,7 @@ body.home .js-hero-sub {
     font-size: 16.5px;
     line-height: 1.6;
     color: rgba(246, 243, 236, .82);
-    max-width: 50ch;
+    max-width: 52ch;
     margin: 24px 0 0;
 }
 
@@ -442,67 +501,39 @@ body.home .js-hero-meta {
     color: rgba(246, 243, 236, .62);
 }
 
-/* Design picker rail */
-body.home .js-picker-rule {
+/* Pivot strip at the hero's foot */
+body.home .js-pivot-rule {
     margin: 10px 0 14px;
 }
 
-body.home .js-picker {
+body.home .js-pivot {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     align-items: stretch;
 }
 
-body.home .js-pick {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 14px 5px 5px;
-    background: rgba(11, 22, 38, .45);
-    border: 1px solid var(--js-paper-24);
-    border-radius: 0;
-    cursor: pointer;
-    text-align: left;
-    font-family: var(--js-body);
-    transition: border-color .15s ease, background-color .15s ease;
-}
-
-body.home .js-pick:hover {
-    border-color: var(--js-gold-400);
-}
-
-body.home .js-pick.is-active {
-    background: rgba(11, 22, 38, .78);
-    border-color: var(--js-gold-400);
-}
-
-body.home .js-pick-thumb {
-    width: 38px;
-    height: 38px;
-    display: block;
-    flex: none;
-    object-fit: cover;
-    background: var(--js-paper-12);
-}
-
-body.home .js-pick-text {
+body.home .js-pivot-chip {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    justify-content: center;
+    padding: 8px 16px;
+    background: rgba(11, 22, 38, .45);
+    border: 1px solid var(--js-paper-24);
 }
 
-body.home .js-pick-name {
+body.home .js-pivot-name {
     font-family: var(--js-heading);
     font-weight: 600;
-    font-size: 14.5px;
-    letter-spacing: .04em;
+    font-size: 15px;
+    letter-spacing: .06em;
     text-transform: uppercase;
     color: var(--js-paper);
     white-space: nowrap;
 }
 
-body.home .js-pick-group {
+body.home .js-pivot-cap {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: .1em;
@@ -510,243 +541,74 @@ body.home .js-pick-group {
     color: rgba(246, 243, 236, .6);
 }
 
-body.home .js-pick.is-active .js-pick-group {
-    color: var(--js-gold-400);
-}
-
-body.home .js-viewall {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 16px;
-    border: 1px solid rgba(246, 243, 236, .28);
-    background: rgba(11, 22, 38, .45);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--js-gold-400);
-    transition: border-color .15s ease;
-}
-
-body.home .js-viewall:hover {
-    border-color: var(--js-gold-400);
-    color: var(--js-gold-400);
-}
-
-body.home .js-viewall svg {
-    display: block;
-}
-
-/* --------------------------------------------------------------------------
-   Sheet 01: performance data table
-   -------------------------------------------------------------------------- */
-
-body.home .js-datasheet-band {
-    background: var(--js-bg);
-    padding-top: clamp(56px, 7vw, 88px);
-    padding-bottom: clamp(32px, 4vw, 48px);
-}
-
-body.home .js-sheet-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
-    border-bottom: 1px solid var(--js-divider);
-}
-
-body.home .js-sheet-title {
-    flex: 1;
-    min-width: 16ch;
-    padding: 12px 24px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-}
-
-body.home .js-sheet-cell {
-    border-left: 1px solid var(--js-divider);
-    padding: 12px 20px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    color: color-mix(in srgb, var(--js-ink) 70%, transparent);
-}
-
-body.home .js-sheet-cols,
-body.home .js-sheet-row {
-    display: grid;
-    grid-template-columns: 64px minmax(150px, 1.1fr) minmax(110px, .7fr) minmax(180px, 1.6fr);
-}
-
-body.home .js-sheet-cols {
-    border-bottom: 1px solid var(--js-divider);
-    padding: 9px 0;
-}
-
-body.home .js-sheet-cols span {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
-}
-
-body.home .js-sheet-cols span:first-child,
-body.home .js-sheet-num {
-    padding-left: 24px;
-}
-
-body.home .js-sheet-row {
-    align-items: center;
-    border-bottom: 1px solid var(--js-hairline);
-    padding: 14px 0;
-}
-
-body.home .js-sheet-row:last-of-type {
-    border-bottom: none;
-}
-
-body.home .js-sheet-num {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    color: var(--js-gold-700);
-}
-
-body.home .js-sheet-prop {
-    font-size: 15px;
-    padding-right: 16px;
-}
-
-body.home .js-sheet-val {
+body.home .js-pivot-swap {
+    align-self: center;
     font-family: var(--js-heading);
     font-weight: 600;
-    font-size: 27px;
-    letter-spacing: .02em;
-    white-space: nowrap;
+    font-size: 19px;
+    color: var(--js-gold-400);
 }
 
-body.home .js-sheet-remark {
-    padding-right: 24px;
-    font-size: 14px;
-    color: color-mix(in srgb, var(--js-ink) 72%, transparent);
-}
-
-body.home .js-sheet-foot {
-    margin: 0;
-    border-top: 1px solid var(--js-divider);
-    padding: 12px 24px;
-    font-size: 13px;
-    color: color-mix(in srgb, var(--js-ink) 70%, transparent);
+body.home .js-pivot-note {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid rgba(246, 243, 236, .28);
+    background: rgba(11, 22, 38, .45);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--js-gold-400);
 }
 
 /* --------------------------------------------------------------------------
-   Sections 02 / 03 on the paper ground
+   Three-up blueprint cards (01 supplier, 06 national)
    -------------------------------------------------------------------------- */
 
-body.home .js-band {
-    background: var(--js-bg);
-    padding-top: clamp(48px, 6vw, 80px);
-    padding-bottom: clamp(56px, 7vw, 88px);
-}
-
-body.home .js-sec-head {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px 48px;
-    align-items: flex-end;
-    justify-content: space-between;
-}
-
-body.home .js-sec-head .js-h2 {
-    max-width: 20ch;
-}
-
-body.home .js-side-note {
-    margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
-    max-width: 30ch;
-}
-
-/* Collection grid */
-body.home .js-slabs {
+body.home .js-cards3 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 44px 32px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
     margin-top: 44px;
 }
 
-body.home .js-slab {
+body.home .js-c3 {
+    padding: 22px;
+}
+
+body.home .js-c3 h3 {
+    font-size: 21px;
+    letter-spacing: .02em;
+    margin: 0 0 8px;
+}
+
+body.home .js-c3 p {
     margin: 0;
-    display: block;
-    color: inherit;
-    text-decoration: none;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--js-ink) 74%, transparent);
 }
 
-body.home a.js-slab:hover {
-    color: inherit;
-    background: color-mix(in srgb, var(--js-ink) 4%, transparent);
+/* --------------------------------------------------------------------------
+   02: problems we solve
+   -------------------------------------------------------------------------- */
+
+body.home .js-problems {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-top: 44px;
 }
 
-body.home .js-slab-img {
-    width: 100%;
-    aspect-ratio: 417 / 360;
-    display: block;
-    object-fit: cover;
-}
-
-body.home .js-slab-cap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    border-top: 1px solid var(--js-divider);
-    padding: 10px 14px;
-}
-
-body.home .js-slab-name {
-    font-family: var(--js-heading);
-    font-weight: 600;
-    font-size: 17px;
-    letter-spacing: .03em;
-    text-transform: uppercase;
-}
-
-body.home .js-slab-group {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--js-gold-700);
-}
-
-/* Index card */
-body.home .js-index-card {
+body.home .js-problem {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     padding: 22px;
-    text-decoration: none;
-    color: inherit;
-    min-height: 240px;
 }
 
-body.home .js-index-card:hover {
-    background: color-mix(in srgb, var(--js-ink) 4%, transparent);
-    color: inherit;
-}
-
-body.home .js-index-label {
+body.home .js-need {
     font-size: 12px;
     font-weight: 600;
     letter-spacing: .1em;
@@ -754,27 +616,187 @@ body.home .js-index-label {
     color: var(--js-gold-700);
 }
 
-body.home .js-index-title {
+body.home .js-prob-quote {
     font-family: var(--js-heading);
     font-weight: 600;
-    font-size: 30px;
-    line-height: 1.12;
+    font-size: 23px;
+    line-height: 1.1;
     letter-spacing: .01em;
     text-transform: uppercase;
+    margin: 0;
 }
 
-body.home .js-index-cta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+body.home .js-prob-body {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--js-ink) 70%, transparent);
+}
+
+body.home .js-answer-wrap {
+    margin-top: auto;
+    border-top: 1px solid var(--js-hairline);
+    padding-top: 12px;
+}
+
+body.home .js-answer-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--js-gold-700);
+    margin-bottom: 5px;
+}
+
+body.home .js-answer {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--js-ink) 85%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   03: the supply chain (navy)
+   -------------------------------------------------------------------------- */
+
+body.home .js-chain {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+    margin-top: 44px;
+}
+
+body.home .js-chain-step {
+    position: relative;
+    border: 1px solid var(--js-paper-24);
+    background: rgba(11, 22, 38, .35);
+    padding: 18px 16px;
+}
+
+body.home .js-chain-step:not(:last-child)::after {
+    content: "\2192";
+    position: absolute;
+    right: -19px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--js-heading);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--js-gold-400);
+}
+
+body.home .js-chain-num {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    color: var(--js-gold-400);
+    margin-bottom: 8px;
+}
+
+body.home .js-chain-step h3 {
+    font-size: 19px;
+    letter-spacing: .02em;
+    color: var(--js-paper);
+    margin: 0 0 6px;
+}
+
+body.home .js-chain-step p {
+    margin: 0;
     font-size: 13px;
+    line-height: 1.5;
+    color: rgba(246, 243, 236, .65);
+}
+
+body.home .js-chain-note {
+    margin: 36px 0 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(246, 243, 236, .82);
+    max-width: 62ch;
+}
+
+body.home .js-chain-note strong {
+    color: var(--js-gold-400);
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   04: material strategy
+   -------------------------------------------------------------------------- */
+
+body.home .js-mats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 44px;
+}
+
+body.home .js-mat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px;
+    color: inherit;
+    text-decoration: none;
+}
+
+body.home a.js-mat:hover {
+    background: color-mix(in srgb, var(--js-ink) 4%, transparent);
+    color: inherit;
+}
+
+body.home .js-mat h3 {
+    font-size: 22px;
+    letter-spacing: .02em;
+    margin: 0;
+}
+
+body.home .js-mat-tool {
+    font-size: 11.5px;
     font-weight: 600;
     letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--js-gold-700);
 }
 
-/* Volume rows */
+body.home .js-mat p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--js-ink) 72%, transparent);
+}
+
+body.home .js-mat-link {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--js-gold-700);
+}
+
+body.home .js-mat-line {
+    margin: 44px 0 0;
+    border-top: 1px solid var(--js-divider);
+    padding-top: 20px;
+    font-family: var(--js-heading);
+    font-weight: 600;
+    font-size: clamp(20px, 2.2vw, 26px);
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   05: factory cut-to-size rows
+   -------------------------------------------------------------------------- */
+
 body.home .js-vrows {
     margin-top: 40px;
     border-top: 1px solid var(--js-divider);
@@ -814,42 +836,26 @@ body.home .js-vrow p {
 }
 
 /* --------------------------------------------------------------------------
-   04: sink program (navy field)
+   07: certainty (navy, split)
    -------------------------------------------------------------------------- */
 
-body.home .js-sinkband {
-    background: var(--js-navy-field);
-    color: var(--js-paper);
-}
-
-body.home .js-sinkband .js-wrap {
-    padding-top: clamp(56px, 7vw, 96px);
-    padding-bottom: clamp(56px, 7vw, 96px);
+body.home .js-cert-inner {
     display: flex;
     flex-wrap: wrap;
     gap: 56px;
     align-items: center;
 }
 
-body.home .js-sink-copy {
+body.home .js-cert-copy {
     flex: 1 1 480px;
     min-width: 0;
 }
 
-body.home .js-sinkband .js-seclabel {
-    color: var(--js-gold-400);
-}
-
-body.home .js-sinkband .js-seclabel-rule {
-    background: rgba(246, 243, 236, .18);
-}
-
-body.home .js-sinkband .js-h2 {
-    font-size: clamp(32px, 3.4vw, 44px);
+body.home .js-cert-copy .js-h2 {
     max-width: 22ch;
 }
 
-body.home .js-sink-sub {
+body.home .js-cert-sub {
     font-size: 16px;
     line-height: 1.6;
     color: rgba(246, 243, 236, .72);
@@ -857,70 +863,228 @@ body.home .js-sink-sub {
     margin: 20px 0 0;
 }
 
-body.home .js-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 28px;
-    list-style: none;
-    padding: 0;
-}
-
-body.home .js-tags li {
-    border: 1px solid var(--js-paper-24);
-    color: rgba(246, 243, 236, .72);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
+body.home .js-cert-quote {
+    margin: 28px 0 0;
+    font-family: var(--js-heading);
+    font-weight: 600;
+    font-size: clamp(21px, 2.4vw, 27px);
+    letter-spacing: .02em;
     text-transform: uppercase;
-    padding: 5px 12px;
+    color: var(--js-gold-400);
 }
 
-body.home .js-sink-cta {
-    margin-top: 32px;
-}
-
-body.home .js-sink-fig {
+body.home .js-cert-fig {
     flex: 1 1 360px;
     min-width: 300px;
     max-width: 480px;
     margin: 0;
 }
 
-body.home .js-sink-fig img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: contain;
-    display: block;
-    background: var(--js-paper);
-    padding: 20px;
-    box-sizing: border-box;
+body.home .js-cert-cell {
+    padding: 24px 22px;
 }
 
-body.home .js-sink-fig figcaption {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+body.home .js-cert-cell + .js-cert-cell {
     border-top: 1px solid rgba(246, 243, 236, .3);
-    padding: 11px 14px;
-    font-size: 12px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
 }
 
-body.home .js-sink-fig figcaption .js-fig-name {
+body.home .js-cert-cell strong {
+    display: block;
+    font-family: var(--js-heading);
     font-weight: 600;
+    font-size: 23px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
     color: var(--js-paper);
 }
 
-body.home .js-sink-fig figcaption .js-fig-count {
+body.home .js-cert-cell span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
     font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     color: var(--js-gold-400);
 }
 
+body.home .js-cert-fig figcaption {
+    border-top: 1px solid rgba(246, 243, 236, .3);
+    padding: 11px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(246, 243, 236, .6);
+}
+
 /* --------------------------------------------------------------------------
-   05: order desk (navy field)
+   08: comparison table (blueprint sheet)
+   -------------------------------------------------------------------------- */
+
+body.home .js-sheet {
+    margin-top: 44px;
+}
+
+body.home .js-sheet-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    border-bottom: 1px solid var(--js-divider);
+}
+
+body.home .js-sheet-title {
+    flex: 1;
+    min-width: 16ch;
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+body.home .js-sheet-cell {
+    border-left: 1px solid var(--js-divider);
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: color-mix(in srgb, var(--js-ink) 70%, transparent);
+}
+
+body.home .js-cmp-cols,
+body.home .js-cmp-row {
+    display: grid;
+    grid-template-columns: minmax(130px, .7fr) minmax(220px, 1.15fr) minmax(220px, 1.15fr);
+}
+
+body.home .js-cmp-cols {
+    border-bottom: 1px solid var(--js-divider);
+    padding: 9px 0;
+}
+
+body.home .js-cmp-cols span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
+}
+
+body.home .js-cmp-cols span:first-child {
+    padding-left: 24px;
+}
+
+body.home .js-cmp-cols span:last-child {
+    color: var(--js-gold-700);
+}
+
+body.home .js-cmp-row {
+    border-bottom: 1px solid var(--js-hairline);
+    padding: 16px 0;
+}
+
+body.home .js-cmp-row:last-of-type {
+    border-bottom: none;
+}
+
+body.home .js-cmp-prop {
+    padding-left: 24px;
+    padding-right: 16px;
+    font-family: var(--js-heading);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+body.home .js-cmp-trad,
+body.home .js-cmp-js {
+    padding-right: 24px;
+    font-size: 14.5px;
+    line-height: 1.55;
+}
+
+body.home .js-cmp-trad {
+    color: color-mix(in srgb, var(--js-ink) 58%, transparent);
+}
+
+body.home .js-cmp-js {
+    color: color-mix(in srgb, var(--js-ink) 88%, transparent);
+}
+
+body.home .js-cmp-tag {
+    display: none;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--js-ink) 55%, transparent);
+    margin-bottom: 3px;
+}
+
+body.home .js-cmp-js .js-cmp-tag {
+    color: var(--js-gold-700);
+}
+
+body.home .js-sheet-foot {
+    margin: 0;
+    border-top: 1px solid var(--js-divider);
+    padding: 12px 24px;
+    font-size: 13px;
+    color: color-mix(in srgb, var(--js-ink) 70%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   09: working with Judestone (5 steps)
+   -------------------------------------------------------------------------- */
+
+body.home .js-steps5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin-top: 44px;
+}
+
+body.home .js-step5 {
+    border-top: 1px solid var(--js-divider);
+    padding-top: 14px;
+}
+
+body.home .js-step5-num {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: var(--js-gold-700);
+    margin-bottom: 8px;
+}
+
+body.home .js-step5 h3 {
+    font-size: 20px;
+    letter-spacing: .02em;
+    margin: 0 0 6px;
+}
+
+body.home .js-step5 p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--js-ink) 70%, transparent);
+}
+
+body.home .js-steps-note {
+    margin: 36px 0 0;
+    font-size: 14px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   The order desk (navy CTA band)
    -------------------------------------------------------------------------- */
 
 body.home .js-orderband {
@@ -957,16 +1121,60 @@ body.home .js-order-sub {
     font-size: 16px;
     line-height: 1.6;
     color: rgba(246, 243, 236, .72);
-    max-width: 52ch;
+    max-width: 54ch;
     margin: 20px auto 0;
 }
 
-body.home .js-order-ctas {
+body.home .js-offers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 44px;
+    text-align: left;
+}
+
+body.home .js-offer {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 32px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px;
+    background: rgba(11, 22, 38, .45);
+    border: 1px solid var(--js-paper-24);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .15s ease;
+}
+
+body.home .js-offer:hover {
+    border-color: var(--js-gold-400);
+    color: inherit;
+}
+
+body.home .js-offer h3 {
+    font-size: 21px;
+    letter-spacing: .02em;
+    color: var(--js-paper);
+    margin: 0;
+}
+
+body.home .js-offer p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(246, 243, 236, .68);
+}
+
+body.home .js-offer-cta {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--js-gold-400);
 }
 
 body.home .js-order-steps {
@@ -1011,8 +1219,17 @@ body.home .js-foot-tag {
     font-size: 14px;
     line-height: 1.6;
     color: rgba(246, 243, 236, .6);
-    max-width: 30ch;
+    max-width: 32ch;
     margin: 16px 0 0;
+}
+
+body.home .js-foot-ent {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(246, 243, 236, .45);
+    margin: 14px 0 0;
 }
 
 body.home .js-foot-col {
@@ -1119,29 +1336,58 @@ body.home .js-foot-sheetno {
    Responsive
    -------------------------------------------------------------------------- */
 
+@media (max-width: 1000px) {
+
+    body.home .js-chain {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        border-left: 2px solid var(--js-gold-400);
+        padding-left: 18px;
+    }
+
+    body.home .js-chain-step:not(:last-child)::after {
+        content: none;
+    }
+
+    body.home .js-cards3,
+    body.home .js-mats,
+    body.home .js-offers {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    body.home .js-steps5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 900px) {
 
-    body.home .js-sheet-cols {
+    body.home .js-problems {
+        grid-template-columns: 1fr;
+    }
+
+    body.home .js-cmp-cols {
         display: none;
     }
 
-    body.home .js-sheet-row {
-        grid-template-columns: 44px minmax(0, 1fr) auto;
-        gap: 2px 12px;
-        padding: 14px 0;
+    body.home .js-cmp-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 16px;
     }
 
-    body.home .js-sheet-num {
-        padding-left: 16px;
+    body.home .js-cmp-prop {
+        padding-left: 0;
     }
 
-    body.home .js-sheet-remark {
-        grid-column: 2 / -1;
-        padding-right: 16px;
+    body.home .js-cmp-trad,
+    body.home .js-cmp-js {
+        padding-right: 0;
     }
 
-    body.home .js-sheet-val {
-        padding-right: 16px;
+    body.home .js-cmp-tag {
+        display: block;
     }
 
     body.home .js-vrow {
@@ -1193,26 +1439,27 @@ body.home .js-foot-sheetno {
     body.home .js-hero-main {
         padding: 40px 0 36px;
     }
-
-    body.home .js-pick-name {
-        white-space: normal;
-    }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
 
-    body.home .js-hero-ctas .js-btn,
-    body.home .js-order-ctas .js-btn {
+    body.home .js-cards3,
+    body.home .js-mats,
+    body.home .js-offers,
+    body.home .js-steps5 {
+        grid-template-columns: 1fr;
+    }
+
+    body.home .js-hero-ctas .js-btn {
         flex: 1 1 100%;
     }
 
-    body.home .js-pick {
+    body.home .js-pivot-chip,
+    body.home .js-pivot-note {
         flex: 1 1 100%;
     }
 
-    body.home .js-viewall {
-        flex: 1 1 100%;
-        justify-content: center;
-        padding: 10px 16px;
+    body.home .js-pivot-swap {
+        display: none;
     }
 }
