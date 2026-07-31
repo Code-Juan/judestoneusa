@@ -14,8 +14,12 @@ services:
         sync: false
       - key: POSTMARK_FROM_EMAIL
         sync: false
+      # Real delivery mailbox behind the public info@ address
       - key: POSTMARK_TO_EMAIL
         sync: false
+      # Public-facing address customers reply to
+      - key: POSTMARK_REPLY_TO
+        value: info@judestoneusa.com
       - key: RATE_LIMIT_WINDOW_MS
         value: 900000
       - key: RATE_LIMIT_MAX_REQUESTS

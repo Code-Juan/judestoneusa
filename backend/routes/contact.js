@@ -11,8 +11,17 @@ const postmarkClient = process.env.POSTMARK_API_KEY
     : null;
 
 const FROM_EMAIL = process.env.POSTMARK_FROM_EMAIL || process.env.FROM_EMAIL || 'noreply@judestoneusa.com';
+// Where submissions actually land. Public-facing addresses on the site stay
+// info@; this is the real mailbox behind it.
 const TO_EMAIL = process.env.POSTMARK_TO_EMAIL || process.env.TO_EMAIL || 'info@judestoneusa.com';
+// The address customers see and reply to. Kept separate from TO_EMAIL so the
+// brand address can front a different delivery mailbox.
+const PUBLIC_EMAIL = process.env.POSTMARK_REPLY_TO || 'info@judestoneusa.com';
 const HONEYPOT = process.env.HONEYPOT_FIELD_NAME || 'website';
+
+if (!process.env.POSTMARK_TO_EMAIL && !process.env.TO_EMAIL) {
+    console.warn('POSTMARK_TO_EMAIL is not set - submissions will be sent to the default ' + TO_EMAIL);
+}
 
 // The three order-desk tracks offered on the site, plus a general fallback.
 const TRACKS = {
@@ -157,6 +166,8 @@ router.post('/', validateOrderDesk, async (req, res) => {
         const confirmation = {
             From: FROM_EMAIL,
             To: email,
+            // Replies go to the public address, not the no-reply sender.
+            ReplyTo: PUBLIC_EMAIL,
             Subject: 'We have your project - Judestone',
             HtmlBody: `
                 <div style="background:#f4f1ea;padding:24px;font-family:Arial,sans-serif;">
@@ -232,11 +243,14 @@ router.post('/', validateOrderDesk, async (req, res) => {
 });
 
 // GET /api/contact/health
+// Public endpoint, so it reports whether delivery is configured without
+// disclosing the mailbox itself.
 router.get('/health', (req, res) => {
     res.json({
         status: 'ok',
         service: 'contact-api',
-        postmark: postmarkClient ? 'configured' : 'not configured'
+        postmark: postmarkClient ? 'configured' : 'not configured',
+        delivery: (process.env.POSTMARK_TO_EMAIL || process.env.TO_EMAIL) ? 'configured' : 'default'
     });
 });
 
