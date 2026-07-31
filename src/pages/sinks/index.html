@@ -12,28 +12,26 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sinks - Judestone</title>
+    <title>The Sink Program - Judestone</title>
     <meta name="description"
-        content="Browse our professional-grade sink products. Choose from kitchen and bath sinks in various series and sizes. Bulk quantities available for multifamily and large-scale projects.">
+        content="The Judestone sink program: twenty undermount models across kitchen and bath, with published dimensions and ADA-compliant options, spec'd alongside the countertop so one supplier covers the whole top.">
     <link rel="stylesheet" href="../../assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <!-- Header -->
+    <!-- Masthead -->
     <header>
-        <div class="container">
+        <div class="js-wrap">
             <div class="header-content">
-                <div class="logo">
-                    <a href="/">
-                        <img src="../assets/brand/logo.png" alt="Judestone"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span
-                            style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
-                    </a>
-                </div>
+                <a href="/" class="js-brand">
+                    <span class="js-mark">JS</span>
+                    <span class="js-wordmark">JUDESTONE</span>
+                </a>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
                 <nav>
                     <a href="/">Home</a>
@@ -43,9 +41,10 @@
                     <a href="/contact/">Contact</a>
                 </nav>
                 <div class="header-utils">
+                    <a href="/contact/" class="js-btn js-btn-primary js-nav-quote">Price a project</a>
                     <a href="#" class="saved-designs-link" title="My Saved Designs">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="17"
+                            height="17">
                             <path
                                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                             </path>
@@ -57,21 +56,26 @@
         </div>
     </header>
 
-    <!-- Page Title -->
-    <section class="page-title">
-        <div class="container">
-            <h1>Professional Sink Products</h1>
-            <p>Discover our comprehensive collection of undermount sinks designed for seamless integration with your
-                countertop installation. Available in multiple series and sizes, and we excel at bulk procurement for multifamily and large-scale projects.</p>
+    <!-- Page head -->
+    <section class="js-pagehead">
+        <div class="js-wrap">
+            <div class="js-annot">
+                <span class="js-seclabel">JS-102 &middot; The sink program</span>
+                <span class="js-docno">Rev 2026-07 &middot; 20 models &middot; Undermount</span>
+            </div>
+            <div class="js-seclabel-rule"></div>
+            <h1 class="js-h1">The sink that matches the countertop program.</h1>
+            <p class="js-lede">Spec the sink alongside the quartz and one supplier covers the whole top - twenty
+                undermount models across kitchen and bath, with published dimensions and ADA-compliant options,
+                sized for standard cabinets. Verify cutout dimensions before fabrication.</p>
         </div>
     </section>
 
     <!-- Filter Bar -->
     <section class="filter-bar">
-        <div class="container">
-            <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <button class="filter-toggle" onclick="toggleFilters()"
-                    style="background: none; border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+        <div class="js-wrap">
+            <div class="filter-header">
+                <button class="filter-toggle" onclick="toggleFilters()">
                     <span>Filters</span>
                     <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"
                         style="transition: transform 0.3s; transform: rotate(-90deg);">
@@ -92,10 +96,10 @@
     </section>
 
     <!-- Product Grid -->
-    <section style="padding: var(--spacing-lg) 0;">
-        <div class="container">
+    <section style="padding: var(--spacing-lg) 0 var(--spacing-xl);">
+        <div class="js-wrap">
             <div class="product-grid" id="product-grid">
-                <div class="loading">Loading products...</div>
+                <div class="loading">Loading sink models...</div>
             </div>
             <div class="load-more">
                 <button class="btn btn-secondary" id="load-more-btn" style="display: none;">Load More</button>
@@ -103,43 +107,70 @@
         </div>
     </section>
 
+    <!-- Program note -->
+    <section class="js-band-navy">
+        <div class="js-wrap">
+            <span class="js-seclabel">One supplier, whole top</span>
+            <div class="js-seclabel-rule"></div>
+            <h2 class="js-h2">Spec the sink with the material, not after it.</h2>
+            <p class="js-lede">Sinks come off the same owned supply chain as the countertops and deploy on the same
+                schedule - no chasing a second vendor for the cutout that holds the job up.</p>
+            <div class="js-order-ctas" style="justify-content:flex-start;">
+                <a href="/contact/" class="js-btn js-btn-primary">Price a live project</a>
+                <a href="/quartz-designs/" class="js-btn js-btn-paper">Explore quartz designs</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Our Company</h3>
+        <div class="js-wrap">
+            <div class="js-foot-grid">
+                <div class="js-foot-brand">
+                    <div class="js-brand">
+                        <span class="js-mark">JS</span>
+                        <span class="js-wordmark">JUDESTONE</span>
+                    </div>
+                    <p class="js-foot-tag">The multifamily countertop solutions platform.</p>
+                    <p class="js-foot-ent">A company of The Enterprise &middot; Judestone + The Wooden Stone</p>
+                </div>
+                <div class="js-foot-col">
+                    <h3>Our company</h3>
                     <ul>
-                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/about/">About Judestone</a></li>
                         <li><a href="/contact/">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <div class="js-foot-col">
+                    <h3>The platform</h3>
+                    <ul>
+                        <li><a href="/#problems">Problems we solve</a></li>
+                        <li><a href="/#materials">Material strategy</a></li>
+                        <li><a href="/#national">National programs</a></li>
+                    </ul>
+                </div>
+                <div class="js-foot-col">
                     <h3>Products</h3>
                     <ul>
-                        <li><a href="/quartz-designs/">Quartz Designs</a></li>
+                        <li><a href="/quartz-designs/">Quartz designs</a></li>
                         <li><a href="/sinks/">Sinks</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Get Judestone</h3>
-                    <ul>
-                        <li><a href="../contact/index.html">Contact Us</a></li>
-                        <li><a href="../contact/index.html">Order a Sample</a></li>
-                        <li><a href="../contact/index.html">Request Bulk Quote</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Stay Connected</h3>
-                    <p style="color: var(--gray-light); margin-bottom: var(--spacing-sm);">Sign up for updates</p>
+                <div class="js-foot-col js-foot-col-wide">
+                    <h3>Stay connected</h3>
+                    <p class="js-foot-note">Sign up for new programs and revisions.</p>
                     <form class="email-signup" action="https://formspree.io/f/xreylqrp" method="POST">
-                        <input type="email" name="email" placeholder="Your email" required>
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <input type="email" name="email" placeholder="you@example.com" aria-label="Email address"
+                            required>
+                        <button type="submit" class="js-btn js-btn-primary">Sign up</button>
                     </form>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Judestone. All rights reserved.</p>
+            <div class="js-foot-rule"></div>
+            <div class="js-foot-bottom">
+                <p class="js-foot-copy">&copy; 2026 Judestone &middot; Multifamily Countertop Solutions Platform.
+                    All rights reserved.</p>
+                <p class="js-foot-sheetno">JS-102 &middot; Rev 2026-07</p>
             </div>
         </div>
     </footer>

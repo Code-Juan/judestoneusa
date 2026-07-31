@@ -205,7 +205,7 @@ function createSinkFilters(container, categories, series) {
     // Category filters
     const categoryGroup = document.createElement('div');
     categoryGroup.className = 'filter-group';
-    categoryGroup.innerHTML = '<span style="color: var(--white); margin-right: 8px;">Category:</span>';
+    categoryGroup.innerHTML = '<span style="color: var(--js-ink); margin-right: 8px;">Category:</span>';
 
     const allCategoryBtn = document.createElement('button');
     allCategoryBtn.className = 'filter-btn active';
@@ -226,7 +226,7 @@ function createSinkFilters(container, categories, series) {
     // Series filters
     const seriesGroup = document.createElement('div');
     seriesGroup.className = 'filter-group';
-    seriesGroup.innerHTML = '<span style="color: var(--white); margin-right: 8px;">Series:</span>';
+    seriesGroup.innerHTML = '<span style="color: var(--js-ink); margin-right: 8px;">Series:</span>';
 
     const allSeriesBtn = document.createElement('button');
     allSeriesBtn.className = 'filter-btn active';
