@@ -28,7 +28,7 @@ const TRACKS = {
     'material-strategy': 'Material strategy session',
     'price-project': 'Price a live project',
     'national-program': 'National program review',
-    'general': 'General enquiry'
+    'general': 'General inquiry'
 };
 
 const validateOrderDesk = [
@@ -188,8 +188,7 @@ router.post('/', validateOrderDesk, async (req, res) => {
                       <p style="margin:0;font:400 15px/1.7 Arial,sans-serif;color:#55616e;white-space:pre-wrap;">${esc(message)}</p>
                     </div>
                     <div style="border-top:1px solid #d8d4c9;padding:14px 24px;font:400 12px/1.5 Arial,sans-serif;color:#55616e;">
-                      Judestone - The Multifamily Countertop Solutions Platform<br>
-                      A company of The Enterprise - Judestone + The Wooden Stone
+                      Judestone - The Multifamily Countertop Solutions Platform
                     </div>
                   </div>
                 </div>
@@ -204,8 +203,7 @@ router.post('/', validateOrderDesk, async (req, res) => {
                 `What you sent:`,
                 message,
                 ``,
-                `Judestone - The Multifamily Countertop Solutions Platform`,
-                `A company of The Enterprise - Judestone + The Wooden Stone`
+                `Judestone - The Multifamily Countertop Solutions Platform`
             ].join('\n'),
             MessageStream: 'outbound'
         };

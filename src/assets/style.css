@@ -743,7 +743,7 @@ nav a.active {
     color: color-mix(in srgb, var(--js-ink) 60%, transparent);
 }
 
-/* Enterprise / certainty figure */
+/* Certainty figure */
 .js-cert-inner {
     display: flex;
     flex-wrap: wrap;
