@@ -20,36 +20,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap"
         rel="stylesheet">
 </head>
 
 <body class="home">
-    <!-- Header -->
+    <!-- Masthead -->
     <header>
-        <div class="container">
+        <div class="js-wrap">
             <div class="header-content">
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="../assets/brand/logo.png" alt="Judestone"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span
-                            style="display:none; font-size: 1.5rem; font-weight: 700; color: var(--white);">JUDESTONE</span>
-                    </a>
-                </div>
+                <a href="index.html" class="js-brand">
+                    <span class="js-mark">JS</span>
+                    <span class="js-wordmark">JUDESTONE</span>
+                </a>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
                 <nav>
-                    <a href="index.html">Home</a>
-                    <a href="about/index.html">About Judestone</a>
-                    <a href="quartz-designs/index.html">Quartz Designs</a>
+                    <a href="quartz-designs/index.html">Quartz designs</a>
                     <a href="sinks/index.html">Sinks</a>
+                    <a href="#volume">Volume supply</a>
+                    <a href="about/index.html">About Judestone</a>
                     <a href="contact/index.html">Contact</a>
                 </nav>
                 <div class="header-utils">
-                    <a href="contact/index.html" class="js-nav-cta">Request a Quote</a>
+                    <a href="contact/index.html" class="js-btn js-btn-primary js-nav-quote">Request a quote</a>
                     <a href="#" class="saved-designs-link" title="My Saved Designs">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="17"
+                            height="17">
                             <path
                                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                             </path>
@@ -62,289 +58,333 @@
     </header>
 
     <main>
-        <!-- Bento hero -->
+        <!-- Hero: full-bleed slab, spec-sheet furniture, design picker -->
         <section class="js-hero">
-            <div class="container">
-                <div class="js-bento">
-                    <div class="js-tile js-tile-copy">
-                        <div>
-                            <span class="js-chip">Premium Quartz · Sinks · Bulk Supply</span>
-                            <h1>Quartz that holds up.<br><span class="js-accent">Supply that keeps&nbsp;up.</span>
-                            </h1>
-                            <p class="js-hero-sub">Judestone curates premium quartz designs and professional-grade
-                                undermount sinks, then delivers them at any volume - a single kitchen or hundreds of
-                                multifamily units, priced across five straightforward groups.</p>
-                            <div class="js-hero-ctas">
-                                <a href="quartz-designs/index.html" class="js-btn js-btn-gold">Explore Quartz
-                                    Designs</a>
-                                <a href="contact/index.html" class="js-btn js-btn-ghost">Request a Bulk Quote</a>
-                            </div>
-                            <ul class="js-hero-tags">
-                                <li>20 undermount sink models</li>
-                                <li>ADA options</li>
-                                <li>Samples available</li>
-                                <li>Multifamily &amp; large-scale</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <a href="quartz-designs/index.html" class="js-tile js-tile-media js-tile-a">
-                        <img src="/images/materials/calacatta-royale.jpg" alt="Calacatta Royale quartz design">
-                        <span class="js-tile-tag"><strong>Calacatta Royale</strong><span>Group 5</span></span>
-                    </a>
-                    <div class="js-tile js-tile-stat">
-                        <strong>16</strong>
-                        <span>Curated quartz designs in five price groups</span>
-                    </div>
-                    <a href="quartz-designs/index.html" class="js-tile js-tile-media js-tile-b">
-                        <img src="/images/materials/obsidian-venato.jpg" alt="Obsidian Venato quartz design">
-                        <span class="js-tile-tag"><strong>Obsidian Venato</strong><span>Group 4</span></span>
-                    </a>
+            <div class="js-hero-bg" data-hero-stage>
+                <img src="/images/materials/calacatta-royale.jpg" alt="Calacatta Royale quartz slab" class="is-active"
+                    data-name="Calacatta Royale" data-group="Group 5">
+                <img src="/images/materials/luna-calacatta.jpg" alt="Luna Calacatta quartz slab"
+                    data-name="Luna Calacatta" data-group="Group 5" loading="lazy">
+                <img src="/images/materials/obsidian-venato.jpg" alt="Obsidian Venato quartz slab"
+                    data-name="Obsidian Venato" data-group="Group 4" loading="lazy">
+                <img src="/images/materials/nocturne-stone.jpg" alt="Nocturne Stone quartz slab"
+                    data-name="Nocturne Stone" data-group="Group 4" loading="lazy">
+                <img src="/images/materials/aurora-venato.jpg" alt="Aurora Venato quartz slab"
+                    data-name="Aurora Venato" data-group="Group 3" loading="lazy">
+            </div>
+            <div class="js-hero-shade"></div>
+            <div class="js-wrap js-hero-inner">
+                <div class="js-annot">
+                    <span class="js-kicker">Premium quartz &middot; Sinks &middot; Bulk supply</span>
+                    <span class="js-sheetno">JS-100 &middot; Rev 2026-07 &middot; Sheet 01 of 05</span>
                 </div>
-            </div>
-        </section>
-
-        <!-- Collection rail -->
-        <section class="js-section js-collection">
-            <div class="container">
-                <div class="js-rail-head js-reveal">
-                    <div>
-                        <span class="js-chip">The Collection</span>
-                        <h2 class="js-h2">Sixteen designs. No filler.</h2>
-                        <p class="js-lede">From bright polished whites to bold calacattas and dramatic darks - every
-                            design works in kitchens, baths, and high-traffic commercial spaces.</p>
-                    </div>
-                    <div class="js-rail-nav">
-                        <button type="button" class="js-rail-btn" data-rail-prev aria-label="Scroll designs left">
-                            ←</button>
-                        <button type="button" class="js-rail-btn" data-rail-next aria-label="Scroll designs right">
-                            →</button>
-                    </div>
-                </div>
-            </div>
-            <div class="js-rail js-reveal" data-rail tabindex="0" aria-label="Quartz design collection">
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/calacatta-royale.jpg"
-                            alt="Calacatta Royale quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Calacatta Royale</span><span
-                            class="js-rail-group">Group 5</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/luna-calacatta.jpg"
-                            alt="Luna Calacatta quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Luna Calacatta</span><span
-                            class="js-rail-group">Group 5</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/obsidian-venato.jpg"
-                            alt="Obsidian Venato quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Obsidian Venato</span><span
-                            class="js-rail-group">Group 4</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/nocturne-stone.jpg"
-                            alt="Nocturne Stone quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Nocturne Stone</span><span
-                            class="js-rail-group">Group 4</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/aurora-venato.jpg" alt="Aurora Venato quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Aurora Venato</span><span
-                            class="js-rail-group">Group 3</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/bianco-crest.jpg" alt="Bianco Crest quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Bianco Crest</span><span
-                            class="js-rail-group">Group 3</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/venato-classic.jpg"
-                            alt="Venato Classic quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Venato Classic</span><span
-                            class="js-rail-group">Group 3</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/summit-fog.jpg" alt="Summit Fog quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Summit Fog</span><span
-                            class="js-rail-group">Group 3</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/alpine-pure.jpg" alt="Alpine Pure quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Alpine Pure</span><span
-                            class="js-rail-group">Group 3</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/imperial-pearl.jpg"
-                            alt="Imperial Pearl quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Imperial Pearl</span><span
-                            class="js-rail-group">Group 2</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/coastal-mist.jpg" alt="Coastal Mist quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Coastal Mist</span><span
-                            class="js-rail-group">Group 2</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/glacier-frost.jpg" alt="Glacier Frost quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Glacier Frost</span><span
-                            class="js-rail-group">Group 1</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/arctic-tundra.jpg" alt="Arctic Tundra quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Arctic Tundra</span><span
-                            class="js-rail-group">Group 1</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/sterling-ash.jpg" alt="Sterling Ash quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Sterling Ash</span><span
-                            class="js-rail-group">Group 1</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/titanium-ridge.jpg"
-                            alt="Titanium Ridge quartz" loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Titanium Ridge</span><span
-                            class="js-rail-group">Group 1</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-card">
-                    <div class="js-rail-img"><img src="/images/materials/desert-dune.jpg" alt="Desert Dune quartz"
-                            loading="lazy"></div>
-                    <div class="js-rail-info"><span class="js-rail-name">Desert Dune</span><span
-                            class="js-rail-group">Group 1</span></div>
-                </a>
-                <a href="quartz-designs/index.html" class="js-rail-more">
-                    <span class="js-rail-arrow">→</span>
-                    <strong>View the full collection</strong>
-                    <span>Filter by tone, group, and finish on the designs page</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- Built for volume -->
-        <section class="js-section js-volume">
-            <div class="container">
-                <div class="js-rows-head js-reveal">
-                    <span class="js-chip">Built for Volume</span>
-                    <h2 class="js-h2">One kitchen or four hundred units. Same finish, same schedule.</h2>
-                    <p class="js-lede">Judestone serves projects of all sizes, and is built around bulk procurement
-                        and delivery for multifamily and large-scale construction.</p>
-                </div>
-                <ul class="js-rows">
-                    <li class="js-row js-reveal">
-                        <h3>Project-level pricing</h3>
-                        <p>Quotes priced across five material groups for the full unit count - not slab by slab - so
-                            budgeting a building is as simple as budgeting a kitchen.</p>
-                    </li>
-                    <li class="js-row js-reveal">
-                        <h3>Consistency at scale</h3>
-                        <p>Engineered quartz keeps pattern and color consistent from the model unit to the last
-                            building, so unit 400 matches the one your buyers toured.</p>
-                    </li>
-                    <li class="js-row js-reveal">
-                        <h3>Delivery that follows the build</h3>
-                        <p>Bulk orders are staged and delivered for multifamily and large-scale builds, so material
-                            lands when the construction schedule needs it.</p>
-                    </li>
-                    <li class="js-row js-reveal">
-                        <h3>Samples before commitments</h3>
-                        <p>Order samples, compare designs side by side, and save favorites - see the material in
-                            your own light before a project rides on it.</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Sink panel -->
-        <section class="js-section js-sinks">
-            <div class="container">
-                <div class="js-sink-panel js-reveal">
-                    <div>
-                        <span class="js-chip">Sink Program</span>
-                        <h2>The sink that matches the countertop program.</h2>
-                        <p class="js-lede">Spec the sink alongside the quartz and one supplier covers the whole top -
-                            twenty undermount models with published dimensions, sized for standard cabinets.</p>
-                        <ul class="js-sink-tags">
-                            <li>Kitchen</li>
-                            <li>Bath &amp; Vanity</li>
-                            <li>ADA-compliant options</li>
-                            <li>Undermount</li>
-                        </ul>
-                        <a href="sinks/index.html" class="js-btn js-btn-navy">Browse Sink Models</a>
-                    </div>
-                    <figure class="js-sink-media">
-                        <img src="https://strictlysinks.store/wp-content/uploads/2025/06/R28R-SS-4-Sink-Only.jpg"
-                            alt="Judestone R28R undermount kitchen sink" loading="lazy"
-                            onerror="this.closest('figure').style.display='none';">
-                        <figcaption>R-Series · Undermount</figcaption>
-                    </figure>
-                </div>
-            </div>
-        </section>
-
-        <!-- Closing CTA -->
-        <section class="js-section js-close">
-            <div class="container">
-                <div class="js-cta-panel js-reveal">
-                    <h2>Spec Judestone on your next project.</h2>
-                    <p>Tell us what you're building and we'll come back with designs, samples, and a quote that fits
-                        the scale of the job.</p>
+                <div class="js-rule"></div>
+                <div class="js-hero-main">
+                    <h1><span>Quartz that holds up.</span><span class="js-goldline">Supply that keeps
+                            up.</span></h1>
+                    <p class="js-hero-sub">Judestone curates sixteen premium quartz designs and twenty
+                        professional-grade undermount sinks, then delivers them at any volume - a single kitchen or
+                        four hundred units - priced across five straightforward groups.</p>
                     <div class="js-hero-ctas">
-                        <a href="contact/index.html" class="js-btn js-btn-navy">Request a Bulk Quote</a>
-                        <a href="contact/index.html" class="js-btn js-btn-navy-ghost">Order a Sample</a>
+                        <a href="quartz-designs/index.html" class="js-btn js-btn-primary">Explore quartz designs</a>
+                        <a href="contact/index.html" class="js-btn js-btn-paper">Request a bulk quote</a>
                     </div>
-                    <p class="js-cta-steps">Browse · Sample · Quote · Delivery</p>
+                    <p class="js-hero-meta">20 undermount sink models &middot; ADA options &middot; Samples
+                        available &middot; Multifamily &amp; large-scale</p>
                 </div>
+                <div class="js-annot">
+                    <span class="js-kicker" style="font-size:12px;">The collection &middot; Sixteen designs</span>
+                    <span class="js-sheetno">Shown: <span data-hero-shown>Calacatta Royale &middot; Group
+                            5</span></span>
+                </div>
+                <div class="js-rule js-picker-rule"></div>
+                <div class="js-picker" data-hero-picker>
+                    <button type="button" class="js-pick is-active" data-pick="0">
+                        <img class="js-pick-thumb" src="/images/materials/calacatta-royale.jpg" alt="" loading="lazy">
+                        <span class="js-pick-text"><span class="js-pick-name">Calacatta Royale</span><span
+                                class="js-pick-group">Group 5</span></span>
+                    </button>
+                    <button type="button" class="js-pick" data-pick="1">
+                        <img class="js-pick-thumb" src="/images/materials/luna-calacatta.jpg" alt="" loading="lazy">
+                        <span class="js-pick-text"><span class="js-pick-name">Luna Calacatta</span><span
+                                class="js-pick-group">Group 5</span></span>
+                    </button>
+                    <button type="button" class="js-pick" data-pick="2">
+                        <img class="js-pick-thumb" src="/images/materials/obsidian-venato.jpg" alt="" loading="lazy">
+                        <span class="js-pick-text"><span class="js-pick-name">Obsidian Venato</span><span
+                                class="js-pick-group">Group 4</span></span>
+                    </button>
+                    <button type="button" class="js-pick" data-pick="3">
+                        <img class="js-pick-thumb" src="/images/materials/nocturne-stone.jpg" alt="" loading="lazy">
+                        <span class="js-pick-text"><span class="js-pick-name">Nocturne Stone</span><span
+                                class="js-pick-group">Group 4</span></span>
+                    </button>
+                    <button type="button" class="js-pick" data-pick="4">
+                        <img class="js-pick-thumb" src="/images/materials/aurora-venato.jpg" alt="" loading="lazy">
+                        <span class="js-pick-text"><span class="js-pick-name">Aurora Venato</span><span
+                                class="js-pick-group">Group 3</span></span>
+                    </button>
+                    <a href="quartz-designs/index.html" class="js-viewall">View all 16
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sheet 01: performance data -->
+        <section class="js-datasheet-band">
+            <div class="js-wrap">
+                <div class="js-bp">
+                    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                        class="corner br"></i>
+                    <div class="js-sheet-head">
+                        <span class="js-sheet-title">Judestone - supply performance data</span>
+                        <span class="js-sheet-cell">JS-100</span>
+                        <span class="js-sheet-cell">Rev 2026-07</span>
+                        <span class="js-sheet-cell">Sheet 01 of 05</span>
+                    </div>
+                    <div class="js-sheet-cols">
+                        <span>No.</span>
+                        <span>Property</span>
+                        <span>Value</span>
+                        <span>Remark</span>
+                    </div>
+                    <div class="js-sheet-row">
+                        <span class="js-sheet-num">01</span>
+                        <span class="js-sheet-prop">Curated quartz designs</span>
+                        <span class="js-sheet-val">16</span>
+                        <span class="js-sheet-remark">Polished whites to dramatic darks - no filler</span>
+                    </div>
+                    <div class="js-sheet-row">
+                        <span class="js-sheet-num">02</span>
+                        <span class="js-sheet-prop">Straightforward price groups</span>
+                        <span class="js-sheet-val">5</span>
+                        <span class="js-sheet-remark">Quote a building as simply as a kitchen</span>
+                    </div>
+                    <div class="js-sheet-row">
+                        <span class="js-sheet-num">03</span>
+                        <span class="js-sheet-prop">Undermount sink models</span>
+                        <span class="js-sheet-val">20</span>
+                        <span class="js-sheet-remark">Published dimensions; ADA-compliant options</span>
+                    </div>
+                    <div class="js-sheet-row">
+                        <span class="js-sheet-num">04</span>
+                        <span class="js-sheet-prop">Volume range, per order</span>
+                        <span class="js-sheet-val">1 - 400+</span>
+                        <span class="js-sheet-remark">A single kitchen to full multifamily, same schedule</span>
+                    </div>
+                    <p class="js-sheet-foot">Values hold for the current printing. Samples ship before any
+                        commitment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02: the collection -->
+        <section id="collection" class="js-band">
+            <div class="js-wrap">
+                <span class="js-seclabel">02 &middot; The collection</span>
+                <div class="js-seclabel-rule"></div>
+                <div class="js-sec-head">
+                    <h2 class="js-h2">Sixteen designs. No filler.</h2>
+                    <p class="js-side-note">Slabs shown true to material - no color grading</p>
+                </div>
+                <p class="js-lede">From bright polished whites to bold calacattas and dramatic darks - every design
+                    holds up in kitchens, baths, and high-traffic commercial spaces.</p>
+                <div class="js-slabs">
+                    <a href="quartz-designs/index.html" class="js-bp js-slab">
+                        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                            class="corner br"></i>
+                        <img class="js-slab-img" src="/images/materials/calacatta-royale.jpg"
+                            alt="Calacatta Royale quartz" loading="lazy">
+                        <span class="js-slab-cap"><span class="js-slab-name">Calacatta Royale</span><span
+                                class="js-slab-group">Group 5</span></span>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-bp js-slab">
+                        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                            class="corner br"></i>
+                        <img class="js-slab-img" src="/images/materials/luna-calacatta.jpg"
+                            alt="Luna Calacatta quartz" loading="lazy">
+                        <span class="js-slab-cap"><span class="js-slab-name">Luna Calacatta</span><span
+                                class="js-slab-group">Group 5</span></span>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-bp js-slab">
+                        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                            class="corner br"></i>
+                        <img class="js-slab-img" src="/images/materials/obsidian-venato.jpg"
+                            alt="Obsidian Venato quartz" loading="lazy">
+                        <span class="js-slab-cap"><span class="js-slab-name">Obsidian Venato</span><span
+                                class="js-slab-group">Group 4</span></span>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-bp js-slab">
+                        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                            class="corner br"></i>
+                        <img class="js-slab-img" src="/images/materials/nocturne-stone.jpg"
+                            alt="Nocturne Stone quartz" loading="lazy">
+                        <span class="js-slab-cap"><span class="js-slab-name">Nocturne Stone</span><span
+                                class="js-slab-group">Group 4</span></span>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-bp js-slab">
+                        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                            class="corner br"></i>
+                        <img class="js-slab-img" src="/images/materials/aurora-venato.jpg"
+                            alt="Aurora Venato quartz" loading="lazy">
+                        <span class="js-slab-cap"><span class="js-slab-name">Aurora Venato</span><span
+                                class="js-slab-group">Group 3</span></span>
+                    </a>
+                    <a href="quartz-designs/index.html" class="js-bp js-index-card">
+                        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                            class="corner br"></i>
+                        <span class="js-index-label">Index</span>
+                        <span class="js-index-title">Eleven more designs in the book</span>
+                        <span class="js-index-cta">View all sixteen
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03: built for volume -->
+        <section id="volume" class="js-band">
+            <div class="js-wrap">
+                <span class="js-seclabel">03 &middot; Built for volume</span>
+                <div class="js-seclabel-rule"></div>
+                <h2 class="js-h2" style="max-width:26ch;">One kitchen or four hundred units. Same finish, same
+                    schedule.</h2>
+                <p class="js-lede" style="max-width:60ch;">Judestone is built around bulk procurement for multifamily
+                    and large-scale construction - and serves a single kitchen off the same sheet.</p>
+                <div class="js-vrows">
+                    <div class="js-vrow">
+                        <span class="js-vrow-num">01</span>
+                        <h3>Project-level pricing</h3>
+                        <p>Quotes are priced across five material groups for the full unit count - not slab by
+                            slab - so budgeting a building is as simple as budgeting a kitchen.</p>
+                    </div>
+                    <div class="js-vrow">
+                        <span class="js-vrow-num">02</span>
+                        <h3>Consistency at scale</h3>
+                        <p>Engineered quartz holds pattern and color from the model unit to the last building -
+                            unit 400 matches the one your buyers toured.</p>
+                    </div>
+                    <div class="js-vrow">
+                        <span class="js-vrow-num">03</span>
+                        <h3>Delivery that follows the build</h3>
+                        <p>Bulk orders are staged and delivered against the construction schedule, so material lands
+                            when the trades need it - not before, not after.</p>
+                    </div>
+                    <div class="js-vrow">
+                        <span class="js-vrow-num">04</span>
+                        <h3>Samples before commitments</h3>
+                        <p>Order samples, compare designs side by side, and see the material in your own light
+                            before a project rides on it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04: the sink program -->
+        <section id="sinks" class="js-sinkband">
+            <div class="js-wrap">
+                <div class="js-sink-copy">
+                    <span class="js-seclabel">04 &middot; The sink program</span>
+                    <div class="js-seclabel-rule"></div>
+                    <h2 class="js-h2">The sink that matches the countertop program.</h2>
+                    <p class="js-sink-sub">Spec the sink alongside the quartz and one supplier covers the whole
+                        top - twenty undermount models with published dimensions, sized for standard cabinets.</p>
+                    <ul class="js-tags">
+                        <li>Kitchen</li>
+                        <li>Bath &amp; vanity</li>
+                        <li>ADA-compliant</li>
+                        <li>Undermount</li>
+                    </ul>
+                    <div class="js-sink-cta">
+                        <a href="sinks/index.html" class="js-btn js-btn-primary">Browse sink models</a>
+                    </div>
+                </div>
+                <figure class="js-bp js-bp-dark js-sink-fig">
+                    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
+                        class="corner br"></i>
+                    <img src="https://strictlysinks.store/wp-content/uploads/2025/06/R28R-SS-4-Sink-Only.jpg"
+                        alt="Judestone R28R undermount kitchen sink" loading="lazy"
+                        onerror="this.closest('figure').style.display='none';">
+                    <figcaption>
+                        <span class="js-fig-name">R-Series &middot; Undermount</span>
+                        <span class="js-fig-count">20 models</span>
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- 05: the order desk -->
+        <section id="order" class="js-orderband">
+            <div class="js-wrap">
+                <span class="js-seclabel">05 &middot; The order desk</span>
+                <div class="js-order-rule"></div>
+                <h2>Spec Judestone on your next project.</h2>
+                <p class="js-order-sub">Tell us what you&rsquo;re building and we&rsquo;ll come back with designs,
+                    samples, and a quote that fits the scale of the job.</p>
+                <div class="js-order-ctas">
+                    <a href="contact/index.html" class="js-btn js-btn-primary">Request a bulk quote</a>
+                    <a href="contact/index.html" class="js-btn js-btn-paper">Order a sample</a>
+                </div>
+                <div class="js-order-steps">Browse &middot; Sample &middot; Quote &middot; Delivery</div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="js-footer-brand">
-                <strong>JUDESTONE</strong>
-                <span>Premium quartz designs &amp; sink products, supplied at scale.</span>
-            </div>
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Our Company</h3>
+        <div class="js-wrap">
+            <div class="js-foot-grid">
+                <div class="js-foot-brand">
+                    <div class="js-brand">
+                        <span class="js-mark">JS</span>
+                        <span class="js-wordmark">JUDESTONE</span>
+                    </div>
+                    <p class="js-foot-tag">Premium quartz designs and sink products, supplied at scale.</p>
+                </div>
+                <div class="js-foot-col">
+                    <h3>Our company</h3>
                     <ul>
-                        <li><a href="about/index.html">About Us</a></li>
+                        <li><a href="about/index.html">About Judestone</a></li>
                         <li><a href="contact/index.html">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <div class="js-foot-col">
                     <h3>Products</h3>
                     <ul>
-                        <li><a href="quartz-designs/index.html">Quartz Designs</a></li>
+                        <li><a href="quartz-designs/index.html">Quartz designs</a></li>
                         <li><a href="sinks/index.html">Sinks</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <div class="js-foot-col">
                     <h3>Get Judestone</h3>
                     <ul>
-                        <li><a href="contact/index.html">Contact Us</a></li>
-                        <li><a href="contact/index.html">Order a Sample</a></li>
-                        <li><a href="contact/index.html">Request Bulk Quote</a></li>
+                        <li><a href="contact/index.html">Order a sample</a></li>
+                        <li><a href="contact/index.html">Request a bulk quote</a></li>
+                        <li><a href="quartz-designs/index.html">Saved designs</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Stay Connected</h3>
-                    <p class="footer-note">Sign up for updates</p>
+                <div class="js-foot-col js-foot-col-wide">
+                    <h3>Stay connected</h3>
+                    <p class="js-foot-note">Sign up for new designs and revisions.</p>
                     <form class="email-signup" action="https://formspree.io/f/xreylqrp" method="POST">
-                        <input type="email" name="email" placeholder="Your email" required>
-                        <button type="submit" class="js-btn js-btn-gold">Sign Up</button>
+                        <input type="email" name="email" placeholder="you@example.com" aria-label="Email address"
+                            required>
+                        <button type="submit" class="js-btn js-btn-primary">Sign up</button>
                     </form>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Judestone. All rights reserved.</p>
+            <div class="js-foot-rule"></div>
+            <div class="js-foot-bottom">
+                <p class="js-foot-copy">&copy; 2026 Judestone. All rights reserved.</p>
+                <p class="js-foot-sheetno">JS-100 &middot; Rev 2026-07 &middot; Sheet 05 of 05</p>
             </div>
         </div>
     </footer>
