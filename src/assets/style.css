@@ -2812,3 +2812,100 @@ form.email-signup,
         grid-template-columns: 1fr;
     }
 }
+
+/* ---------------------------------------------------------------
+   Rev 2026-08: combined material book (quartz + granite)
+   --------------------------------------------------------------- */
+
+/* Filter rows are labelled now that there are four of them */
+.filter-container {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.filter-group {
+    padding: 6px 0;
+}
+
+.filter-group + .filter-group {
+    border-top: 1px solid color-mix(in srgb, var(--js-ink) 12%, transparent);
+}
+
+.filter-group-label {
+    font-family: var(--js-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+    color: color-mix(in srgb, var(--js-ink) 65%, transparent);
+    min-width: 84px;
+    margin-right: 4px;
+}
+
+.js-result-count {
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--js-ink) 60%, transparent);
+    margin-left: auto;
+    margin-right: 12px;
+    white-space: nowrap;
+}
+
+/* Upgrade tier reads as a badge rather than its own group */
+.js-upgrade-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: var(--js-gold-400);
+    color: var(--js-ink);
+    font-family: var(--js-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.66rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+/* Homepage hero: cross-fading slab slideshow */
+body.home .js-hero-bg .js-hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.1s ease-in-out;
+}
+
+body.home .js-hero-bg .js-hero-slide.is-active {
+    opacity: 1;
+}
+
+body.home .js-hero-shown {
+    position: absolute;
+    right: 16px;
+    bottom: 14px;
+    z-index: 3;
+    font-family: var(--js-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    color: color-mix(in srgb, var(--js-paper) 78%, transparent);
+    background: color-mix(in srgb, var(--js-ink) 42%, transparent);
+    padding: 4px 10px;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .filter-group-label { min-width: 100%; margin-bottom: 2px; }
+    .js-result-count { margin-right: 8px; }
+    body.home .js-hero-shown { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.home .js-hero-bg .js-hero-slide { transition: none; }
+}

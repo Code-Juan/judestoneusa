@@ -9,9 +9,21 @@
   status = 200
 
 [[redirects]]
-  from = "/quartz-designs"
-  to = "/quartz-designs/index.html"
+  from = "/materials"
+  to = "/materials/index.html"
   status = 200
+
+# The quartz book became the material book in Rev 2026-08; the old path is
+# kept so published links and print collateral keep resolving.
+[[redirects]]
+  from = "/quartz-designs"
+  to = "/materials/"
+  status = 301
+
+[[redirects]]
+  from = "/quartz-designs/*"
+  to = "/materials/"
+  status = 301
 
 [[redirects]]
   from = "/sinks"

@@ -15,7 +15,9 @@ function parseCSV(filePath) {
         for (let j = 0; j < lines[i].length; j++) {
             const char = lines[i][j];
             if (char === '"') {
-                inQuotes = !inQuotes;
+                // "" inside a quoted field is a literal quote (inch marks, etc.)
+                if (inQuotes && lines[i][j + 1] === '"') { current += '"'; j++; }
+                else { inQuotes = !inQuotes; }
             } else if (char === ',' && !inQuotes) {
                 values.push(current.trim());
                 current = '';
@@ -47,7 +49,7 @@ const sinksRaw = parseCSV(sinksPath);
 
 // Strip brand-related data from output (keys and tag values from config)
 const configPath = path.join(__dirname, 'brand-strip-config.json');
-let BRAND_KEYS_TO_REMOVE = ['Brand'];
+let BRAND_KEYS_TO_REMOVE = ['Brand', 'Vendor Material Name', 'Previous Name'];
 let TAG_VALUES_TO_STRIP = [];
 try {
     const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
@@ -76,7 +78,8 @@ const sinks = sinksRaw.map(s => sanitizeItem(s, false));
 function extractFilters(items, tagColumn) {
     const filters = new Set();
     const stripPart = TAG_VALUES_TO_STRIP.length ? '|' + TAG_VALUES_TO_STRIP.map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') : '';
-    const excludePattern = new RegExp('^(Quartz|Group \\d+|Kitchen|Bath' + stripPart + ')$', 'i');
+    // tags that already have a dedicated control must not also become filter chips
+    const excludePattern = new RegExp('^(Quartz|Granite|Upgrade|Group \\d+|Kitchen|Bath|Undermount|Stainless Steel|Porcelain' + stripPart + ')$', 'i');
     items.forEach(item => {
         if (item[tagColumn]) {
             const tags = item[tagColumn].split(';').map(t => t.trim());

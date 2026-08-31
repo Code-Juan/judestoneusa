@@ -19,9 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
         initProductDetailPage();
     } else if (path.includes('sinks')) {
         initSinksGallery();
-    } else if (path.includes('quartz-designs') || path.endsWith('/') || path.includes('index')) {
-        initQuartzGallery();
+    } else if (path.includes('materials') || path.includes('quartz-designs') || path.endsWith('/') || path.includes('index')) {
+        initMaterialsGallery();
     }
+
+    // Homepage hero: cycle a random slab behind the headline
+    initHeroSlideshow();
 
     // Initialize mobile menu
     initMobileMenu();
@@ -66,6 +69,55 @@ function initEmailSignup() {
     });
 }
 
+// Homepage hero slideshow: cycles a random slab from the live catalogue, so
+// the hero can never point at a design that has been discontinued.
+function initHeroSlideshow() {
+    const stage = document.querySelector('.js-hero-bg');
+    if (!stage || !productsData || !productsData.materials || !productsData.materials.length) return;
+
+    const pool = productsData.materials.slice();
+    for (let i = pool.length - 1; i > 0; i--) {          // shuffle once per load
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    const caption = document.querySelector('.js-hero-shown');
+    const layers = [document.createElement('img'), document.createElement('img')];
+    layers.forEach((img, i) => {
+        img.className = 'js-hero-slide' + (i === 0 ? ' is-active' : '');
+        img.alt = '';
+        img.setAttribute('aria-hidden', 'true');
+        stage.appendChild(img);
+    });
+
+    let index = 0, front = 0;
+    const show = (item, img) => {
+        img.src = item['Image URL'];
+        img.alt = item['Color Name'] + ' ' + item.Material.toLowerCase() + ' slab';
+        if (caption) caption.textContent = 'Shown: ' + item['Color Name'] + ' ' + item.Material.toLowerCase();
+    };
+
+    show(pool[0], layers[0]);
+    stage.querySelectorAll('img:not(.js-hero-slide)').forEach(el => el.remove());
+
+    if (pool.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    setInterval(() => {
+        index = (index + 1) % pool.length;
+        const back = 1 - front;
+        const img = layers[back];
+        const next = pool[index];
+        const pre = new Image();
+        pre.onload = () => {                              // only cross-fade once decoded
+            show(next, img);
+            layers[front].classList.remove('is-active');
+            img.classList.add('is-active');
+            front = back;
+        };
+        pre.src = next['Image URL'];
+    }, 6000);
+}
+
 // Mobile Menu Toggle
 function initMobileMenu() {
     const toggle = document.querySelector('.mobile-menu-toggle');
@@ -78,8 +130,31 @@ function initMobileMenu() {
     }
 }
 
-// Quartz Designs Gallery
-function initQuartzGallery() {
+// Colour tags get their own filter row; everything else is a "look" chip.
+const COLOUR_TAGS = ['White', 'Grey', 'Black', 'Beige', 'Brown', 'Cream', 'Gold'];
+
+// Structural tags carry data shown elsewhere on the card, so they are not
+// repeated as descriptive chips.
+const STRUCTURAL_TAGS = /^(Quartz|Granite|Upgrade|Group \d+|Kitchen|Bath|Undermount|Stainless Steel|Porcelain)$/i;
+
+function displayTags(tagStr) {
+    if (!tagStr) return [];
+    return tagStr.split(';').map(t => t.trim()).filter(t => t && !STRUCTURAL_TAGS.test(t));
+}
+
+// 'Imperial Pearl' exists in both quartz and granite, so a material is
+// identified by its qualified slug rather than by colour name alone.
+function productKey(product, type) {
+    if (type === 'material') return product.Slug || product['Color Name'];
+    return product.Model;
+}
+
+function groupLabel(product) {
+    return 'Group ' + product.Group + (product.Upgrade === 'Yes' ? ' Upgrade' : '');
+}
+
+// Materials Gallery (quartz + granite in one book)
+function initMaterialsGallery() {
     if (!productsData || !productsData.materials) return;
 
     const filterBar = document.querySelector('.filter-bar');
@@ -88,41 +163,103 @@ function initQuartzGallery() {
 
     if (!filterBar || !productGrid) return;
 
-    // Create filter buttons
-    createFilterButtons(filterBar, productsData.materialFilters || []);
+    createMaterialFilters(filterBar, productsData.materials, productsData.materialFilters || []);
 
-    // Render products
-    let filteredProducts = [...productsData.materials];
-    renderProducts(productGrid, filteredProducts, 'material');
+    // Deep links such as /materials/?material=Granite preselect a filter row
+    const params = new URLSearchParams(window.location.search);
+    ['material', 'group', 'colour', 'look'].forEach(dim => {
+        const wanted = params.get(dim);
+        if (!wanted) return;
+        const btn = filterBar.querySelector('[data-filter="' + dim + '"][data-value="' + CSS.escape(wanted) + '"]');
+        if (!btn) return;
+        btn.closest('.filter-group').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
 
-    // Filter functionality
-    const filterButtons = filterBar.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
+    const apply = () => {
+        const pick = (dim) => {
+            const btn = filterBar.querySelector('[data-filter="' + dim + '"].active');
+            return btn ? btn.dataset.value : 'ALL';
+        };
+        let out = filterMaterials(productsData.materials, {
+            material: pick('material'),
+            group: pick('group'),
+            colour: pick('colour'),
+            look: pick('look')
+        });
+        out = sortProducts(out, sortSelect ? sortSelect.value : 'recommended');
+        renderProducts(productGrid, out, 'material');
+        updateResultCount(out.length, productsData.materials.length);
+    };
+
+    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-            // Toggle active state
-            filterButtons.forEach(b => b.classList.remove('active'));
+            const row = this.closest('.filter-group');
+            row.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-
-            // Get active filters
-            const activeFilters = Array.from(filterBar.querySelectorAll('.filter-btn.active'))
-                .map(b => b.textContent.trim());
-
-            // Filter products
-            filteredProducts = filterProducts(productsData.materials, activeFilters);
-
-            // Sort and render
-            filteredProducts = sortProducts(filteredProducts, sortSelect.value);
-            renderProducts(productGrid, filteredProducts, 'material');
+            apply();
         });
     });
 
-    // Sort functionality
-    if (sortSelect) {
-        sortSelect.addEventListener('change', function () {
-            filteredProducts = sortProducts(filteredProducts, this.value);
-            renderProducts(productGrid, filteredProducts, 'material');
+    if (sortSelect) sortSelect.addEventListener('change', apply);
+
+    apply();
+}
+
+// Build the four filter rows: material, group, colour, look
+function createMaterialFilters(container, materials, allTags) {
+    const wrap = container.querySelector('.filter-container');
+    if (!wrap) return;
+
+    const row = (label, values) => {
+        const group = document.createElement('div');
+        group.className = 'filter-group';
+        const tag = document.createElement('span');
+        tag.className = 'filter-group-label';
+        tag.textContent = label + ':';
+        group.appendChild(tag);
+        values.forEach((v, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn' + (i === 0 ? ' active' : '');
+            btn.textContent = v.label;
+            btn.dataset.value = v.value;
+            btn.dataset.filter = v.dim;
+            group.appendChild(btn);
         });
-    }
+        wrap.appendChild(group);
+    };
+
+    const opts = (dim, values) =>
+        [{ dim, value: 'ALL', label: 'All' }].concat(values.map(v => ({ dim, value: v, label: v })));
+
+    const materialsList = [...new Set(materials.map(m => m.Material))];
+    const groups = [...new Set(materials.map(m => m.Group))].sort();
+    const colours = COLOUR_TAGS.filter(c => allTags.includes(c));
+    const looks = allTags.filter(t => !COLOUR_TAGS.includes(t));
+
+    row('Material', opts('material', materialsList));
+    row('Group', opts('group', groups));
+    row('Colour', opts('colour', colours));
+    row('Look', opts('look', looks));
+}
+
+function updateResultCount(shown, total, noun) {
+    const el = document.querySelector('.js-result-count');
+    if (!el) return;
+    const word = noun || 'designs';
+    el.textContent = shown === total ? total + ' ' + word : shown + ' of ' + total + ' ' + word;
+}
+
+// Filter materials across the four dimensions
+function filterMaterials(materials, f) {
+    return materials.filter(m => {
+        if (f.material !== 'ALL' && m.Material !== f.material) return false;
+        if (f.group !== 'ALL' && m.Group !== f.group) return false;
+        const tags = m.Tag ? m.Tag.split(';').map(t => t.trim().toLowerCase()) : [];
+        if (f.colour !== 'ALL' && !tags.includes(f.colour.toLowerCase())) return false;
+        if (f.look !== 'ALL' && !tags.includes(f.look.toLowerCase())) return false;
+        return true;
+    });
 }
 
 // Sinks Gallery
@@ -135,45 +272,35 @@ function initSinksGallery() {
 
     if (!filterBar || !productGrid) return;
 
-    // Create filter buttons for sinks (Category, Series, Type)
     const categories = [...new Set(productsData.sinks.map(s => s.Category))];
     const series = [...new Set(productsData.sinks.map(s => s.Series))];
+    const configs = [...new Set(productsData.sinks.map(s => s.Configuration))].filter(Boolean);
 
-    createSinkFilters(filterBar, categories, series);
+    createSinkFilters(filterBar, categories, series, configs);
 
-    // Render products
-    let filteredProducts = [...productsData.sinks];
-    renderProducts(productGrid, filteredProducts, 'sink');
+    const apply = () => {
+        const pick = (dim) => {
+            const btn = filterBar.querySelector('[data-filter="' + dim + '"].active');
+            return btn ? btn.dataset.value : 'ALL';
+        };
+        let out = filterSinks(productsData.sinks, pick('category'), pick('series'), pick('config'));
+        out = sortProducts(out, sortSelect ? sortSelect.value : 'recommended');
+        renderProducts(productGrid, out, 'sink');
+        updateResultCount(out.length, productsData.sinks.length, 'models');
+    };
 
-    // Filter functionality
-    const filterButtons = filterBar.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
+    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-            // Toggle active state
-            const filterGroup = this.closest('.filter-group');
-            filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            const row = this.closest('.filter-group');
+            row.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-
-            // Get active filters
-            const activeCategory = filterBar.querySelector('[data-filter="category"].active')?.textContent.trim();
-            const activeSeries = filterBar.querySelector('[data-filter="series"].active')?.textContent.trim();
-
-            // Filter products
-            filteredProducts = filterSinks(productsData.sinks, activeCategory, activeSeries);
-
-            // Sort and render
-            filteredProducts = sortProducts(filteredProducts, sortSelect.value);
-            renderProducts(productGrid, filteredProducts, 'sink');
+            apply();
         });
     });
 
-    // Sort functionality
-    if (sortSelect) {
-        sortSelect.addEventListener('change', function () {
-            filteredProducts = sortProducts(filteredProducts, this.value);
-            renderProducts(productGrid, filteredProducts, 'sink');
-        });
-    }
+    if (sortSelect) sortSelect.addEventListener('change', apply);
+
+    apply();
 }
 
 // Create Filter Buttons
@@ -198,51 +325,32 @@ function createFilterButtons(container, filters) {
     container.querySelector('.filter-container').appendChild(filterGroup);
 }
 
-// Create Sink Filters
-function createSinkFilters(container, categories, series) {
-    const filterContainer = container.querySelector('.filter-container');
+// Create Sink Filters: room, material, and bowl configuration
+function createSinkFilters(container, categories, series, configs) {
+    const wrap = container.querySelector('.filter-container');
+    if (!wrap) return;
 
-    // Category filters
-    const categoryGroup = document.createElement('div');
-    categoryGroup.className = 'filter-group';
-    categoryGroup.innerHTML = '<span style="color: var(--js-ink); margin-right: 8px;">Category:</span>';
+    const row = (label, dim, values) => {
+        const group = document.createElement('div');
+        group.className = 'filter-group';
+        const tag = document.createElement('span');
+        tag.className = 'filter-group-label';
+        tag.textContent = label + ':';
+        group.appendChild(tag);
+        ['ALL'].concat(values).forEach((v, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn' + (i === 0 ? ' active' : '');
+            btn.textContent = v === 'ALL' ? 'All' : v;
+            btn.dataset.value = v;
+            btn.dataset.filter = dim;
+            group.appendChild(btn);
+        });
+        wrap.appendChild(group);
+    };
 
-    const allCategoryBtn = document.createElement('button');
-    allCategoryBtn.className = 'filter-btn active';
-    allCategoryBtn.textContent = 'ALL';
-    allCategoryBtn.setAttribute('data-filter', 'category');
-    categoryGroup.appendChild(allCategoryBtn);
-
-    categories.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.textContent = cat;
-        btn.setAttribute('data-filter', 'category');
-        categoryGroup.appendChild(btn);
-    });
-
-    filterContainer.appendChild(categoryGroup);
-
-    // Series filters
-    const seriesGroup = document.createElement('div');
-    seriesGroup.className = 'filter-group';
-    seriesGroup.innerHTML = '<span style="color: var(--js-ink); margin-right: 8px;">Series:</span>';
-
-    const allSeriesBtn = document.createElement('button');
-    allSeriesBtn.className = 'filter-btn active';
-    allSeriesBtn.textContent = 'ALL';
-    allSeriesBtn.setAttribute('data-filter', 'series');
-    seriesGroup.appendChild(allSeriesBtn);
-
-    series.forEach(ser => {
-        const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.textContent = ser;
-        btn.setAttribute('data-filter', 'series');
-        seriesGroup.appendChild(btn);
-    });
-
-    filterContainer.appendChild(seriesGroup);
+    row('Room', 'category', categories);
+    row('Material', 'series', series);
+    row('Configuration', 'config', configs);
 }
 
 // Filter Products
@@ -260,7 +368,7 @@ function filterProducts(products, activeFilters) {
 }
 
 // Filter Sinks
-function filterSinks(sinks, category, series) {
+function filterSinks(sinks, category, series, config) {
     let filtered = sinks;
 
     if (category && category !== 'ALL') {
@@ -271,7 +379,20 @@ function filterSinks(sinks, category, series) {
         filtered = filtered.filter(s => s.Series === series);
     }
 
+    if (config && config !== 'ALL') {
+        filtered = filtered.filter(s => s.Configuration === config);
+    }
+
     return filtered;
+}
+
+// Group ordering: quartz before granite, then group number, then upgrade tier last
+// within its group, so "3" and "3 Upgrade" stay adjacent instead of interleaving.
+function materialRank(m) {
+    const material = m.Material === 'Granite' ? 1 : 0;
+    const group = parseInt(m.Group || '0', 10) || 0;
+    const upgrade = m.Upgrade === 'Yes' ? 1 : 0;
+    return material * 1000 + group * 10 + upgrade;
 }
 
 // Sort Products
@@ -291,16 +412,17 @@ function sortProducts(products, sortBy) {
                 const nameB = b['Color Name'] || b.Model || '';
                 return nameB.localeCompare(nameA);
             });
-        case 'newest':
-            // Assuming Group or Category indicates newness
-            return sorted.sort((a, b) => {
-                const groupA = parseInt(a.Group || a.Category || '0');
-                const groupB = parseInt(b.Group || b.Category || '0');
-                return groupB - groupA;
-            });
+        case 'group-asc':
+            return sorted.sort((a, b) => materialRank(a) - materialRank(b));
+        case 'group-desc':
+            return sorted.sort((a, b) => materialRank(b) - materialRank(a));
         case 'recommended':
         default:
-            return sorted;
+            // Catalogue order: quartz groups 1-6 then granite, upgrades after
+            // their base group. Sinks keep sheet order.
+            return sorted[0] && sorted[0].Material
+                ? sorted.sort((a, b) => materialRank(a) - materialRank(b))
+                : sorted;
     }
 }
 
@@ -324,13 +446,14 @@ function createProductCard(product, type) {
     const card = document.createElement('div');
     card.className = 'product-card';
 
-    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const productId = productKey(product, type);
     const isSaved = isDesignSaved(productId);
 
     if (type === 'material') {
         card.innerHTML = `
             <div class="product-card-image-wrapper">
-                <img src="${product['Image URL']}" alt="${product['Color Name']}" class="product-card-image" loading="lazy">
+                <img src="${product['Image URL']}" alt="${product['Color Name']} ${product.Material.toLowerCase()} slab" class="product-card-image" loading="lazy">
+                ${product.Upgrade === 'Yes' ? '<span class="js-upgrade-badge">Upgrade</span>' : ''}
                 <button class="save-heart-btn ${isSaved ? 'saved' : ''}" data-product-id="${productId}" aria-label="Save design">
                     <svg viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -339,11 +462,11 @@ function createProductCard(product, type) {
             </div>
             <div class="product-card-content">
                 <h3 class="product-card-title">${product['Color Name']}</h3>
-                <div class="product-card-brand">Group ${product.Group} • ${product.Finish}</div>
+                <div class="product-card-brand">${product.Material} &middot; ${groupLabel(product)} &middot; ${product.Finish}</div>
                 <p class="product-card-description">${product['Short Description']}</p>
                 <div class="product-card-tags">
-                    ${product.Tag ? product.Tag.split(';').slice(0, 3).map(tag =>
-            `<span class="tag">${tag.trim()}</span>`
+                    ${product.Tag ? displayTags(product.Tag).slice(0, 3).map(tag =>
+            `<span class="tag">${tag}</span>`
         ).join('') : ''}
                 </div>
             </div>
@@ -360,7 +483,7 @@ function createProductCard(product, type) {
             </div>
             <div class="product-card-content">
                 <h3 class="product-card-title">${product.Model}</h3>
-                <div class="product-card-brand">${product.Series} Series - ${product.Type}</div>
+                <div class="product-card-brand">${product.Series} &middot; ${product.Type} &middot; ${product.Configuration}</div>
                 <p class="product-card-description">${product['Short Description']}</p>
                 <div style="margin-top: 8px; color: var(--navy-primary); font-size: 0.9rem;">
                     Size: ${product['Size (L x W x H)']}
@@ -391,7 +514,7 @@ function createProductCard(product, type) {
 
 // Navigate to product detail page
 function navigateToProductPage(product, type) {
-    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const productId = productKey(product, type);
     const encodedId = encodeURIComponent(productId);
 
     window.location.href = `/product/?type=${type}&id=${encodedId}`;
@@ -403,7 +526,7 @@ function showProductDetail(product, type) {
     const existingModal = document.getElementById('product-detail-modal');
     if (existingModal) existingModal.remove();
 
-    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const productId = productKey(product, type);
     const isSaved = isDesignSaved(productId);
 
     let detailHtml = '';
@@ -426,9 +549,11 @@ function showProductDetail(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="detail-brand">Group ${product.Group} • ${product.Finish}</div>
+                <div class="detail-brand">${product.Material} &middot; ${groupLabel(product)} &middot; ${product.Finish}</div>
                 <div class="detail-meta">
-                    <span class="detail-meta-item">Group ${product.Group}</span>
+                    <span class="detail-meta-item">${groupLabel(product)}</span>
+                    <span class="detail-meta-item">${product.Thickness || '2cm, 3cm'}</span>
+                    <span class="detail-meta-item">${product['Slab Size'] || ''}</span>
                 </div>
                 <p class="detail-description">${product['Short Description']}</p>
                 <div class="detail-tags">
@@ -442,23 +567,16 @@ function showProductDetail(product, type) {
         ).join('') : '';
 
         // Build specifications section
+        const rows = [
+            ['Configuration', product.Configuration],
+            ['Overall size', product['Size (L x W x H)']],
+            ['Interior size', product['Interior Dimension']],
+            ['Construction', product.Construction]
+        ];
         let specsHtml = '<div class="sink-specs">';
-
-        // Show Gauge Options if there are gauge options available
-        const gaugeOptions = product.Options ? product.Options.filter(opt => opt.toLowerCase().includes('gauge')) : [];
-        if (gaugeOptions.length > 0) {
-            specsHtml += `<div class="spec-row"><span class="spec-label">Gauge Options:</span><span class="spec-value">${gaugeOptions.join(', ')}</span></div>`;
-        }
-        if (product['Cabinet Base']) {
-            specsHtml += `<div class="spec-row"><span class="spec-label">Cabinet Base:</span><span class="spec-value">${product['Cabinet Base']}</span></div>`;
-        }
-        if (product['Overall Dimension']) {
-            specsHtml += `<div class="spec-row"><span class="spec-label">Overall Dimension:</span><span class="spec-value">${product['Overall Dimension']}</span></div>`;
-        }
-        if (product['Interior Dimension']) {
-            specsHtml += `<div class="spec-row"><span class="spec-label">Interior Dimension:</span><span class="spec-value">${product['Interior Dimension']}</span></div>`;
-        }
-
+        rows.forEach(([label, value]) => {
+            if (value) specsHtml += `<div class="spec-row"><span class="spec-label">${label}:</span><span class="spec-value">${value}</span></div>`;
+        });
         specsHtml += '</div>';
 
         detailHtml = `
@@ -474,7 +592,7 @@ function showProductDetail(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="detail-brand">${product.Series} Series • ${product.Type} • ${product.Category}</div>
+                <div class="detail-brand">${product.Series} • ${product.Type} • ${product.Category}</div>
                 ${specsHtml}
                 <p class="detail-description">${product['Short Description']}</p>
                 <div class="detail-tags">
@@ -630,11 +748,11 @@ function showSavedDesignsModal() {
         const allProducts = [...(productsData?.materials || []), ...(productsData?.sinks || [])];
 
         saved.forEach(productId => {
-            const product = allProducts.find(p => p['Color Name'] === productId || p.Model === productId);
+            const product = allProducts.find(p => (p.Slug || p['Color Name']) === productId || p.Model === productId);
             if (product) {
                 const name = product['Color Name'] || product.Model;
                 const image = product['Image URL'];
-                const brand = product.Group ? `Group ${product.Group}` : `${product.Series} Series`;
+                const brand = product.Group ? groupLabel(product) : product.Series;
                 itemsHtml += `
                     <div class="saved-item">
                         <img src="${image}" alt="${name}" class="saved-item-image">
@@ -728,7 +846,9 @@ function toggleFilters() {
     if (filterContent) {
         const isCollapsed = filterContent.style.maxHeight === '0px';
         if (isCollapsed) {
-            filterContent.style.maxHeight = '500px';
+            // Measured, not fixed: the material book has four filter rows and the
+            // "Look" row alone wraps to several lines on narrow viewports.
+            filterContent.style.maxHeight = filterContent.scrollHeight + 'px';
             filterContent.style.marginTop = 'var(--spacing-sm)';
             if (filterArrow) filterArrow.style.transform = 'rotate(0deg)';
         } else {
@@ -769,7 +889,7 @@ function initProductDetailPage() {
     // Find the product
     let product = null;
     if (type === 'material') {
-        product = productsData.materials.find(m => m['Color Name'] === productId);
+        product = productsData.materials.find(m => (m.Slug || m['Color Name']) === productId);
     } else if (type === 'sink') {
         product = productsData.sinks.find(s => s.Model === productId);
     }
@@ -800,7 +920,7 @@ function showProductNotFound() {
             <div class="product-not-found">
                 <h2>Product Not Found</h2>
                 <p>The product you're looking for doesn't exist or has been removed.</p>
-                <a href="/quartz-designs/" class="btn btn-primary">Browse Quartz Designs</a>
+                <a href="/materials/" class="btn btn-primary">Browse materials</a>
                 <a href="/sinks/" class="btn btn-secondary">Browse Sinks</a>
             </div>
         `;
@@ -812,8 +932,8 @@ function updateBreadcrumb(product, type) {
     const productName = document.getElementById('product-name');
 
     if (type === 'material') {
-        categoryLink.href = '/quartz-designs/';
-        categoryLink.textContent = 'Quartz Designs';
+        categoryLink.href = '/materials/';
+        categoryLink.textContent = 'Materials';
         productName.textContent = product['Color Name'];
     } else if (type === 'sink') {
         categoryLink.href = '/sinks/';
@@ -826,7 +946,7 @@ function renderProductDetailPage(product, type) {
     const container = document.getElementById('product-detail');
     if (!container) return;
 
-    const productId = type === 'material' ? product['Color Name'] : product.Model;
+    const productId = productKey(product, type);
     const isSaved = isDesignSaved(productId);
 
     let detailHtml = '';
@@ -849,16 +969,24 @@ function renderProductDetailPage(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="product-page-subtitle">Group ${product.Group} • ${product.Finish}</div>
-                
+                <div class="product-page-subtitle">${product.Material} &middot; ${groupLabel(product)} &middot; ${product.Finish}</div>
+
                 <div class="product-page-specs">
                     <div class="spec-item">
+                        <span class="spec-label">Material</span>
+                        <span class="spec-value">${product.Material}</span>
+                    </div>
+                    <div class="spec-item">
                         <span class="spec-label">Group</span>
-                        <span class="spec-value">${product.Group}</span>
+                        <span class="spec-value">${groupLabel(product).replace('Group ', '')}</span>
                     </div>
                     <div class="spec-item">
                         <span class="spec-label">Thickness</span>
-                        <span class="spec-value">${product.Thickness ? product.Thickness.join(', ') : '2cm, 3cm'}</span>
+                        <span class="spec-value">${product.Thickness || '2cm, 3cm'}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Slab size</span>
+                        <span class="spec-value">${product['Slab Size'] || '-'}</span>
                     </div>
                     <div class="spec-item">
                         <span class="spec-label">Finish</span>
@@ -889,43 +1017,20 @@ function renderProductDetailPage(product, type) {
 
         // Build specifications
         let specsHtml = '';
-
-        const gaugeOptions = product.Options ? product.Options.filter(opt => opt.toLowerCase().includes('gauge')) : [];
-        if (gaugeOptions.length > 0) {
+        [
+            ['Configuration', product.Configuration],
+            ['Overall size', product['Size (L x W x H)']],
+            ['Interior size', product['Interior Dimension']],
+            ['Construction', product.Construction]
+        ].forEach(([label, value]) => {
+            if (!value) return;
             specsHtml += `
                 <div class="spec-item">
-                    <span class="spec-label">Gauge Options</span>
-                    <span class="spec-value">${gaugeOptions.join(', ')}</span>
+                    <span class="spec-label">${label}</span>
+                    <span class="spec-value">${value}</span>
                 </div>
             `;
-        }
-
-        if (product['Cabinet Base']) {
-            specsHtml += `
-                <div class="spec-item">
-                    <span class="spec-label">Cabinet Base</span>
-                    <span class="spec-value">${product['Cabinet Base']}</span>
-                </div>
-            `;
-        }
-
-        if (product['Overall Dimension']) {
-            specsHtml += `
-                <div class="spec-item">
-                    <span class="spec-label">Overall Dimension</span>
-                    <span class="spec-value">${product['Overall Dimension']}</span>
-                </div>
-            `;
-        }
-
-        if (product['Interior Dimension']) {
-            specsHtml += `
-                <div class="spec-item">
-                    <span class="spec-label">Interior Dimension</span>
-                    <span class="spec-value">${product['Interior Dimension']}</span>
-                </div>
-            `;
-        }
+        });
 
         detailHtml = `
             <div class="product-page-image">
@@ -940,7 +1045,7 @@ function renderProductDetailPage(product, type) {
                         </svg>
                     </button>
                 </div>
-                <div class="product-page-subtitle">${product.Series} Series • ${product.Type} • ${product.Category}</div>
+                <div class="product-page-subtitle">${product.Series} • ${product.Type} • ${product.Category}</div>
                 
                 <div class="product-page-specs">
                     ${specsHtml}
@@ -984,11 +1089,21 @@ function loadRelatedProducts(product, type) {
     let related = [];
 
     if (type === 'material') {
-        // Get materials from same group
+        // Same material and group - quartz Group 1 and granite Group 1 are
+        // different price tiers, so they must not be shown as alternatives.
+        const key = productKey(product, type);
         related = productsData.materials
-            .filter(m => m['Color Name'] !== product['Color Name'] &&
+            .filter(m => productKey(m, type) !== key &&
+                m.Material === product.Material &&
                 m.Group === product.Group)
             .slice(0, 4);
+        // Fall back to the rest of the same material if the group is thin
+        if (related.length < 4) {
+            const have = new Set(related.map(m => productKey(m, type)).concat([key]));
+            related = related.concat(productsData.materials
+                .filter(m => m.Material === product.Material && !have.has(productKey(m, type)))
+                .slice(0, 4 - related.length));
+        }
     } else if (type === 'sink') {
         // Get sinks from same series or category
         related = productsData.sinks
@@ -1042,7 +1157,7 @@ function initComparePage() {
     const savedSinks = [];
 
     saved.forEach(productId => {
-        const material = productsData.materials.find(m => m['Color Name'] === productId);
+        const material = productsData.materials.find(m => (m.Slug || m['Color Name']) === productId);
         if (material) {
             savedMaterials.push(material);
             return;
@@ -1197,12 +1312,20 @@ function renderCompareItem(product, index) {
                 <div class="compare-item-details">
                     <h3 class="compare-item-name">${product['Color Name']}</h3>
                     <div class="compare-spec">
+                        <span class="compare-spec-label">Material</span>
+                        <span class="compare-spec-value">${product.Material}</span>
+                    </div>
+                    <div class="compare-spec">
                         <span class="compare-spec-label">Group</span>
-                        <span class="compare-spec-value">${product.Group}</span>
+                        <span class="compare-spec-value">${groupLabel(product).replace('Group ', '')}</span>
                     </div>
                     <div class="compare-spec">
                         <span class="compare-spec-label">Thickness</span>
-                        <span class="compare-spec-value">${product.Thickness ? product.Thickness.join(', ') : '2cm, 3cm'}</span>
+                        <span class="compare-spec-value">${product.Thickness || '2cm, 3cm'}</span>
+                    </div>
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">Slab size</span>
+                        <span class="compare-spec-value">${product['Slab Size'] || '-'}</span>
                     </div>
                     <div class="compare-spec">
                         <span class="compare-spec-label">Finish</span>
@@ -1216,7 +1339,18 @@ function renderCompareItem(product, index) {
         `;
     } else {
         // Sink
-        const gaugeOptions = product.Options ? product.Options.filter(opt => opt.toLowerCase().includes('gauge')) : [];
+        const sinkSpecs = [
+            ['Material', product.Series],
+            ['Type', product.Type],
+            ['Configuration', product.Configuration],
+            ['Overall size', product['Size (L x W x H)']],
+            ['Interior size', product['Interior Dimension']],
+            ['Construction', product.Construction]
+        ].filter(([, v]) => v).map(([label, value]) => `
+                    <div class="compare-spec">
+                        <span class="compare-spec-label">${label}</span>
+                        <span class="compare-spec-value">${value}</span>
+                    </div>`).join('');
 
         return `
             <div class="compare-item">
@@ -1230,38 +1364,7 @@ function renderCompareItem(product, index) {
                 </div>
                 <div class="compare-item-details">
                     <h3 class="compare-item-name">${product.Model}</h3>
-                    <div class="compare-spec">
-                        <span class="compare-spec-label">Series</span>
-                        <span class="compare-spec-value">${product.Series} Series</span>
-                    </div>
-                    <div class="compare-spec">
-                        <span class="compare-spec-label">Type</span>
-                        <span class="compare-spec-value">${product.Type}</span>
-                    </div>
-                    ${gaugeOptions.length > 0 ? `
-                    <div class="compare-spec">
-                        <span class="compare-spec-label">Gauge Options</span>
-                        <span class="compare-spec-value">${gaugeOptions.join(', ')}</span>
-                    </div>
-                    ` : ''}
-                    ${product['Cabinet Base'] ? `
-                    <div class="compare-spec">
-                        <span class="compare-spec-label">Cabinet Base</span>
-                        <span class="compare-spec-value">${product['Cabinet Base']}</span>
-                    </div>
-                    ` : ''}
-                    ${product['Overall Dimension'] ? `
-                    <div class="compare-spec">
-                        <span class="compare-spec-label">Overall Dimension</span>
-                        <span class="compare-spec-value">${product['Overall Dimension']}</span>
-                    </div>
-                    ` : ''}
-                    ${product['Interior Dimension'] ? `
-                    <div class="compare-spec">
-                        <span class="compare-spec-label">Interior Dimension</span>
-                        <span class="compare-spec-value">${product['Interior Dimension']}</span>
-                    </div>
-                    ` : ''}
+                    ${sinkSpecs}
                     <div class="compare-description">
                         <p>${product['Short Description']}</p>
                     </div>
@@ -1286,13 +1389,13 @@ function addToComparison(productId) {
 
     let product = null;
     if (compareState.type === 'material') {
-        product = productsData.materials.find(m => m['Color Name'] === productId);
+        product = productsData.materials.find(m => (m.Slug || m['Color Name']) === productId);
     } else {
         product = productsData.sinks.find(s => s.Model === productId);
     }
 
     if (product && !items.some(p =>
-        (compareState.type === 'material' ? p['Color Name'] : p.Model) === productId
+        productKey(p, compareState.type) === productId
     )) {
         items.push(product);
         setCurrentCompareItems(items);
@@ -1341,11 +1444,11 @@ function showProductSelector() {
         body.innerHTML = '<p class="selector-empty">No more items available to add.</p>';
     } else {
         body.innerHTML = availableProducts.map(product => {
-            const id = compareState.type === 'material' ? product['Color Name'] : product.Model;
+            const id = productKey(product, compareState.type);
             const name = compareState.type === 'material' ? product['Color Name'] : product.Model;
             const subtitle = compareState.type === 'material'
-                ? `Group ${product.Group} • ${product.Finish}`
-                : `${product.Series} Series • ${product.Type}`;
+                ? `${groupLabel(product)} • ${product.Finish}`
+                : `${product.Series} • ${product.Type}`;
             const image = product['Image URL'];
 
             return `
@@ -1424,7 +1527,7 @@ function confirmSelectorSelection() {
 
         let product = null;
         if (compareState.type === 'material') {
-            product = productsData.materials.find(m => m['Color Name'] === productId);
+            product = productsData.materials.find(m => (m.Slug || m['Color Name']) === productId);
         } else {
             product = productsData.sinks.find(s => s.Model === productId);
         }

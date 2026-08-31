@@ -12,10 +12,10 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Designs - Judestone</title>
+    <title>The Material Book - Judestone</title>
     <meta name="description"
-        content="Compare quartz materials and sinks side-by-side to find the perfect match for your project.">
-    <link rel="stylesheet" href="/assets/style.css">
+        content="The Judestone material book: twenty-seven quartz designs across six groups and six granite colours, spec'd for multifamily programs. Filter by material, group, colour and look. Program pricing and factory cut-to-size available.">
+    <link rel="stylesheet" href="../../assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -36,7 +36,7 @@
                 <nav>
                     <a href="/">Home</a>
                     <a href="/about/">About Judestone</a>
-                    <a href="/materials/">Materials</a>
+                    <a href="/materials/" class="active">Materials</a>
                     <a href="/sinks/">Sinks</a>
                     <a href="/contact/">Contact</a>
                 </nav>
@@ -56,73 +56,74 @@
         </div>
     </header>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-bar">
-        <div class="container">
-            <nav class="breadcrumb">
-                <a href="/">Home</a>
-                <span class="breadcrumb-separator">›</span>
-                <span>Compare designs</span>
-            </nav>
+    <!-- Page head -->
+    <section class="js-pagehead">
+        <div class="js-wrap">
+            <div class="js-annot">
+                <span class="js-seclabel">JS-101 &middot; The material book</span>
+                <span class="js-docno">Rev 2026-08 &middot; 33 designs &middot; Quartz &amp; granite</span>
+            </div>
+            <div class="js-seclabel-rule"></div>
+            <h1 class="js-h1">Thirty-three designs. Two materials. One program.</h1>
+            <p class="js-lede">The tool for design-driven, spec-tight projects: consistent colour and pattern at
+                scale, engineered performance, and program pricing across thousands of units. Quartz and granite
+                are grouped by price tier, so a change of material does not mean a change of program. Slabs shown
+                true to material - no colour grading.</p>
         </div>
-    </div>
+    </section>
 
-    <!-- Compare Page Content -->
-    <section class="compare-page">
-        <div class="container">
-            <div class="compare-header">
-                <h1>Compare designs</h1>
-                <p>Put up to four side by side - materials or sinks - before the spec locks.</p>
-            </div>
-
-            <!-- Tab Switcher -->
-            <div class="compare-tabs">
-                <button class="compare-tab active" data-type="material" onclick="switchCompareTab('material')">
-                    Materials
-                </button>
-                <button class="compare-tab" data-type="sink" onclick="switchCompareTab('sink')">
-                    Sinks
-                </button>
-            </div>
-
-            <!-- Comparison Grid -->
-            <div class="compare-grid" id="compare-grid">
-                <!-- Populated by JavaScript -->
-            </div>
-
-            <!-- Empty State -->
-            <div class="compare-empty" id="compare-empty" style="display: none;">
-                <div class="compare-empty-content">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64"
-                        height="64">
-                        <path
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                        </path>
+    <!-- Filter Bar -->
+    <section class="filter-bar">
+        <div class="js-wrap">
+            <div class="filter-header">
+                <button class="filter-toggle" onclick="toggleFilters()">
+                    <span>Filters</span>
+                    <svg class="filter-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"
+                        style="transition: transform 0.3s; transform: rotate(-90deg);">
+                        <path d="M2 4l4 4 4-4" />
                     </svg>
-                    <h3>Nothing to compare yet</h3>
-                    <p>Add items from your saved designs, or browse the material book and sink program.</p>
-                    <button class="btn btn-primary" onclick="showProductSelector()">Add Item</button>
-                </div>
+                </button>
+                <span class="js-result-count"></span>
+                <select class="sort-select">
+                    <option value="recommended">Sort By: Catalogue order</option>
+                    <option value="name-asc">Name A-Z</option>
+                    <option value="name-desc">Name Z-A</option>
+                    <option value="group-asc">Group: low to high</option>
+                    <option value="group-desc">Group: high to low</option>
+                </select>
+            </div>
+            <div class="filter-container collapsible" id="filter-content"
+                style="max-height: 0px; overflow: hidden; transition: max-height 0.3s ease;"></div>
+        </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section style="padding: var(--spacing-lg) 0 var(--spacing-xl);">
+        <div class="js-wrap">
+            <div class="product-grid" id="product-grid">
+                <div class="loading">Loading designs...</div>
+            </div>
+            <div class="load-more">
+                <button class="btn btn-secondary" id="load-more-btn" style="display: none;">Load More</button>
             </div>
         </div>
     </section>
 
-    <!-- Product Selector Modal (hidden by default) -->
-    <div class="product-selector-modal" id="product-selector-modal" style="display: none;">
-        <div class="product-selector-content">
-            <div class="product-selector-header">
-                <h2>Select a <span id="selector-type-label">Material</span></h2>
-                <button class="product-selector-close" onclick="closeProductSelector()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-                        <path d="M18 6L6 18M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="product-selector-body" id="product-selector-body">
-                <!-- Product list populated by JavaScript -->
+    <!-- Program note -->
+    <section class="js-band-navy">
+        <div class="js-wrap">
+            <span class="js-seclabel">The pivot advantage</span>
+            <div class="js-seclabel-rule"></div>
+            <h2 class="js-h2">Quartz and granite are two of three tools. The program stays the same.</h2>
+            <p class="js-lede">Both books are sourced and priced against the same group structure, and the
+                silica-free lane sits behind them on the same terms. If the owner changes the spec, the program
+                carries over instead of starting again.</p>
+            <div class="js-order-ctas" style="justify-content:flex-start;">
+                <a href="/contact/" class="js-btn js-btn-primary">Price a live project</a>
+                <a href="/sinks/" class="js-btn js-btn-paper">Browse sink models</a>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -171,13 +172,13 @@
             <div class="js-foot-bottom">
                 <p class="js-foot-copy">&copy; 2026 Judestone &middot; Multifamily Countertop Solutions Platform.
                     All rights reserved.</p>
-                <p class="js-foot-sheetno">JS-105 &middot; Rev 2026-07</p>
+                <p class="js-foot-sheetno">JS-101 &middot; Rev 2026-08</p>
             </div>
         </div>
     </footer>
 
-    <script src="/assets/products-data.js"></script>
-    <script src="/assets/script.js"></script>
+    <script src="../../assets/products-data.js"></script>
+    <script src="../../assets/script.js"></script>
 </body>
 
 </html>

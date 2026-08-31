@@ -38,7 +38,10 @@ async function copyPagesAsUtf8(srcDir, destDir) {
 
 async function build() {
     try {
-        // Create dist directory
+        // Start from an empty dist. The copies below merge rather than replace,
+        // so without this, files deleted from src (retired slab images, orphaned
+        // scripts) keep shipping from previous builds.
+        await fs.remove('dist');
         await fs.ensureDir('dist');
 
         // Copy src/pages to dist, normalizing HTML to UTF-8 (fixes GitHub Pages encoding)

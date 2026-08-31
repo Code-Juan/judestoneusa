@@ -37,7 +37,7 @@
                 <nav>
                     <a href="index.html" class="active">Home</a>
                     <a href="about/index.html">About Judestone</a>
-                    <a href="quartz-designs/index.html">Quartz Designs</a>
+                    <a href="materials/index.html">Materials</a>
                     <a href="sinks/index.html">Sinks</a>
                     <a href="contact/index.html">Contact</a>
                 </nav>
@@ -60,10 +60,13 @@
     <main>
         <!-- Hero: full-bleed slab, spec-sheet furniture, pivot strip -->
         <section class="js-hero">
+            <!-- Fallback slab for no-JS; script.js replaces this with a
+                 randomised cross-fade across the live catalogue. -->
             <div class="js-hero-bg">
-                <img src="/images/materials/calacatta-royale.jpg" alt="Calacatta Royale quartz slab">
+                <img src="/images/materials/quartz/alpine-calacatta.jpg" alt="Alpine Calacatta quartz slab">
             </div>
             <div class="js-hero-shade"></div>
+            <span class="js-hero-shown" aria-live="polite"></span>
             <div class="js-wrap js-hero-inner">
                 <div class="js-annot">
                     <span class="js-kicker">The Multifamily Countertop Solutions Platform</span>
@@ -259,7 +262,7 @@
                 <p class="js-lede">We don't push a material. We match one to your budget, your schedule, your owner,
                     and your market - then stand behind it.</p>
                 <div class="js-mats">
-                    <a href="quartz-designs/index.html" class="js-bp js-mat">
+                    <a href="materials/index.html" class="js-bp js-mat">
                         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
                             class="corner br"></i>
                         <h3>Quartz</h3>
@@ -272,14 +275,20 @@
                                 <path d="m12 5 7 7-7 7"></path>
                             </svg></span>
                     </a>
-                    <div class="js-bp js-mat">
+                    <a href="materials/index.html?material=Granite" class="js-bp js-mat">
                         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
                             class="corner br"></i>
                         <h3>Granite</h3>
                         <span class="js-mat-tool">The tool for durability and natural variation</span>
                         <p>Proven in the field for decades, globally available, and sourced direct from quarry
                             partners we know by name.</p>
-                    </div>
+                        <span class="js-mat-link">View the granite colours
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg></span>
+                    </a>
                     <div class="js-bp js-mat">
                         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i
                             class="corner br"></i>
@@ -553,7 +562,7 @@
                 <div class="js-foot-col">
                     <h3>Products</h3>
                     <ul>
-                        <li><a href="quartz-designs/index.html">Quartz designs</a></li>
+                        <li><a href="materials/index.html">Materials</a></li>
                         <li><a href="sinks/index.html">Sinks</a></li>
                     </ul>
                 </div>
